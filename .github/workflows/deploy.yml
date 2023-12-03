@@ -24,17 +24,22 @@ jobs:
     - name: Build
       run: hugo --minify
 
-    - name: Deploy to AWS S3
-      run: |
-        aws s3 sync public s3://abishevs.dev 
+    - uses: actions/checkout@master
+    - uses: jakejarvis/s3-sync-action@master
+      with:
+        args: --delete
       env:
+        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: 'global'
 
     - name: Invalidate CloudFront Distribution
-      run: |
-        aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRO_ID }} --paths "/*"
+      uses: chetan/invalidate-cloudfront-action@v2
       env:
+        DISTRIBUTION: ${{ secrets.DISTRO_ID }}
+        PATHS: "/*"
+        AWS_REGION: "global"
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
