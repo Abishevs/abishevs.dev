@@ -1,0 +1,76 @@
+baseurl = "http://www.abishevs.dev"
+title = "Eduards Abishevs"
+theme = "hugo-coder"
+languagecode = "en"
+defaultcontentlanguage = "en"
+
+paginate = 20
+
+disqusShortname = "Abishevs"
+
+[markup.highlight]
+style = "github-dark"
+
+[params]
+  author = "Eduards Abishevs"
+  info = "Aspiring Mehanical Engineer. Delving into the World of Robotics and Cybersecurity"
+  # info = "Delving into the World of Robotics and Cybersecurity. Built myself, always in beta"
+  description = "Eduards Abishevs portfolio website"
+  keywords = "blog,developer,personal,engineer,robotics"
+  avatarurl = "images/profile.png"
+  #gravatar = "john.doe@example.com"
+
+  faviconSVG = "/img/favicon.svg"
+  favicon_32 = "/img/favicon-32x32.png"
+  favicon_16 = "/img/favicon-16x16.png"
+
+  since = 2023
+
+  enableTwemoji = true
+
+  colorScheme = "auto"
+  hidecolorschemetoggle = false
+  
+  katex = true
+  math = true
+
+  # customCSS = ["css/custom.css"]
+  # customSCSS = ["scss/custom.scss"]
+  # customJS = ["js/custom.js"]
+
+[taxonomies]
+  category = "categories"
+  series = "series"
+  tag = "tags"
+  author = "authors"
+
+# Social links
+[[params.social]]
+  name = "Github"
+  icon = "fa fa-github fa-2x"
+  weight = 1
+  url = "https://github.com/Abishevs/"
+[[params.social]]
+  name = "Twitter"
+  icon = "fa fa-twitter fa-2x"
+  weight = 2
+  url = "https://twitter.com/FRApp_GG"
+[[params.social]]
+  name = "Linkedin"
+  icon = "fa fa-linkedin fa-2x"
+  weight = 2
+  url = "https://www.linkedin.com/in/eduards-abishevs-b5b584202/"
+
+# Menu links
+[[menu.main]]
+  name = "Blog"
+  weight = 1
+  url  = "posts/"
+[[menu.main]]
+  name = "Projects"
+  weight = 2
+  url = "projects/"
+[[menu.main]]
+  name = "About"
+  weight = 3
+  url = "about/"
