@@ -1,4 +1,4 @@
-baseurl = "http://www.abishevs.dev"
+baseurl = "https://www.abishevs.dev"
 title = "Eduards Abishevs"
 theme = "hugo-coder"
 languagecode = "en"
@@ -13,7 +13,7 @@ style = "github-dark"
 
 [params]
   author = "Eduards Abishevs"
-  info = "Aspiring Mehanical Engineer. Delving into the World of Robotics and Cybersecurity"
+  info = "Aspiring Mehanical Engineer. Delving into the World of Mechatronics and Cybersecurity"
   # info = "Delving into the World of Robotics and Cybersecurity. Built myself, always in beta"
   description = "Eduards Abishevs portfolio website"
   keywords = "blog,developer,personal,engineer,robotics"
@@ -74,3 +74,15 @@ style = "github-dark"
   name = "About"
   weight = 3
   url = "about/"
+
+
+[deployment]
+
+[[deployment.targets]]
+# An arbitrary name for this target.
+name = "production"
+
+# Amazon Web Services S3; see https://gocloud.dev/howto/blob/#s3
+# For S3-compatible endpoints, see https://gocloud.dev/howto/blob/#s3-compatible
+URL = "s3://abishevs.dev?region=eu-north-1"
+
