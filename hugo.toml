@@ -2,7 +2,7 @@ baseurl = "https://www.abishevs.dev"
 title = "Eduards Abishevs"
 theme = "hugo-coder"
 languagecode = "en"
-defaultcontentlanguage = "en"
+# defaultcontentlanguage = "en"
 
 paginate = 20
 
@@ -13,10 +13,13 @@ style = "github-dark"
 
 [params]
   author = "Eduards Abishevs"
-  info = "Aspiring Mehanical Engineer. Delving into the World of Mechatronics and Cybersecurity"
-  # info = "Delving into the World of Robotics and Cybersecurity. Built myself, always in beta"
+  info = [
+  "Hej! I'm a Bachelor of Engineering student in Mechatronics at Chalmers University of Technology, with passion for systems programming and embedded systems.", 
+  "Delving into the World of Robotics and Cybersecurity.",
+  "Built myself, always in beta"]
+  # info = "{{ partial \"custom-info.html\" . }}"
   description = "Eduards Abishevs portfolio website"
-  keywords = "blog,developer,personal,engineer,robotics"
+  keywords = "blog,developer,personal,engineer,robotics, mechatronics"
   avatarurl = "images/profile.png"
   #gravatar = "john.doe@example.com"
 

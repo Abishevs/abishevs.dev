@@ -5,7 +5,7 @@ date = 2023-12-02T21:09:15+01:00
 
 # Hej! I'm Eduards Abishevs
 
-A passionate technology enthusiast and aspiring engineer based in Stockholm, Sweden. I'm currently navigating through my final year at Gymnasiet (swedish highschool), where my fascination with **mechanical engineering**, **robotics**, and **cybersecurity** continues to grow.
+A passionate technology enthusiast from Sweden. I'm currently pursuing an Engineering degree in Mechatronics at Chalmers University of Technology, where my fascination with **mechanical engineering**, **systems engineering**, and **robotics** continues to grow.
 
 ## My Journey
 
@@ -22,7 +22,7 @@ There's something incredibly rewarding about turning ideas into reality. Whether
 - **Linux Enthusiast**: Proficient in Ubuntu & Arch, dabbling in sysadmin tasks while managing VPS.
 - **Robotics**: Eager to learn more and develop my skills in robotics and mechatronics.
 - **Cloud Services**: Familiar with basic AWS services.
-- **CAD & 3D Printing**: Skilled in Autodesk Inventor with practical experience in 3D printing.
+- **CAD & 3D Printing**: Skilled in Autodesk Inventor and CatiaV5 with practical experience in 3D printing.
 
 ## Beyond the Screen
 
@@ -30,7 +30,7 @@ When I'm not coding or tinkering with electronics, I like  to dive into a good b
 
 ## Let's Connect
 
-I'm always open to discussing new projects, tech ideas, or potential collaborations. Feel free to [contact me](/contact) or connect with me on [LinkedIn](#).
+I'm always open to discussing new projects, tech ideas, or potential collaborations. Feel free to [contact me](/contact) or connect with me on [LinkedIn](https://www.linkedin.com/in/eduards-abishevs-b5b584202/).
 
 ---
 
