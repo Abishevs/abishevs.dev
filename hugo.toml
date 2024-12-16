@@ -11,6 +11,9 @@ disqusShortname = "Abishevs"
 [markup.highlight]
 style = "github-dark"
 
+[markup.goldmark.renderer]
+unsafe = true
+
 [params]
   author = "Eduards Abishevs"
   info = [

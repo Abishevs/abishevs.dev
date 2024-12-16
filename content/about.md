@@ -28,6 +28,8 @@ There's something incredibly rewarding about turning ideas into reality. Whether
 
 When I'm not coding or tinkering with electronics, I like  to dive into a good book (often in Swedish, English sometimes Russian).
 
+- My favorite book is Hail Mary by Andy Weir (Author of The Martian)
+
 ## Let's Connect
 
 I'm always open to discussing new projects, tech ideas, or potential collaborations. Feel free to [contact me](/contact) or connect with me on [LinkedIn](https://www.linkedin.com/in/eduards-abishevs-b5b584202/).
