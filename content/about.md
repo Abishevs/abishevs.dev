@@ -17,7 +17,7 @@ There's something incredibly rewarding about turning ideas into reality. Whether
 
 ## Skills and Interests
 
-- **Languages**: Python (OOP, file handling, servers), Golang, C++, Rust.
+- **Languages**: Python (OOP, file handling, servers), Golang, C, Rust.
 - **Web Development**: Experienced in creating sleek, responsive websites.
 - **Linux Enthusiast**: Proficient in Ubuntu & Arch, dabbling in sysadmin tasks while managing VPS.
 - **Robotics**: Eager to learn more and develop my skills in robotics and mechatronics.
