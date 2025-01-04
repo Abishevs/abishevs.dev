@@ -1,150 +1,59 @@
 +++
 title = 'Robot Arm Simulator'
 date = 2024-12-16
+thumbnail = '/images/roboarmthumbnail.png'
 +++
 
-# Robotic Arm Simulation and Control Platform
-[GitHub](https://github.com/Abishevs/RobotArmSimulator.git)
+## The vison
+It started with a simple goal: build a desktop app to control a robotic arm and
+visualize its movements in real-time. But like any good project, it grew beyond
+its initial scope. Why stop there when you can create a multi-client
+architecture? Now, one GUI controls the arm, and others can join as viewers,
+creating a collaborative robotics experience.
+
+Source code on [GitHub](https://github.com/Abishevs/RobotArmSimulator.git)
 
 ## Description
-A desktop GUI application is designed to control a real robotic arm.
-The GUI communicates with a server, which maintains the "true state" of the arm
-segment positions. When the first GUI client connects to the server, it
-automatically becomes the "Controller," thereby gaining the ability to control
-the robotic arm. Subsequent GUI clients can connect but are assigned a "Viewer"
-role, allowing them to observe the current position of the arm.
+The Robotic Arm Simulation and Control Platform is a desktop GUI application
+designed to control a real robotic arm. The GUI communicates with a server that
+maintains the "true state" of the arm segment positions. The first GUI client
+to connect becomes the "Controller," gaining the ability to control the robotic
+arm, while subsequent clients are assigned a "Viewer" role to observe the arm's
+current position.
 
-The project is organized into various project directories, along with a
-libs/commonlib folder where the JSON schema and logging are defined. Within the
-projects folder, there are three seperate projects: robo_arm_sim (PySide6
-GUI), server (via WebSocket), and esp32_client (written in Arduino).
-
-## Table of Contents
-- Installation
-- Usage
-- Project Directory Structure
-- Future Plans
-- Contributing
-- License
-- Acknowledgements
-- Contact
-
-## Installation
-### Prerequestites
-- Python 3.x
-- Arduino framework / manual upload to ESP32
-
-### Steps
-1. Clone the repository
-    ```bash
-    git clone https://github.com/Abishevs/RobotArmSimulator.git 
-    ```
-2. Navigate to the project directory
-    ```bash
-    cd RobotArmSimulator 
-    ```
-3. Activate install/ start scripts
-    ```bash
-    source scripts/setup.sh
-    ```
-
-4. Install apps (same name as the dir of the project)
-    ```bash
-    install-app robo_arm_sim
-    install-app server
-    ```
-
-5. ESP32 setup 
-Update sample-config.h with your WIFI settings.
-Compile Arduino file and upload to ESP32.
-
-## Usage
-1. Starting apps
-    ```bash 
-    start-app robo_arm_sim &
-    start-app server
-    ```
-## Future plans include
-- Devolopment of real robotic arm is ongoing to test it fully.
-- version 2.0 of the software (GUI) is under devolement because
- software lacks feedback loop and restrictions of movement.
-
+### Watch the robotic arm simulator in action!
 <iframe  width="560" height="315" src="https://www.youtube.com/embed/qluetKPBPwk?si=8fZOAtvAbCLjRqGj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 
-## Project directory structure
-```bash
-.
-├── dev-requirements.txt
-├── libs
-│   └── commonlib
-│       ├── pyproject.toml
-│       └── src
-│           ├── commonlib
-│           │   ├── enums.py
-│           │   ├── errors.py
-│           │   ├── __init__.py
-│           │   ├── json_schema.py
-│           │   └── logger.py
-│           └── json_schemas
-│               ├── command.json
-│               ├── error.json
-│               ├── general.json
-│               └── positionUpdate.json
-├── projects
-│   ├── esp32_client
-│   │   ├── build.txt
-│   │   ├── connect_serial.py
-│   │   ├── main
-│   │   │   ├── main.ino
-│   │   │   └── sample-config.h
-│   │   ├── Makefile
-│   │   └── servo
-│   │       └── servo.ino
-│   ├── mock_client
-│   │   ├── main.py
-│   │   ├── pwm_test.py
-│   │   ├── pyproject.toml
-│   │   ├── requirements.txt
-│   │   ├── src
-│   │   │   └── mock_client
-│   │   │       ├── client.py
-│   │   │       └── __init__.py
-│   │   └── test_hpwm.py
-│   ├── robo_arm_sim
-│   │   ├── main.py
-│   │   ├── pyproject.toml
-│   │   ├── requirements.txt
-│   │   ├── src
-│   │   │   └── robo_arm_sim
-│   │   │       ├── constants.py
-│   │   │       ├── controllers.py
-│   │   │       ├── entities.py
-│   │   │       ├── __init__.py
-│   │   │       ├── robotic_arm.py
-│   │   │       ├── ui
-│   │   │       │   ├── __init__.py
-│   │   │       │   ├── ui_angle_controll_widget.py
-│   │   │       │   └── ui_mainwindow.py
-│   │   │       ├── utils.py
-│   │   │       └── views.py
-│   │   └── ui_files
-│   │       ├── controll_widget.ui
-│   │       └── ui_main_window.ui
-│   └── server
-│       ├── main.py
-│       ├── pyproject.toml
-│       ├── requirements.txt
-│       ├── sample-env
-│       └── src
-│           └── ws_server
-│               ├── __init__.py
-│               └── ws_server.py
-├── sample-env
-├── scripts
-│   ├── install.sh
-│   ├── setup.sh
-│   ├── start.sh
-│   └── win-start.sh
-´´´
+## Key Features
+- Real-time Control: Control the robotic arm in real-time through a
+  user-friendly GUI.
+- Multi-client Support: Multiple clients can connect, with one controlling and
+  others viewing.
+- Modular Design: Organized into separate projects for the GUI, server, and
+  ESP32 client.
 
+## Highlights
+- Interactive GUI: The PySide6-based GUI provides an intuitive interface for
+  controlling the robotic arm.
+- WebSocket Server: The server ensures smooth communication and synchronization
+  between the GUI and the robotic arm.
+- ESP32 Client: The Arduino-based client handles the physical control of the
+  robotic arm.
+
+## What I Learned
+This project deepened my understanding of WebSocket communication, Python GUI
+design with PySide6, and microcontroller programming with the ESP32. It also
+taught me the value of modular design and careful debugging when working across
+multiple platforms.
+
+## Future Plans
+- Real Robotic Arm Development: Ongoing development of a real robotic arm to
+  fully test the platform.
+- Software Enhancements: Version 2.0 of the software is in development,
+  focusing on adding a feedback loop and movement restrictions.
+
+## Impact
+This platform bridges the gap between simulation and real-world robotics. It's
+not only a valuable tool for hobbyists and educators but also a stepping stone
+for more advanced robotic systems.

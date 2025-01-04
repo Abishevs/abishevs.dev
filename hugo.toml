@@ -16,15 +16,19 @@ unsafe = true
 
 [params]
   author = "Eduards Abishevs"
+
+  school = "Mechatronics at Chalmers University of Technology"
+
+  interests = ["Systems Programming", "Embedded Systems", "Robotics", "Cybersecurity"]
+
   info = [
-  "Hej! I'm a Bachelor of Engineering student in Mechatronics at Chalmers University of Technology, with passion for systems programming and embedded systems.", 
-  "Delving into the World of Robotics and Cybersecurity.",
-  "Built myself, always in beta"]
-  # info = "{{ partial \"custom-info.html\" . }}"
+  "Hej! I’m a curious engineering student, always striving to bridge the gap between software and hardware. Whether it’s programming systems, diving into embedded solutions, or experimenting with robotics, I thrive at the intersection of innovation and technology. Cybersecurity adds an exciting edge to my journey, keeping me on my toes.", 
+  "`Built myself, always in beta`", ]
+
   description = "Eduards Abishevs portfolio website"
   keywords = "blog,developer,personal,engineer,robotics, mechatronics"
   avatarurl = "images/profile.png"
-  #gravatar = "john.doe@example.com"
+  # gravatar = "john.doe@example.com"
 
   faviconSVG = "/img/favicon.svg"
   favicon_32 = "/img/favicon-32x32.png"
@@ -65,13 +69,13 @@ unsafe = true
   name = "Linkedin"
   icon = "fa fa-linkedin fa-2x"
   weight = 2
-  url = "https://www.linkedin.com/in/eduards-abishevs-b5b584202/"
+  url = "https://www.linkedin.com/in/eduards-abi%C5%A1evs-b5b584202"
 
 # Menu links
-[[menu.main]]
-  name = "Blog"
-  weight = 1
-  url  = "posts/"
+# [[menu.main]]
+#   name = "Blog"
+#   weight = 1
+#   url  = "posts/"
 [[menu.main]]
   name = "Projects"
   weight = 2
