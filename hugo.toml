@@ -1,10 +1,10 @@
-baseurl = "https://www.abishevs.dev"
+baseurl = "https://abishevs.dev/"
 title = "Eduards Abishevs"
 theme = "hugo-coder"
 languagecode = "en"
 # defaultcontentlanguage = "en"
 
-paginate = 20
+pagination.pagerSize = 20
 
 disqusShortname = "Abishevs"
 
@@ -78,11 +78,11 @@ unsafe = true
 #   url  = "posts/"
 [[menu.main]]
   name = "Projects"
-  weight = 2
+  weight = 1
   url = "projects/"
 [[menu.main]]
   name = "About"
-  weight = 3
+  weight = 2
   url = "about/"
 
 
