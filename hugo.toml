@@ -26,7 +26,7 @@ unsafe = true
   "Hej! I’m a curious engineering student, always striving to bridge the gap between software and hardware. Whether it’s programming systems, diving into embedded solutions, or experimenting with robotics, I thrive at the intersection of innovation and technology. Cybersecurity adds an exciting edge to my journey, keeping me on my toes.", 
   "`Built myself, always in beta`", ]
 
-  description = "Eduards Abishevs portfolio website"
+  description = "OASIS of Eduards Abishevs"
   keywords = "blog,developer,personal,engineer,robotics, mechatronics"
   avatarurl = "images/profile.png"
   # gravatar = "john.doe@example.com"
