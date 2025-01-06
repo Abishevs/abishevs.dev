@@ -1,7 +1,7 @@
 +++
 title = 'Snake Game In C'
 date = 2025-01-03T22:17:21+01:00
-tags = ['C', 'Terminal']
+keywords = ["C", "CLI"]
 thumbnail = "/gifs/snakegame.gif"
 +++
 

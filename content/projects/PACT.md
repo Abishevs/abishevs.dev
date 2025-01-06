@@ -1,7 +1,9 @@
 +++
 title = 'PACT (Project Automation and Cloning Tool)'
 date = 2024-12-30
+keywords = ['C', 'CLI', 'Automation']
 thumbnail = '/images/pactthumbnail.png'
+description = 'lightweight command-line utility written in C. It simplifies the process of creating and managing project directories.'
 +++
 
 ## The Vision

@@ -19,7 +19,8 @@ unsafe = true
 
   school = "Mechatronics at Chalmers University of Technology"
 
-  interests = ["Systems Programming", "Embedded Systems", "Robotics", "Cybersecurity"]
+  interests = ["Embedded Systems", "Robotics",
+  "Cybersecurity", "CAD", "Simulations" ]
 
   info = [
   "Hej! I’m a curious engineering student, always striving to bridge the gap between software and hardware. Whether it’s programming systems, diving into embedded solutions, or experimenting with robotics, I thrive at the intersection of innovation and technology. Cybersecurity adds an exciting edge to my journey, keeping me on my toes.", 
@@ -72,17 +73,17 @@ unsafe = true
   url = "https://www.linkedin.com/in/eduards-abi%C5%A1evs-b5b584202"
 
 # Menu links
-# [[menu.main]]
-#   name = "Blog"
-#   weight = 1
-#   url  = "posts/"
+[[menu.main]]
+  name = "Blog"
+  weight = 1
+  url  = "posts/"
 [[menu.main]]
   name = "Projects"
-  weight = 1
+  weight = 2
   url = "projects/"
 [[menu.main]]
   name = "About"
-  weight = 2
+  weight = 3
   url = "about/"
 
 

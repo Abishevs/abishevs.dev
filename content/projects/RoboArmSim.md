@@ -1,7 +1,9 @@
 +++
 title = 'Robot Arm Simulator'
 date = 2024-12-16
+keywords = ["Python", "GUI", "Simulation"] 
 thumbnail = '/images/roboarmthumbnail.png'
+description = 'Desktop app (PySide6) with 3D view of a robotic arm, with controlls. Central server (Py WS) for controlling servos over Wifi.'
 +++
 
 ## The vison
