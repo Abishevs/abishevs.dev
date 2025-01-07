@@ -49,6 +49,11 @@ unsafe = true
   # customSCSS = ["scss/custom.scss"]
   # customJS = ["js/custom.js"]
 
+[params.umami]
+  siteID = "849c819c-42c4-449a-959d-964f87f5aad1"
+  scriptURL = "https://cloud.umami.is/script.js"
+
+
 [taxonomies]
   category = "categories"
   series = "series"
