@@ -1,7 +1,7 @@
 baseurl = "https://abishevs.dev/"
 title = "Eduards Abishevs"
 theme = "hugo-coder"
-languagecode = "en"
+locale = "en"
 # defaultcontentlanguage = "en"
 
 pagination.pagerSize = 20
