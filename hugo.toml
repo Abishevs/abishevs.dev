@@ -23,8 +23,8 @@ unsafe = true
   "Cybersecurity", "CAD", "Simulations" ]
 
   info = [
-  "Hej! I’m a curious engineering student, always striving to bridge the gap between software and hardware. Whether it’s programming systems, diving into embedded solutions, or experimenting with robotics, I thrive at the intersection of innovation and technology. Cybersecurity adds an exciting edge to my journey, keeping me on my toes.", 
-  "`Built myself, always in beta`", ]
+  "Hej! Mechatronics engineering student here- sharing ideas, projects, build logs and daily workflows. Mostly interested in embedded systems, low-level software and hardware tinkering basicly anything that connects software with the physical world.",
+  "`Builder of never ending, always growing projects :D`", ]
 
   description = "OASIS of Eduards Abishevs"
   keywords = "blog,developer,personal,engineer,robotics, mechatronics"
@@ -79,16 +79,20 @@ unsafe = true
 
 # Menu links
 [[menu.main]]
-  name = "Blog"
-  weight = 1
-  url  = "posts/"
-[[menu.main]]
   name = "Projects"
-  weight = 2
+  weight = 1
   url = "projects/"
 [[menu.main]]
-  name = "About"
+  name = "Project Journal"
+  weight = 2
+  url = "project-journal/"
+[[menu.main]]
+  name = "Blog"
   weight = 3
+  url  = "posts/"
+[[menu.main]]
+  name = "About"
+  weight = 4
   url = "about/"
 
 
