@@ -1,0 +1,37 @@
+{{/*
+  Shared Knowledge Node metadata block.
+  Context: dict
+    "page"      — the page object (required)
+    "domainKey" — frontmatter param name for domains (default: "projectType")
+    "showDates" — bool, render date/lastmod (default: true)
+*/}}
+{{- $page := .page }}
+{{- $domainKey := .domainKey | default "projectType" }}
+{{- $showDates := .showDates | default true }}
+{{- $statuses := hugo.Data.knowledge.statuses }}
+{{- $domainData := hugo.Data.knowledge.domains }}
+
+{{/* Resolve domains from the configured frontmatter key */}}
+{{- $domains := slice }}
+{{- $raw := index $page.Params $domainKey }}
+{{- with $raw }}
+  {{- if reflect.IsSlice . }}{{- $domains = . }}{{- else }}{{- $domains = slice . }}{{- end }}
+{{- end }}
+
+<div class="node-meta">
+  {{- with $page.Params.status }}
+    {{ partial "knowledge/badge-status.html" (dict "status" . "statuses" $statuses) }}
+  {{- end }}
+  {{- with $domains }}
+    {{ partial "knowledge/badge-domains.html" (dict "domains" . "domainData" $domainData) }}
+  {{- end }}
+  {{- if $showDates }}
+    <span class="node-meta__dates">
+      <time datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date | time.Format "2 Jan 2006" }}</time>
+      {{- if ne ($page.Lastmod.Format "2006-01-02") ($page.Date.Format "2006-01-02") }}
+        <span class="node-meta__sep">·</span>
+        <span class="node-meta__updated">Updated {{ $page.Lastmod | time.Format "2 Jan 2006" }}</span>
+      {{- end }}
+    </span>
+  {{- end }}
+</div>

@@ -102,3 +102,54 @@ Existing project fields in use:
 - `sourceCodeUrl`, `linkToSource`, `demoUrl`, `liveUrl`, `reportUrl`, `journalUrl`
 
 Do not rename or replace these.
+
+## Knowledge Node Architecture
+
+Shared data lives in `data/knowledge/`:
+- `statuses.toml` — status definitions used across all content types
+- `domains.toml` — engineering domain definitions used across all content types
+
+Shared partials live in `_partials/knowledge/`:
+- `node-meta.html` — renders status badge + domain badges + dates
+- `badge-status.html` — parameterized (dict "status" "statuses")
+- `badge-domains.html` — parameterized (dict "domains" "domainData")
+- `external-links.html` — renders labeled external links
+- `related.html` — resolves .Params.related paths via site.GetPage, groups by section
+- `node-nav.html` — exploration footer (section link + tags + prev/next)
+
+Old `_partials/badge-status.html` and `_partials/badge-domains.html` are thin
+wrappers that delegate to the knowledge/ versions. Do not modify them — they
+exist for backward compatibility with `project-card.html`.
+
+### Adding a New Content Type
+
+1. Create archetype in `themes/maker-log/archetypes/<section>.md`
+2. Create `content/<section>/_index.md`
+3. Use `node-meta.html`, `related.html`, `node-nav.html` in layouts
+4. Add section-specific metadata rendering only for type-unique fields
+5. Add menu entry to `hugo.toml`
+6. Existing shared SCSS classes (`.node-meta`, `.node-related`, `.node-nav`,
+   `.node-links`, `.badge--status`, `.badge--domain`, `.badge--tech`) require no changes
+
+### Relationships
+
+Generic relationships use a flat `related` list in frontmatter:
+```toml
+related = ["/projects/modest", "/work-experience/example-corp"]
+```
+Paths are resolved via `site.GetPage`. Grouped by `.Section` automatically.
+Only populated groups render. Empty `related` produces no output.
+
+### Template Syntax Constraint
+
+Hugo does NOT support `else with` inside `if` blocks.
+Use `else if .Params.field` and access the param explicitly:
+```
+{{- if .Params.current }} – Present
+{{- else if .Params.endDate }} – {{ .Params.endDate | time.Format "Jan 2006" }}
+{{- end }}
+```
+
+## Hugo Version
+
+Updated to Hugo v0.163.3+extended (detected during build verification).

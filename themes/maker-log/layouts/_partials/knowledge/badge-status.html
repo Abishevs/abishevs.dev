@@ -1,0 +1,16 @@
+{{/*
+  Renders a status badge.
+  Context: dict "status" (string) "statuses" (map of status definitions)
+*/}}
+{{- $status := .status }}
+{{- $statuses := .statuses }}
+{{- with $status }}
+  {{- $def := index $statuses (lower .) }}
+  {{- $color := "" }}
+  {{- $label := . | upper }}
+  {{- with $def }}
+    {{- $color = .color }}
+    {{- $label = .label | upper }}
+  {{- end }}
+  <span class="badge badge--status" style="--badge-color:{{ $color }}">{{ $label }}</span>
+{{- end }}

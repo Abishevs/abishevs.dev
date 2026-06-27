@@ -1,7 +1,7 @@
 {{ define "main" }}
   {{- $projects   := .Pages }}
-  {{- $statusData := hugo.Data.projects.statuses }}
-  {{- $domainData := hugo.Data.projects.domains }}
+  {{- $statusData := hugo.Data.knowledge.statuses }}
+  {{- $domainData := hugo.Data.knowledge.domains }}
 
   {{/* Count projects per status */}}
   {{- $statusCounts := dict }}

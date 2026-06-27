@@ -91,8 +91,12 @@ unsafe = true
   weight = 3
   url  = "posts/"
 [[menu.main]]
-  name = "About"
+  name = "Work"
   weight = 4
+  url = "work-experience/"
+[[menu.main]]
+  name = "About"
+  weight = 5
   url = "about/"
 
 

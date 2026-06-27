@@ -602,3 +602,224 @@ h2.proj-section__title {
   white-space: nowrap;
   flex-shrink: 0;
 }
+
+// ─── Knowledge Node Components ───────────────────────────────
+
+// Shared metadata block
+.node-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+  font-family: $font-mono;
+  font-size: 0.75rem;
+}
+
+.node-meta__dates {
+  color: $color-muted;
+}
+
+.node-meta__sep {
+  margin: 0 0.25em;
+  opacity: 0.5;
+}
+
+.node-meta__updated {
+  color: $color-muted;
+}
+
+// External links
+.node-links {
+  font-family: $font-heading;
+  font-size: 0.8rem;
+  color: $color-muted;
+  margin-top: 0.5rem;
+
+  a { color: $color-muted; }
+  a:hover { color: $color-blue; }
+}
+
+// Related knowledge
+.node-related {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid $color-border;
+}
+
+.node-related__title {
+  font-family: $font-mono;
+  font-size: 0.75rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $color-muted;
+  margin: 0 0 1rem;
+}
+
+.node-related__section {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $color-muted;
+  margin: 0.75rem 0 0.4rem;
+}
+
+.node-related__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    padding: 0.3rem 0;
+    font-size: 0.875rem;
+    font-family: $font-heading;
+  }
+
+  a { color: $color-text; }
+  a:hover { color: $color-blue; }
+}
+
+.node-related__desc {
+  color: $color-muted;
+  font-size: 0.8rem;
+  margin-left: 0.5em;
+}
+
+// Exploration navigation footer
+.node-nav {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid $color-border;
+  font-family: $font-heading;
+  font-size: 0.8rem;
+}
+
+.node-nav__section {
+  margin-bottom: 0.75rem;
+
+  a { color: $color-muted; }
+  a:hover { color: $color-blue; }
+}
+
+.node-nav__tags {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.node-nav__tag {
+  font-family: $font-mono;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.2em 0.5em;
+  border: 1px solid $color-border;
+  color: $color-muted;
+
+  &:hover { border-color: $color-text; color: $color-text; text-decoration: none; }
+}
+
+.node-nav__adjacent {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.75rem;
+  color: $color-muted;
+
+  a { color: $color-muted; }
+  a:hover { color: $color-blue; }
+}
+
+.node-nav__next { margin-left: auto; }
+
+// ─── Work Experience ─────────────────────────────────────────
+
+// Technology badge (reusable across content types)
+.badge--tech {
+  color: $color-muted;
+  border: 1px solid $color-border;
+  background: transparent;
+  font-size: 0.6rem;
+}
+
+// Work experience list page
+.work-list {
+  margin-top: 1.5rem;
+}
+
+.work-entry {
+  padding: 1rem 0;
+  border-bottom: 1px solid $color-border;
+
+  &:last-child { border-bottom: none; }
+}
+
+.work-entry__header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.work-entry__title {
+  font-family: $font-heading;
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0;
+
+  a { color: $color-text; }
+  a:hover { color: $color-blue; }
+}
+
+.work-entry__org {
+  font-family: $font-mono;
+  font-size: 0.75rem;
+  color: $color-blue;
+}
+
+.work-entry__meta {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  color: $color-muted;
+  margin-top: 0.25rem;
+}
+
+.work-entry__tech {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+  margin-top: 0.4rem;
+}
+
+.work-entry__desc {
+  font-size: 0.85rem;
+  color: $color-muted;
+  margin: 0.4rem 0 0;
+}
+
+// Work experience single page metadata
+.work-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+  font-family: $font-mono;
+  font-size: 0.75rem;
+  color: $color-muted;
+}
+
+.work-meta__org {
+  color: $color-blue;
+}
+
+.work-meta__tech {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}

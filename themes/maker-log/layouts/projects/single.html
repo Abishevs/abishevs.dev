@@ -2,20 +2,19 @@
   <article>
     <header class="article-header">
       <h1 class="article-title">{{ .Title }}</h1>
-      <div class="project-meta">
-        {{ partial "badge-status.html" . }}
-        {{ partial "badge-domains.html" . }}
-      </div>
-      <div class="article-meta">
-        {{- with .Params.sourceCodeUrl }}<a href="{{ . }}">Source</a>{{ end }}
-        {{- with .Params.demoUrl }} · <a href="{{ . }}">Demo</a>{{ end }}
-        {{- with .Params.liveUrl }} · <a href="{{ . }}">Live</a>{{ end }}
-        {{- with .Params.journalUrl }} · <a href="{{ . }}">Journal</a>{{ end }}
-        {{- with .Params.reportUrl }} · <a href="{{ . }}">Report</a>{{ end }}
-      </div>
+      {{ partial "knowledge/node-meta.html" (dict "page" .) }}
+      {{ partial "knowledge/external-links.html" (dict "links" (slice
+        (dict "label" "Source" "url" .Params.sourceCodeUrl)
+        (dict "label" "Demo" "url" .Params.demoUrl)
+        (dict "label" "Live" "url" .Params.liveUrl)
+        (dict "label" "Journal" "url" .Params.journalUrl)
+        (dict "label" "Report" "url" .Params.reportUrl)
+      )) }}
     </header>
     <div class="article-body">
       {{ .Content }}
     </div>
+    {{ partial "knowledge/related.html" (dict "page" .) }}
+    {{ partial "knowledge/node-nav.html" (dict "page" .) }}
   </article>
 {{ end }}

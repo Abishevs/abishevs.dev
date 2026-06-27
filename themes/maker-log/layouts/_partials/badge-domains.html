@@ -1,14 +1,8 @@
-{{/* Renders domain badges. Pass the page context. */}}
+{{/* Backward-compat wrapper. Delegates to knowledge/badge-domains.html. */}}
 {{- $domains := slice }}
 {{- with .Params.projectType }}
   {{- if reflect.IsSlice . }}{{- $domains = . }}{{- else }}{{- $domains = slice . }}{{- end }}
 {{- end }}
-{{- if $domains }}
-  <span class="badge-group badge-group--domains">
-    {{- range $domains }}
-      {{- $def := index hugo.Data.projects.domains (lower .) }}
-      {{- $lbl := cond (ne $def nil) (index $def "label") (upper .) }}
-      <span class="badge badge--domain">{{ $lbl }}</span>
-    {{- end }}
-  </span>
+{{- with $domains }}
+  {{ partial "knowledge/badge-domains.html" (dict "domains" . "domainData" hugo.Data.knowledge.domains) }}
 {{- end }}

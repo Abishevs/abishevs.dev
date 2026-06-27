@@ -2,9 +2,12 @@
   <article>
     <header class="article-header">
       <h1 class="article-title">{{ .Title }}</h1>
+      {{ partial "knowledge/node-meta.html" (dict "page" . "showDates" true) }}
     </header>
     <div class="article-body journal-body">
       {{ .Content }}
     </div>
+    {{ partial "knowledge/related.html" (dict "page" .) }}
+    {{ partial "knowledge/node-nav.html" (dict "page" .) }}
   </article>
 {{ end }}

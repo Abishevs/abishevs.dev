@@ -1,0 +1,15 @@
+{{/*
+  Renders domain badges.
+  Context: dict "domains" (slice of strings) "domainData" (map of domain definitions)
+*/}}
+{{- $domains := .domains }}
+{{- $domainData := .domainData }}
+{{- with $domains }}
+  <span class="badge-group badge-group--domains">
+    {{- range . }}
+      {{- $def := index $domainData (lower .) }}
+      {{- $lbl := cond (ne $def nil) (index $def "label") (upper .) }}
+      <span class="badge badge--domain">{{ $lbl }}</span>
+    {{- end }}
+  </span>
+{{- end }}

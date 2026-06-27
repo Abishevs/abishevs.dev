@@ -1,5 +1,6 @@
 # Engineering domains, keyed by identifier.
-# order: controls display order on the index.
+# Shared across all content types.
+# order: controls display order.
 
 [embedded]
 label       = "Embedded"

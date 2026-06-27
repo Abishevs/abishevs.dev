@@ -1,6 +1,7 @@
-# Project lifecycle statuses, keyed by identifier.
-# order: controls display order on the index (lower = first).
-# color: any CSS color value — used for badge and chip styling.
+# Knowledge Node lifecycle statuses, keyed by identifier.
+# Shared across all content types (projects, workflows, books, etc.)
+# order: controls display order (lower = first).
+# color: CSS color value for badge and chip styling.
 
 [research]
 label       = "Research"

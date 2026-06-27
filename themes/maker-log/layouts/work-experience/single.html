@@ -1,0 +1,32 @@
+{{ define "main" }}
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">{{ .Params.position }}</h1>
+      <div class="work-meta">
+        <span class="work-meta__org">{{ .Params.organization }}</span>
+        <span class="work-meta__duration">
+          {{- .Params.startDate | time.Format "Jan 2006" }}
+          {{- if .Params.current }} – Present
+          {{- else if .Params.endDate }} – {{ .Params.endDate | time.Format "Jan 2006" }}
+          {{- end }}
+        </span>
+        {{- with .Params.location }}<span class="work-meta__location">{{ . }}</span>{{ end }}
+        {{- with .Params.employmentType }}<span class="work-meta__type">{{ . }}</span>{{ end }}
+      </div>
+      {{- with .Params.technologies }}
+        <div class="work-meta__tech">
+          {{- range . }}<span class="badge badge--tech">{{ . }}</span>{{ end }}
+        </div>
+      {{- end }}
+      {{ partial "knowledge/node-meta.html" (dict "page" . "showDates" false) }}
+      {{ partial "knowledge/external-links.html" (dict "links" (slice
+        (dict "label" "Organization" "url" .Params.externalLink)
+      )) }}
+    </header>
+    <div class="article-body">
+      {{ .Content }}
+    </div>
+    {{ partial "knowledge/related.html" (dict "page" .) }}
+    {{ partial "knowledge/node-nav.html" (dict "page" .) }}
+  </article>
+{{ end }}

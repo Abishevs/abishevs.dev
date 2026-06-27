@@ -1,0 +1,37 @@
+{{/*
+  Exploration-focused navigation footer.
+  Shows section index link and tags/categories as exploration paths.
+  Prev/next are secondary (small, unobtrusive).
+  Context: dict "page" (the page object)
+*/}}
+{{- $page := .page }}
+<nav class="node-nav" aria-label="Explore further">
+  {{/* Section link — always available */}}
+  {{- $section := $page.CurrentSection }}
+  {{- with $section }}
+    {{- if ne .RelPermalink "/" }}
+      <div class="node-nav__section">
+        <a href="{{ .RelPermalink }}">← All {{ .Title }}</a>
+      </div>
+    {{- end }}
+  {{- end }}
+
+  {{/* Tags as exploration paths */}}
+  {{- with $page.GetTerms "tags" }}
+    <div class="node-nav__tags">
+      {{- range . }}
+        <a class="node-nav__tag" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+      {{- end }}
+    </div>
+  {{- end }}
+
+  {{/* Prev/next — secondary, unobtrusive */}}
+  {{- $prev := $page.PrevInSection }}
+  {{- $next := $page.NextInSection }}
+  {{- if or $prev $next }}
+    <div class="node-nav__adjacent">
+      {{- with $prev }}<a class="node-nav__prev" href="{{ .RelPermalink }}">‹ {{ .Title }}</a>{{ end }}
+      {{- with $next }}<a class="node-nav__next" href="{{ .RelPermalink }}">{{ .Title }} ›</a>{{ end }}
+    </div>
+  {{- end }}
+</nav>

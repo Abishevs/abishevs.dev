@@ -1,0 +1,17 @@
+{{/*
+  Renders external links for a Knowledge Node.
+  Context: dict "links" (slice of dicts with "label" and "url")
+  Example: (dict "links" (slice (dict "label" "Source" "url" "...") (dict "label" "Demo" "url" "...")))
+*/}}
+{{- $links := .links }}
+{{- $filtered := slice }}
+{{- range $links }}
+  {{- if .url }}{{- $filtered = $filtered | append . }}{{- end }}
+{{- end }}
+{{- with $filtered }}
+  <nav class="node-links" aria-label="External links">
+    {{- range $i, $link := . }}
+      {{- if $i }} · {{ end }}<a href="{{ $link.url }}" target="_blank" rel="noopener noreferrer">{{ $link.label }}</a>
+    {{- end }}
+  </nav>
+{{- end }}

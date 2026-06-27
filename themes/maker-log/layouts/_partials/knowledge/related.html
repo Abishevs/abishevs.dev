@@ -1,0 +1,38 @@
+{{/*
+  Generic relationship resolver.
+  Reads .Params.related (flat slice of page paths) from the page,
+  resolves each via site.GetPage, groups by Section, and renders.
+  Context: dict "page" (the page object)
+*/}}
+{{- $page := .page }}
+{{- $related := $page.Params.related }}
+{{- with $related }}
+  {{/* Resolve paths to pages and group by section */}}
+  {{- $groups := dict }}
+  {{- range . }}
+    {{- $target := site.GetPage . }}
+    {{- with $target }}
+      {{- $section := .Section }}
+      {{- $existing := index $groups $section | default slice }}
+      {{- $groups = merge $groups (dict $section ($existing | append .)) }}
+    {{- end }}
+  {{- end }}
+
+  {{- with $groups }}
+    <aside class="node-related" aria-label="Related knowledge">
+      <h2 class="node-related__title">Continue Exploring</h2>
+      {{- range $section, $pages := . }}
+        <div class="node-related__group">
+          <h3 class="node-related__section">{{ $section | humanize | title }}</h3>
+          <ul class="node-related__list">
+            {{- range $pages }}
+              <li><a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                {{- with .Description }}<span class="node-related__desc">— {{ . }}</span>{{ end }}
+              </li>
+            {{- end }}
+          </ul>
+        </div>
+      {{- end }}
+    </aside>
+  {{- end }}
+{{- end }}
