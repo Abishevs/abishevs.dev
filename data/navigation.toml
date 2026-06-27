@@ -10,13 +10,28 @@ name = "Projects"
 url  = "projects/"
 desc = "Systems I've built and continue to evolve."
 
+[[explore.items]]
+name = "Workflows"
+url  = "workflows/"
+desc = "Engineering environments, tooling and how I work."
+
 [journey]
 description = "How this engineering journey evolved over time."
+
+[[journey.items]]
+name = "Timeline"
+url  = "timeline/"
+desc = "Chronological view across projects, work and education."
 
 [[journey.items]]
 name = "Work Experience"
 url  = "work-experience/"
 desc = "Professional engineering — challenges, technologies and lessons."
+
+[[journey.items]]
+name = "Education"
+url  = "education/"
+desc = "Engineering environments where knowledge originated."
 
 [writing]
 description = "Long-form writing about engineering and learning."

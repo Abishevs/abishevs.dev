@@ -27,6 +27,7 @@
       {{ .Content }}
     </div>
     {{ partial "knowledge/related.html" (dict "page" .) }}
+    {{ partial "knowledge/backlinks.html" (dict "page" .) }}
     {{ partial "knowledge/node-nav.html" (dict "page" .) }}
   </article>
 {{ end }}

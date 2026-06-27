@@ -1,10 +1,24 @@
 {{ define "main" }}
-  <h1>{{ .Title }}</h1>
-
-  {{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
-  {{ $dateHuman := .Date | time.Format ":date_long" }}
-  <time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
-
-  {{ .Content }}
-  {{ partial "terms.html" (dict "taxonomy" "tags" "page" .) }}
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">{{ .Title }}</h1>
+      {{- with .Description }}<p class="article-desc">{{ . }}</p>{{ end }}
+    </header>
+    {{- if .Params.toc }}
+      <nav class="article-toc" aria-label="Table of contents">
+        {{ .TableOfContents }}
+      </nav>
+    {{- end }}
+    <div class="article-body">
+      {{ .Content }}
+    </div>
+    {{- $social := site.Params.social }}
+    {{- with $social }}
+      <nav class="about-links">
+        {{- range . }}
+          <a href="{{ .url }}" target="_blank" rel="noopener noreferrer">{{ .name }}</a>
+        {{- end }}
+      </nav>
+    {{- end }}
+  </article>
 {{ end }}

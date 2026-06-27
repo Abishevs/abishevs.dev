@@ -61,3 +61,18 @@ order       = 11
 label       = "Automation"
 description = "Scripts and systems that automate repetitive tasks."
 order       = 12
+
+[desktop]
+label       = "Desktop"
+description = "Operating systems, window managers and desktop environments."
+order       = 13
+
+[development]
+label       = "Development"
+description = "Development environments, editors and programming workflows."
+order       = 14
+
+[writing]
+label       = "Writing"
+description = "Writing systems, documentation and note-taking workflows."
+order       = 15

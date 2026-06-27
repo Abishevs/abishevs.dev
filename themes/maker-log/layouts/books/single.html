@@ -2,13 +2,16 @@
   <article>
     <header class="article-header">
       <h1 class="article-title">{{ .Title }}</h1>
-      {{ partial "knowledge/node-meta.html" (dict "page" . "showDates" true) }}
+      <div class="work-meta">
+        {{- with .Params.author }}<span class="work-meta__org">{{ . }}</span>{{ end }}
+        {{- with .Params.year }}<span>{{ . }}</span>{{ end }}
+      </div>
+      {{ partial "knowledge/node-meta.html" (dict "page" . "showDates" false) }}
     </header>
-    <div class="article-body journal-body">
+    <div class="article-body">
       {{ .Content }}
     </div>
     {{ partial "knowledge/related.html" (dict "page" .) }}
-    {{ partial "knowledge/backlinks.html" (dict "page" .) }}
     {{ partial "knowledge/node-nav.html" (dict "page" .) }}
   </article>
 {{ end }}

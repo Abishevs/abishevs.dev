@@ -1,0 +1,103 @@
+{{ define "main" }}
+  {{- $workflows := .Pages }}
+  {{- $statusData := hugo.Data.knowledge.statuses }}
+  {{- $domainData := hugo.Data.knowledge.domains }}
+
+  {{/* Count per status */}}
+  {{- $statusCounts := dict }}
+  {{- range $workflows }}
+    {{- $s := lower .Params.status }}
+    {{- if $s }}
+      {{- $statusCounts = merge $statusCounts (dict $s (add (index $statusCounts $s | default 0) 1)) }}
+    {{- end }}
+  {{- end }}
+
+  {{/* Count per domain */}}
+  {{- $domainCounts := dict }}
+  {{- range $workflows }}
+    {{- $ds := .Params.domains | default slice }}
+    {{- range $ds }}
+      {{- $d := lower . }}
+      {{- $domainCounts = merge $domainCounts (dict $d (add (index $domainCounts $d | default 0) 1)) }}
+    {{- end }}
+  {{- end }}
+
+  {{/* Ordered statuses (only those with workflows) */}}
+  {{- $orderedStatuses := slice }}
+  {{- range $id, $def := $statusData }}
+    {{- if index $statusCounts $id }}
+      {{- $orderedStatuses = $orderedStatuses | append (merge $def (dict "id" $id "count" (index $statusCounts $id))) }}
+    {{- end }}
+  {{- end }}
+  {{- $orderedStatuses = sort $orderedStatuses "order" }}
+
+  {{/* Ordered domains (only those with workflows) */}}
+  {{- $orderedDomains := slice }}
+  {{- range $id, $def := $domainData }}
+    {{- if index $domainCounts $id }}
+      {{- $orderedDomains = $orderedDomains | append (merge $def (dict "id" $id "count" (index $domainCounts $id))) }}
+    {{- end }}
+  {{- end }}
+  {{- $orderedDomains = sort $orderedDomains "order" }}
+
+  <header class="page-header">
+    <h1 class="page-header__title">{{ .Title }}</h1>
+    {{- with .Description }}<p class="page-header__desc">{{ . }}</p>{{ end }}
+  </header>
+
+  {{/* Filters */}}
+  {{- if or $orderedStatuses $orderedDomains }}
+    <div class="proj-filters" id="proj-filters">
+      {{- with $orderedStatuses }}
+        <div class="proj-filters__row">
+          <span class="proj-filters__label">Status</span>
+          <div class="proj-filters__chips" role="group" aria-label="Filter by status">
+            {{- range . }}
+              <button class="filter-chip" style="--chip-color:{{ .color }}" data-filter="status" data-value="{{ .id }}" type="button">{{ .label }}<span class="filter-chip__count">{{ .count }}</span></button>
+            {{- end }}
+          </div>
+        </div>
+      {{- end }}
+      {{- with $orderedDomains }}
+        <div class="proj-filters__row">
+          <span class="proj-filters__label">Domain</span>
+          <div class="proj-filters__chips" role="group" aria-label="Filter by domain">
+            {{- range . }}
+              <button class="filter-chip" data-filter="domain" data-value="{{ .id }}" type="button">{{ .label }}<span class="filter-chip__count">{{ .count }}</span></button>
+            {{- end }}
+          </div>
+        </div>
+      {{- end }}
+      <button class="filter-reset" id="filter-reset" type="button" hidden>Clear filters</button>
+    </div>
+  {{- end }}
+
+  {{/* Workflow list */}}
+  <div class="work-list" id="proj-grid">
+    {{- range $workflows }}
+      {{- $domains := .Params.domains | default slice }}
+      {{- $domainStr := delimit $domains " " | lower }}
+      <article class="proj-card work-entry" data-status="{{ lower .Params.status }}" data-domains="{{ $domainStr }}">
+        <div class="work-entry__header">
+          <h2 class="work-entry__title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+          {{ partial "badge-status.html" . }}
+        </div>
+        <div class="work-entry__meta">
+          {{- .Params.startDate | time.Format "Jan 2006" }}
+          {{- if .Params.current }} – Present
+          {{- else if .Params.endDate }} – {{ .Params.endDate | time.Format "Jan 2006" }}
+          {{- end }}
+        </div>
+        {{- with .Params.tools }}
+          <div class="work-entry__tech">
+            {{- range . }}<span class="badge badge--tech">{{ . }}</span>{{ end }}
+          </div>
+        {{- end }}
+        {{- with .Description }}
+          <p class="work-entry__desc">{{ . }}</p>
+        {{- end }}
+      </article>
+    {{- end }}
+  </div>
+  <p class="proj-empty" id="proj-empty" hidden>No workflows match the selected filters.</p>
+{{ end }}

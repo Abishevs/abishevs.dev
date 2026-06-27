@@ -2,9 +2,14 @@
   <article>
     <header class="article-header">
       <h1 class="article-title">{{ .Title }}</h1>
-      {{ partial "knowledge/node-meta.html" (dict "page" . "showDates" true) }}
+      {{ partial "knowledge/node-meta.html" (dict "page" . "domainKey" "domains") }}
+      {{- with .Params.tools }}
+        <div class="work-meta__tech">
+          {{- range . }}<span class="badge badge--tech">{{ . }}</span>{{ end }}
+        </div>
+      {{- end }}
     </header>
-    <div class="article-body journal-body">
+    <div class="article-body workflow-body">
       {{ .Content }}
     </div>
     {{ partial "knowledge/related.html" (dict "page" .) }}
