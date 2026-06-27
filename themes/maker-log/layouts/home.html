@@ -2,24 +2,24 @@
   {{- $projects := where site.RegularPages "Section" "projects" }}
   {{- $investigations := where $projects ".Params.status" "in" (slice "research" "planning") }}
 
-  {{/* Active projects: up to 3 active/prototype/testing, pad with most recent if under 3 */}}
-  {{- $activeProjects := where $projects ".Params.status" "in" (slice "active" "prototype" "testing") }}
-  {{- $displayProjects := $activeProjects }}
-  {{- if lt (len $activeProjects) 3 }}
-    {{- $needed := sub 3 (len $activeProjects) }}
-    {{- $activeURLs := slice }}
-    {{- range $activeProjects }}{{- $activeURLs = $activeURLs | append .RelPermalink }}{{- end }}
-    {{- $rest := slice }}
-    {{- range $projects }}
-      {{- if not (in $activeURLs .RelPermalink) }}
-        {{- $rest = $rest | append . }}
-      {{- end }}
-    {{- end }}
-    {{- $displayProjects = $activeProjects | append ($rest | first $needed) }}
+  {{/* Pinned projects — manually curated in hugo.toml */}}
+  {{- $pinned := slice }}
+  {{- range site.Params.pinnedProjects }}
+    {{- $p := site.GetPage . }}
+    {{- with $p }}{{- $pinned = $pinned | append . }}{{- end }}
   {{- end }}
-  {{- $displayProjects = $displayProjects | first 3 }}
 
-  {{/* Collect all journal entries across all pages, take last 3 (newest pages last) */}}
+  {{/* Exclude pinned from investigations to avoid duplicates */}}
+  {{- $pinnedURLs := slice }}
+  {{- range $pinned }}{{- $pinnedURLs = $pinnedURLs | append .RelPermalink }}{{- end }}
+  {{- $filteredInvestigations := slice }}
+  {{- range $investigations }}
+    {{- if not (in $pinnedURLs .RelPermalink) }}
+      {{- $filteredInvestigations = $filteredInvestigations | append . }}
+    {{- end }}
+  {{- end }}
+
+  {{/* Collect all journal entries across all pages, take last 3 */}}
   {{- $allEntries := slice }}
   {{- range (where site.RegularPages "Section" "project-journal") | collections.Reverse }}
     {{- $page := . }}
@@ -48,7 +48,7 @@
     </div>
   </section>
 
-  {{- with $investigations }}
+  {{- with $filteredInvestigations }}
     <section class="home-section">
       <h2 class="home-section__title">Current Investigations</h2>
       <div class="proj-card-grid">
@@ -57,12 +57,13 @@
     </section>
   {{- end }}
 
-  {{- with $displayProjects }}
+  {{- with $pinned }}
     <section class="home-section">
-      <h2 class="home-section__title">Active Projects</h2>
+      <h2 class="home-section__title">Pinned Projects</h2>
       <div class="proj-card-grid">
         {{- range . }}{{ partial "project-card.html" . }}{{ end }}
       </div>
+      <a class="home-section__more" href="/projects/">All projects →</a>
     </section>
   {{- end }}
 

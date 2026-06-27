@@ -49,6 +49,9 @@ unsafe = true
   # customSCSS = ["scss/custom.scss"]
   # customJS = ["js/custom.js"]
 
+  # Pinned projects shown on homepage (paths relative to content/)
+  pinnedProjects = ["/projects/modest"]
+
 [params.umami]
   siteID = "849c819c-42c4-449a-959d-964f87f5aad1"
   scriptURL = "https://cloud.umami.is/script.js"
