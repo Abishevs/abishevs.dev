@@ -1,3 +1,15 @@
 <div class="site-footer__inner">
-  <span>© {{ now.Year }} {{ site.Params.author }}</span>
+  {{- $projectCount := len (where site.RegularPages "Section" "projects") }}
+  {{- $journalCount := len (where site.RegularPages "Section" "project-journal") }}
+  {{- $postCount := len (where site.RegularPages "Section" "posts") }}
+  {{- $oldest := (where site.RegularPages "Section" "projects").ByDate | first 1 }}
+  <div class="site-footer__stats">
+    <a href="/projects/">{{ $projectCount }} projects</a>
+    <a href="/project-journal/">{{ $journalCount }} journals</a>
+    <a href="/posts/">{{ $postCount }} posts</a>
+    {{- with $oldest }}
+      <span>building since {{ (index . 0).Date.Year }}</span>
+    {{- end }}
+  </div>
+  <div class="site-footer__copy">© {{ site.Params.since }}–{{ now.Year }} {{ site.Params.author }}</div>
 </div>

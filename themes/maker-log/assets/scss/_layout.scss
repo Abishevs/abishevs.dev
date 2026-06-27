@@ -31,11 +31,27 @@
 .site-footer {
   border-top: 1px solid $color-border;
   padding: 1rem $site-padding;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
+  font-family: $font-mono;
   color: $color-muted;
 }
 
 .site-footer__inner {
   max-width: $content-width;
   margin: 0 auto;
+  text-align: center;
+
+  a { color: $color-muted; &:hover { color: $color-blue; text-decoration: none; } }
+}
+
+.site-footer__stats {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 0.4rem;
+}
+
+.site-footer__copy {
+  opacity: 0.5;
 }

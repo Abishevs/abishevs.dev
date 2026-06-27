@@ -603,42 +603,14 @@ h2.proj-section__title {
 }
 
 // Homepage
-.home-intro {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 1.5rem 0 2rem;
-  border-bottom: 1px solid $color-border;
-  margin-bottom: 2rem;
-}
-
-.home-intro__avatar {
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
-  border: 2px solid $color-border;
-}
-
-.home-intro__name {
-  font-size: 1.25rem;
-  font-family: $font-heading;
-  margin: 0 0 0.25rem;
-}
-
-.home-intro__school {
-  font-size: 0.8rem;
-  color: $color-blue;
-  font-family: $font-mono;
-  margin: 0 0 0.5rem;
-}
-
-.home-intro__bio {
-  font-size: 0.875rem;
+.home-opening {
+  font-family: $font-body;
+  font-size: 0.95rem;
   color: $color-muted;
-  margin: 0;
   line-height: 1.5;
+  margin: 0 0 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid $color-border;
 }
 
 .home-section {
@@ -646,12 +618,12 @@ h2.proj-section__title {
   padding-bottom: 2rem;
   border-bottom: 1px solid $color-border;
 
-  &:last-child { border-bottom: none; }
+  &:last-child { border-bottom: none; padding-bottom: 0; }
 }
 
 .home-section__title {
   font-family: $font-mono;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -668,6 +640,70 @@ h2.proj-section__title {
   color: $color-muted;
 
   &:hover { color: $color-blue; }
+}
+
+.home-now {
+  font-family: $font-body;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: $color-text;
+
+  p { margin: 0; }
+}
+
+// Activity feed
+.home-activity {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.home-activity__item {
+  display: grid;
+  grid-template-columns: 4rem 1fr auto;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid $color-border;
+
+  &:last-child { border-bottom: none; }
+}
+
+.home-activity__date {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  color: $color-muted;
+}
+
+.home-activity__type {
+  font-family: $font-mono;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $color-muted;
+  opacity: 0.7;
+}
+
+.home-activity__link {
+  font-family: $font-heading;
+  font-size: 0.85rem;
+  color: $color-text;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover { color: $color-blue; text-decoration: none; }
+}
+
+// Knowledge Base footer
+.home-kb {
+  display: flex;
+  gap: 1.25rem;
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  color: $color-muted;
+  padding-top: 1rem;
+  opacity: 0.7;
 }
 
 // Project card grid (homepage)
@@ -728,56 +764,6 @@ h2.proj-section__title {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-// Journal / post entry list
-.home-entry-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.home-entry {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: baseline;
-  gap: 0.5rem;
-  padding: 0.4rem 0;
-  border-bottom: 1px solid $color-border;
-  overflow: hidden;
-
-  &:last-child { border-bottom: none; }
-}
-
-.home-entry__project {
-  font-family: $font-mono;
-  font-size: 0.7rem;
-  color: $color-blue;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.home-entry__title {
-  font-family: $font-heading;
-  font-size: 0.875rem;
-  color: $color-text;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-width: 0;
-
-  &:hover { color: $color-blue; text-decoration: none; }
-}
-
-.home-entry__date {
-  font-family: $font-mono;
-  font-size: 0.7rem;
-  color: $color-muted;
-  white-space: nowrap;
-  flex-shrink: 0;
 }
 
 // ─── Knowledge Node Components ───────────────────────────────

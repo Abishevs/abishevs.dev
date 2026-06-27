@@ -1,65 +1,26 @@
 {{ define "main" }}
-  {{- $projects := where site.RegularPages "Section" "projects" }}
-  {{- $investigations := where $projects ".Params.status" "in" (slice "research" "planning") }}
+  {{/* ─── Opening ─── */}}
+  {{- with .Description }}
+    <p class="home-opening">{{ . }}</p>
+  {{- end }}
 
-  {{/* Pinned projects — manually curated in hugo.toml */}}
+  {{/* ─── Now ─── */}}
+  {{- with .Content }}
+    <section class="home-section">
+      <h2 class="home-section__title">Now</h2>
+      <div class="home-now">{{ . }}</div>
+    </section>
+  {{- end }}
+
+  {{/* ─── Featured Work ─── */}}
   {{- $pinned := slice }}
   {{- range site.Params.pinnedProjects }}
     {{- $p := site.GetPage . }}
     {{- with $p }}{{- $pinned = $pinned | append . }}{{- end }}
   {{- end }}
-
-  {{/* Exclude pinned from investigations to avoid duplicates */}}
-  {{- $pinnedURLs := slice }}
-  {{- range $pinned }}{{- $pinnedURLs = $pinnedURLs | append .RelPermalink }}{{- end }}
-  {{- $filteredInvestigations := slice }}
-  {{- range $investigations }}
-    {{- if not (in $pinnedURLs .RelPermalink) }}
-      {{- $filteredInvestigations = $filteredInvestigations | append . }}
-    {{- end }}
-  {{- end }}
-
-  {{/* Collect all journal entries across all pages, take last 3 */}}
-  {{- $allEntries := slice }}
-  {{- range (where site.RegularPages "Section" "project-journal") | collections.Reverse }}
-    {{- $page := . }}
-    {{- $h2s := findRE `<h2 id="([^"]+)">.*?<span class="timestamp">\[([^\]]+)\]</span></span>\s*([^<]+)` $page.Content }}
-    {{- range $h2s }}
-      {{- $h2 := . }}
-      {{- $id := index (findRE `id="([^"]+)"` $h2) 0 | replaceRE `id="|"` "" }}
-      {{- $ts := index (findRE `\[([^\]]+)\]` $h2) 0 | replaceRE `\[|\]` "" }}
-      {{- $label := $h2 | replaceRE `<[^>]+>` "" | replaceRE `^\s*\[[^\]]+\]\s*` "" | strings.TrimSpace }}
-      {{- $allEntries = $allEntries | append (dict "page" $page "id" $id "ts" $ts "label" $label) }}
-    {{- end }}
-  {{- end }}
-  {{- $latestEntries := last 3 $allEntries }}
-
-  {{- $posts := where site.RegularPages "Section" "posts" | first 5 }}
-
-  {{/* Intro */}}
-  <section class="home-intro">
-    {{- with site.Params.avatarurl }}
-      <img class="home-intro__avatar" src="/{{ . }}" alt="{{ site.Params.author }}">
-    {{- end }}
-    <div class="home-intro__text">
-      <h1 class="home-intro__name">{{ site.Params.author }}</h1>
-      {{- with site.Params.school }}<p class="home-intro__school">{{ . }}</p>{{ end }}
-      {{- with index site.Params.info 0 }}<p class="home-intro__bio">{{ . }}</p>{{ end }}
-    </div>
-  </section>
-
-  {{- with $filteredInvestigations }}
-    <section class="home-section">
-      <h2 class="home-section__title">Current Investigations</h2>
-      <div class="proj-card-grid">
-        {{- range . }}{{ partial "project-card.html" . }}{{ end }}
-      </div>
-    </section>
-  {{- end }}
-
   {{- with $pinned }}
     <section class="home-section">
-      <h2 class="home-section__title">Pinned Projects</h2>
+      <h2 class="home-section__title">Featured Work</h2>
       <div class="proj-card-grid">
         {{- range . }}{{ partial "project-card.html" . }}{{ end }}
       </div>
@@ -67,34 +28,44 @@
     </section>
   {{- end }}
 
-  {{- with $latestEntries }}
-    <section class="home-section">
-      <h2 class="home-section__title">Recent Journal Entries</h2>
-      <ul class="home-entry-list">
-        {{- range . }}
-          <li class="home-entry">
-            <span class="home-entry__project">{{ .page.Title }}</span>
-            <a class="home-entry__title" href="{{ .page.RelPermalink }}#{{ .id }}">{{ .label }}</a>
-            <span class="home-entry__date">{{ .ts }}</span>
-          </li>
-        {{- end }}
-      </ul>
-      <a class="home-section__more" href="/project-journal/">All entries →</a>
-    </section>
+  {{/* ─── Activity ─── */}}
+  {{- $activity := slice }}
+
+  {{- range (where site.RegularPages "Section" "project-journal") }}
+    {{- $page := . }}
+    {{- $h2s := findRE `<h2 id="([^"]+)">.*?<span class="timestamp">\[([^\]]+)\]</span></span>\s*([^<]+)` $page.Content }}
+    {{- range $h2s }}
+      {{- $h2 := . }}
+      {{- $id := index (findRE `id="([^"]+)"` $h2) 0 | replaceRE `id="|"` "" }}
+      {{- $ts := index (findRE `\[([^\]]+)\]` $h2) 0 | replaceRE `\[|\]` "" }}
+      {{- $label := $h2 | replaceRE `<[^>]+>` "" | replaceRE `^\s*\[[^\]]+\]\s*` "" | strings.TrimSpace }}
+      {{- $datePart := substr $ts 0 10 }}
+      {{- $activity = $activity | append (dict "date" $datePart "ts" $ts "type" "journal" "title" $label "url" (printf "%s#%s" $page.RelPermalink $id)) }}
+    {{- end }}
   {{- end }}
 
-  {{- with $posts }}
+  {{- range (where site.RegularPages "Section" "posts") }}
+    {{- $activity = $activity | append (dict "date" (.Date.Format "2006-01-02") "type" "post" "title" .Title "url" .RelPermalink) }}
+  {{- end }}
+
+  {{- range (where site.RegularPages "Section" "projects") }}
+    {{- $activity = $activity | append (dict "date" (.Date.Format "2006-01-02") "type" "project" "title" .Title "url" .RelPermalink) }}
+  {{- end }}
+
+  {{- $activity = sort $activity "date" "desc" | first 8 }}
+
+  {{- with $activity }}
     <section class="home-section">
-      <h2 class="home-section__title">Recent Posts</h2>
-      <ul class="home-entry-list">
+      <h2 class="home-section__title">Activity</h2>
+      <ul class="home-activity">
         {{- range . }}
-          <li class="home-entry">
-            <a class="home-entry__title" href="{{ .RelPermalink }}">{{ .Title }}</a>
-            <span class="home-entry__date">{{ .Date | time.Format "2006-01-02" }}</span>
+          <li class="home-activity__item">
+            <span class="home-activity__type">{{ .type }}</span>
+            <a class="home-activity__link" href="{{ .url }}">{{ .title }}</a>
+            <span class="home-activity__date">{{ with .ts }}{{ . }}{{ else }}{{ .date }}{{ end }}</span>
           </li>
         {{- end }}
       </ul>
-      <a class="home-section__more" href="/posts/">All posts →</a>
     </section>
   {{- end }}
 {{ end }}
