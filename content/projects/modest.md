@@ -3,11 +3,11 @@ draft = false
 date = 2026-05-07T20:05:00+02:00
 lastmod = 2026-05-23T17:16:00+02:00
 
-title = "Modular pOkerchip DispEnsing SysTem (MODEST)"
-description = ""
+title = "MODEST"
+description = "Modular pOkerchip DispEnsing SysTem (MODEST) for home poker games."
 keywords = ["3D Printing"]
 
-status = "active"
+status = "research"
 projectType = ["embedded", "mechanical"]
 thumbnail = "/images/modest/modest_thumnail.webp"
 

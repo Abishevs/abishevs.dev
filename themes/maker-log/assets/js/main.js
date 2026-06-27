@@ -1,3 +1,66 @@
+// Navigation panels
+const navToggle = document.querySelector('.nav-toggle');
+const siteNav = document.getElementById('site-nav');
+const navCats = document.querySelectorAll('.nav-cat[data-nav-cat]');
+
+// Mobile hamburger
+if (navToggle && siteNav) {
+  navToggle.addEventListener('click', () => {
+    const open = siteNav.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', open);
+  });
+}
+
+// Panel behavior
+let closeTimer = null;
+const isMobile = () => window.matchMedia('(max-width: 640px)').matches;
+
+function openPanel(cat) {
+  clearTimeout(closeTimer);
+  navCats.forEach(c => { if (c !== cat) c.classList.remove('is-open'); });
+  cat.classList.add('is-open');
+  cat.querySelector('.nav-cat__trigger').setAttribute('aria-expanded', 'true');
+}
+
+function closePanel(cat) {
+  cat.classList.remove('is-open');
+  cat.querySelector('.nav-cat__trigger').setAttribute('aria-expanded', 'false');
+}
+
+function closeAll() {
+  navCats.forEach(c => closePanel(c));
+}
+
+navCats.forEach(cat => {
+  const trigger = cat.querySelector('.nav-cat__trigger');
+
+  // Click/tap toggle (mobile accordion + keyboard)
+  trigger.addEventListener('click', () => {
+    if (cat.classList.contains('is-open')) {
+      closePanel(cat);
+    } else {
+      openPanel(cat);
+    }
+  });
+
+  // Desktop hover
+  cat.addEventListener('mouseenter', () => {
+    if (!isMobile()) openPanel(cat);
+  });
+
+  cat.addEventListener('mouseleave', () => {
+    if (!isMobile()) {
+      closeTimer = setTimeout(() => closePanel(cat), 120);
+    }
+  });
+});
+
+// Close on Escape or click outside
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAll(); });
+document.addEventListener('click', e => {
+  if (!e.target.closest('.nav-cat')) closeAll();
+});
+
 // Project list filtering
 const grid = document.getElementById('proj-grid');
 if (grid) {

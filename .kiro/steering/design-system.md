@@ -76,8 +76,39 @@ Text:
 Muted Text:
 #9CA3AF
 
-Telemetry Blue:
+Primary Accent
+
+Telemetry Blue
 #38BDF8
+
+Used for:
+
+- Links
+- Interactive elements
+- Navigation
+- Buttons
+- Active states
+
+---
+
+Secondary Accent
+
+Insight Purple
+#9F7AEA
+
+Used sparingly to indicate:
+
+- Engineering insights
+- Reflections
+- Knowledge
+- Research
+- Books
+- Learning
+- Callouts
+
+Purple should never compete with the primary accent.
+
+It is a semantic color rather than a branding color.
 
 Success:
 #22C55E
@@ -95,6 +126,7 @@ Avoid:
 - RGB aesthetics
 - Cyberpunk palettes
 - High saturation accents
+
 
 ## Design Goals
 

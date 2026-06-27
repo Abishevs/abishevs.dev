@@ -6,13 +6,13 @@
 [research]
 label       = "Research"
 description = "Early investigation, planning and technology exploration."
-color       = "#38BDF8"
+color       = "#9F7AEA"
 order       = 1
 
 [planning]
 label       = "Planning"
 description = "Architecture defined. Implementation not yet started."
-color       = "#38BDF8"
+color       = "#9F7AEA"
 order       = 2
 
 [prototype]

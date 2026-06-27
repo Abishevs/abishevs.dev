@@ -1,0 +1,32 @@
+# Navigation panel content.
+# Each category has a description and ordered items.
+# Items reference menu entries by URL and add contextual descriptions.
+
+[explore]
+description = "Engineering artefacts and long-term work."
+
+[[explore.items]]
+name = "Projects"
+url  = "projects/"
+desc = "Systems I've built and continue to evolve."
+
+[journey]
+description = "How this engineering journey evolved over time."
+
+[[journey.items]]
+name = "Work Experience"
+url  = "work-experience/"
+desc = "Professional engineering — challenges, technologies and lessons."
+
+[writing]
+description = "Long-form writing about engineering and learning."
+
+[[writing.items]]
+name = "Blog"
+url  = "posts/"
+desc = "Articles on things I've learned."
+
+[[writing.items]]
+name = "Project Journal"
+url  = "project-journal/"
+desc = "Build logs and day-to-day engineering notes."

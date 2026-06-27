@@ -79,24 +79,40 @@ unsafe = true
 
 # Menu links
 [[menu.main]]
+  name = "Explore"
+  weight = 1
+  identifier = "explore"
+[[menu.main]]
   name = "Projects"
+  parent = "explore"
   weight = 1
   url = "projects/"
 [[menu.main]]
+  name = "Journey"
+  weight = 2
+  identifier = "journey"
+[[menu.main]]
+  name = "Work Experience"
+  parent = "journey"
+  weight = 1
+  url = "work-experience/"
+[[menu.main]]
+  name = "Writing"
+  weight = 3
+  identifier = "writing"
+[[menu.main]]
+  name = "Blog"
+  parent = "writing"
+  weight = 1
+  url = "posts/"
+[[menu.main]]
   name = "Project Journal"
+  parent = "writing"
   weight = 2
   url = "project-journal/"
 [[menu.main]]
-  name = "Blog"
-  weight = 3
-  url  = "posts/"
-[[menu.main]]
-  name = "Work"
-  weight = 4
-  url = "work-experience/"
-[[menu.main]]
   name = "About"
-  weight = 5
+  weight = 4
   url = "about/"
 
 
