@@ -130,6 +130,8 @@ exist for backward compatibility with `project-card.html`.
 5. Add menu entry to `hugo.toml`
 6. Existing shared SCSS classes (`.node-meta`, `.node-related`, `.node-nav`,
    `.node-links`, `.badge--status`, `.badge--domain`, `.badge--tech`) require no changes
+7. Duration-based types (work-experience, education) reuse `.work-entry`,
+   `.work-list`, `.work-meta` classes — no duplication needed
 
 ### Relationships
 

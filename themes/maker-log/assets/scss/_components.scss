@@ -524,6 +524,8 @@ h2.proj-section__title {
   text-decoration: none;
   color: inherit;
   height: 100%;
+
+  &:hover { text-decoration: none; }
 }
 
 // Project reference sections (collapsible, above grid)

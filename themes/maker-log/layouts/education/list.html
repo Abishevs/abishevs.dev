@@ -1,0 +1,30 @@
+{{ define "main" }}
+  <header class="page-header">
+    <h1 class="page-header__title">{{ .Title }}</h1>
+    {{- with .Description }}<p class="page-header__desc">{{ . }}</p>{{ end }}
+  </header>
+
+  <div class="work-list">
+    {{- range .Pages.ByParam "startDate" | collections.Reverse }}
+      <article class="work-entry">
+        <div class="work-entry__header">
+          <h2 class="work-entry__title"><a href="{{ .RelPermalink }}">{{ .Params.programme }}</a></h2>
+          <span class="work-entry__org">{{ .Params.institution }}</span>
+        </div>
+        <div class="work-entry__meta">
+          {{- with .Params.degree }}<span>{{ . }}</span> · {{ end }}
+          <span class="work-entry__duration">
+            {{- .Params.startDate | time.Format "Jan 2006" }}
+            {{- if .Params.current }} – Present
+            {{- else if .Params.endDate }} – {{ .Params.endDate | time.Format "Jan 2006" }}
+            {{- end }}
+          </span>
+          {{- with .Params.location }} · <span>{{ . }}</span>{{ end }}
+        </div>
+        {{- with .Description }}
+          <p class="work-entry__desc">{{ . }}</p>
+        {{- end }}
+      </article>
+    {{- end }}
+  </div>
+{{ end }}
