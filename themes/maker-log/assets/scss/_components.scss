@@ -613,6 +613,22 @@ h2.proj-section__title {
   border-bottom: 1px solid $color-border;
 }
 
+.home-section--intro {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 1.5rem;
+}
+
+.home-intro {
+  font-family: $font-body;
+  font-size: 0.9rem;
+  color: $color-muted;
+  line-height: 1.6;
+
+  p { margin: 0 0 0.5rem; &:last-child { margin-bottom: 0; } }
+  em { color: $color-purple; font-style: italic; }
+}
+
 .home-section {
   margin-bottom: 2.5rem;
   padding-bottom: 2rem;

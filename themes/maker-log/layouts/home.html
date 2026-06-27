@@ -1,14 +1,33 @@
 {{ define "main" }}
+  {{/* Split .Content into sections by <h2 id="..."> headings */}}
+  {{- $content := .Content }}
+  {{- $introContent := "" }}
+  {{- $nowContent := "" }}
+
+  {{/* Extract intro section */}}
+  {{- $introMatch := findRE `(?s)<h2 id="intro">.*?</h2>(.*?)(?:<h2|$)` $content }}
+  {{- with $introMatch }}
+    {{- $introContent = index . 0 | replaceRE `<h2 id="intro">.*?</h2>` "" | replaceRE `<h2$` "" }}
+  {{- end }}
+
+  {{/* Extract now section */}}
+  {{- $nowMatch := findRE `(?s)<h2 id="now">.*?</h2>(.*?)(?:<h2|$)` $content }}
+  {{- with $nowMatch }}
+    {{- $nowContent = index . 0 | replaceRE `<h2 id="now">.*?</h2>` "" | replaceRE `<h2$` "" }}
+  {{- end }}
+
   {{/* ─── Opening ─── */}}
-  {{- with .Description }}
-    <p class="home-opening">{{ . }}</p>
+  {{- with $introContent }}
+    <section class="home-section home-section--intro">
+      <div class="home-intro">{{ . | safeHTML }}</div>
+    </section>
   {{- end }}
 
   {{/* ─── Now ─── */}}
-  {{- with .Content }}
+  {{- with $nowContent }}
     <section class="home-section">
       <h2 class="home-section__title">Now</h2>
-      <div class="home-now">{{ . }}</div>
+      <div class="home-now">{{ . | safeHTML }}</div>
     </section>
   {{- end }}
 
