@@ -1,6 +1,6 @@
 baseurl = "https://abishevs.dev/"
 title = "Eduards Abishevs"
-theme = "hugo-coder"
+theme = "maker-log"
 locale = "en"
 # defaultcontentlanguage = "en"
 

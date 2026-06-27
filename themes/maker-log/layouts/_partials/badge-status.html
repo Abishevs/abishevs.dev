@@ -1,0 +1,11 @@
+{{/* Renders a status badge. Pass the page context. */}}
+{{- with .Params.status }}
+  {{- $def := index hugo.Data.projects.statuses (lower .) }}
+  {{- $color := "" }}
+  {{- $label := . | upper }}
+  {{- with $def }}
+    {{- $color = index . "color" }}
+    {{- $label = index . "label" | upper }}
+  {{- end }}
+  <span class="badge badge--status" style="--badge-color:{{ $color }}">{{ $label }}</span>
+{{- end }}

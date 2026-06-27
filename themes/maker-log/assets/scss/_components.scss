@@ -1,0 +1,604 @@
+// Navigation
+.site-nav ul {
+  display: flex;
+  gap: 1.25rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.site-nav a {
+  font-family: $font-heading;
+  font-size: 0.9rem;
+  color: $color-text;
+
+  &:hover, &.active { color: $color-blue; text-decoration: none; }
+}
+
+// Site title
+.site-title {
+  font-family: $font-heading;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+
+  a { color: $color-text; }
+  a:hover { color: $color-blue; text-decoration: none; }
+}
+
+// Article / single page
+.article-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid $color-border;
+}
+
+.article-title {
+  margin-top: 0;
+}
+
+.article-meta {
+  font-size: 0.85rem;
+  color: $color-muted;
+  font-family: $font-heading;
+  margin-top: 0.5rem;
+
+  a { color: $color-muted; }
+}
+
+.article-body {
+  margin-top: 1.5rem;
+}
+
+// List page
+.page-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid $color-border;
+}
+
+.entry-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.entry-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid $color-border;
+
+  &:last-child { border-bottom: none; }
+}
+
+.entry-item__title {
+  font-family: $font-heading;
+  font-size: 1.1rem;
+  margin: 0 0 0.25rem;
+
+  a { color: $color-text; }
+  a:hover { color: $color-blue; }
+}
+
+.entry-item__meta {
+  font-size: 0.8rem;
+  color: $color-muted;
+  font-family: $font-heading;
+}
+
+.entry-item__summary {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: $color-muted;
+}
+
+// Badges — reusable components
+.badge {
+  display: inline-block;
+  font-family: $font-mono;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.2em 0.5em;
+  line-height: 1.4;
+  vertical-align: middle;
+
+  // Status: prominent, color-coded via --badge-color custom property
+  &--status {
+    color: var(--badge-color, $color-muted);
+    border: 1px solid var(--badge-color, $color-muted);
+    background: color-mix(in srgb, var(--badge-color, transparent) 10%, transparent);
+  }
+
+  // Domain: subdued metadata
+  &--domain {
+    color: $color-muted;
+    border: none;
+    background: $color-surface;
+    font-size: 0.6rem;
+  }
+
+  // Legacy type badge (backwards compat)
+  &--type { color: $color-muted; border: 1px solid currentColor; }
+}
+
+// Badge group — wraps multiple domain badges
+.badge-group {
+  display: inline-flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  vertical-align: middle;
+}
+
+// Card meta row — separates status from domains
+.proj-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.35rem;
+}
+
+// Project single meta
+.project-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+// Project cards
+.project-grid {
+  display: grid;
+  gap: 0;
+}
+
+.project-card {
+  padding: 1rem 0;
+  border-bottom: 1px solid $color-border;
+
+  &:last-child { border-bottom: none; }
+}
+
+.project-card__header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.25rem;
+}
+
+.project-card__title {
+  font-family: $font-heading;
+  font-size: 1.05rem;
+  font-weight: 600;
+
+  a { color: $color-text; }
+  a:hover { color: $color-blue; }
+}
+
+.project-card__desc {
+  font-size: 0.9rem;
+  color: $color-muted;
+  margin-bottom: 0.5rem;
+}
+
+.project-card__badges {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+// Projects page sections
+.proj-section {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid $color-border;
+
+  &:first-of-type { margin-top: 1.5rem; border-top: none; padding-top: 0; }
+}
+
+.proj-section__title {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $color-muted;
+  margin: 0 0 1rem;
+  list-style: none;
+  cursor: pointer;
+
+  &::-webkit-details-marker { display: none; }
+  &::before { content: '▸ '; opacity: 0.5; }
+
+  details[open] > & { color: $color-text; &::before { content: '▾ '; } }
+}
+
+h2.proj-section__title {
+  cursor: default;
+  &::before { display: none; }
+}
+
+.proj-section__count {
+  margin-left: 0.5em;
+  opacity: 0.6;
+}
+
+.proj-section__hint {
+  margin-left: 0.75em;
+  font-weight: 400;
+  opacity: 0.5;
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0;
+
+  details[open] > summary > & { display: none; }
+}
+
+// Projects list page — wider grid
+.proj-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+// Filter chips
+.proj-filters {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.proj-filters__row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid $color-border;
+
+  &:first-child { border-top: none; padding-top: 0; }
+}
+
+.proj-filters__label {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $color-muted;
+}
+
+.proj-filters__chips {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.filter-chip {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.2em 0.6em;
+  border: 1px solid $color-border;
+  background: transparent;
+  color: $color-muted;
+  cursor: pointer;
+  line-height: 1.4;
+
+  &:hover { border-color: $color-text; color: $color-text; }
+
+  &.is-active {
+    background: $color-surface;
+    color: var(--chip-color, $color-text);
+    border-color: var(--chip-color, $color-text);
+  }
+}
+
+.filter-chip__count {
+  margin-left: 0.3em;
+  opacity: 0.6;
+}
+
+.filter-reset {
+  font-family: $font-heading;
+  font-size: 0.75rem;
+  background: none;
+  border: none;
+  color: $color-muted;
+  cursor: pointer;
+  padding: 0;
+  align-self: flex-start;
+
+  &:hover { color: $color-blue; }
+}
+
+.proj-empty {
+  font-size: 0.875rem;
+  color: $color-muted;
+  font-family: $font-heading;
+  margin-top: 2rem;
+}
+
+// Ensure hidden attribute works inside grid containers
+.proj-card[hidden] { display: none !important; }
+
+// Project card — description (on proj-grid page)
+.proj-card__desc {
+  font-size: 0.8rem;
+  color: $color-muted;
+  margin-top: 0.4rem;
+  margin-bottom: 0;
+  line-height: 1.4;
+}
+
+.proj-card__dates {
+  font-family: $font-mono;
+  font-size: 0.6rem;
+  color: $color-muted;
+  opacity: 0.7;
+  margin-top: 0.4rem;
+}
+
+.proj-card__link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+}
+
+// Project reference sections (collapsible, above grid)
+.proj-reference-group {
+  margin-top: 0.5rem;
+}
+
+.proj-reference {
+  margin: 0;
+}
+
+.proj-reference__title {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $color-muted;
+  padding: 0.75rem 0 0.4rem;
+  margin: 0;
+  border-top: 1px solid $color-border;
+
+  &:first-child { border-top: none; padding-top: 0; }
+}
+
+.proj-reference__list {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.2rem 1.5rem;
+  margin: 0 0 1rem;
+  padding: 0;
+}
+
+.proj-reference__item { display: contents; }
+
+.proj-reference__term {
+  font-family: $font-mono;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: $color-muted;
+  white-space: nowrap;
+}
+
+.proj-reference__desc {
+  font-family: $font-heading;
+  font-size: 0.8rem;
+  color: $color-muted;
+}
+
+// Journal body — each h2 is a log entry timestamp heading
+.journal-body h2 {
+  font-size: 0.95rem;
+  font-family: $font-mono;
+  font-weight: 400;
+  color: $color-muted;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid $color-border;
+
+  .timestamp-wrapper, .timestamp { color: $color-blue; }
+}
+
+// Taxonomy tags
+.terms {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  font-family: $font-heading;
+
+  a {
+    color: $color-muted;
+    border-bottom: 1px solid $color-border;
+    padding-bottom: 1px;
+  }
+}
+
+// Homepage
+.home-intro {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 0 2rem;
+  border-bottom: 1px solid $color-border;
+  margin-bottom: 2rem;
+}
+
+.home-intro__avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid $color-border;
+}
+
+.home-intro__name {
+  font-size: 1.25rem;
+  font-family: $font-heading;
+  margin: 0 0 0.25rem;
+}
+
+.home-intro__school {
+  font-size: 0.8rem;
+  color: $color-blue;
+  font-family: $font-mono;
+  margin: 0 0 0.5rem;
+}
+
+.home-intro__bio {
+  font-size: 0.875rem;
+  color: $color-muted;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.home-section {
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid $color-border;
+
+  &:last-child { border-bottom: none; }
+}
+
+.home-section__title {
+  font-family: $font-mono;
+  font-size: 0.75rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $color-muted;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.home-section__more {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  font-family: $font-heading;
+  color: $color-muted;
+
+  &:hover { color: $color-blue; }
+}
+
+// Project card grid (homepage)
+.proj-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.proj-card {
+  display: block;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  text-decoration: none;
+  overflow: hidden;
+
+  &:hover { border-color: $color-blue; text-decoration: none; }
+  &:hover .proj-card__title { color: $color-blue; }
+}
+
+.proj-card__img-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: $color-bg;
+}
+
+.proj-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.proj-card__img-placeholder {
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    45deg,
+    $color-border,
+    $color-border 1px,
+    transparent 1px,
+    transparent 8px
+  );
+}
+
+.proj-card__body {
+  padding: 0.6rem 0.75rem 0.75rem;
+}
+
+.proj-card__title {
+  display: block;
+  font-family: $font-heading;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: $color-text;
+  margin-bottom: 0.35rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Journal / post entry list
+.home-entry-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.home-entry {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid $color-border;
+  overflow: hidden;
+
+  &:last-child { border-bottom: none; }
+}
+
+.home-entry__project {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  color: $color-blue;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.home-entry__title {
+  font-family: $font-heading;
+  font-size: 0.875rem;
+  color: $color-text;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+
+  &:hover { color: $color-blue; text-decoration: none; }
+}
+
+.home-entry__date {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  color: $color-muted;
+  white-space: nowrap;
+  flex-shrink: 0;
+}

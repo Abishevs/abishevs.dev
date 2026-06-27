@@ -2,6 +2,8 @@
 title = 'Snake Game In C'
 date = 2025-01-03T22:17:21+01:00
 keywords = ["C", "CLI"]
+status = "complete"
+projectType = ["cli"]
 thumbnail = "/gifs/snakegame.gif"
 description = "A simple terminal based snake game in C with vim bindings 'hjkl'. "
 +++

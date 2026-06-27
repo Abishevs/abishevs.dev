@@ -1,0 +1,24 @@
+{{- $href := .RelPermalink }}
+{{- if and .Params.linkToSource .Params.sourceCodeUrl }}
+  {{- $href = .Params.sourceCodeUrl }}
+{{- end }}
+<a class="proj-card" href="{{ $href }}"{{ if and .Params.linkToSource .Params.sourceCodeUrl }} target="_blank" rel="noopener noreferrer"{{ end }}>
+  <div class="proj-card__img-wrap">
+    {{- with .Params.thumbnail }}
+      <img class="proj-card__img" src="{{ . }}" alt="{{ $.Title }}">
+    {{- else }}
+      <div class="proj-card__img-placeholder"></div>
+    {{- end }}
+  </div>
+  <div class="proj-card__body">
+    <span class="proj-card__title">{{ .Title }}</span>
+    <div class="proj-card__badges">
+      {{- with .Params.status }}
+        <span class="badge badge--status-{{ lower . }}">{{ upper . }}</span>
+      {{- end }}
+      {{- with .Params.projectType }}
+        <span class="badge badge--type">{{ upper . }}</span>
+      {{- end }}
+    </div>
+  </div>
+</a>

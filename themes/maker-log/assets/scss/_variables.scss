@@ -1,0 +1,22 @@
+// Colors — from design-system.md
+$color-bg:      #111827;
+$color-surface: #1F2937;
+$color-text:    #E5E7EB;
+$color-muted:   #9CA3AF;
+$color-blue:    #38BDF8;
+$color-success: #22C55E;
+$color-warning: #F59E0B;
+$color-error:   #EF4444;
+$color-border:  #374151; // surface lighten — subtle separator
+
+// Typography
+$font-heading: 'IBM Plex Sans', system-ui, sans-serif;
+$font-body:    'Source Serif 4', 'IBM Plex Serif', Georgia, serif;
+$font-mono:    'JetBrains Mono', 'Fira Mono', monospace;
+
+$font-size-base: 1rem;
+$line-height:    1.65;
+
+// Layout
+$content-width: 720px;
+$site-padding:  1.5rem;

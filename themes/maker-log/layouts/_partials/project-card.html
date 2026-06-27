@@ -1,0 +1,43 @@
+{{- $href := .RelPermalink }}
+{{- if and .Params.linkToSource .Params.sourceCodeUrl }}
+  {{- $href = .Params.sourceCodeUrl }}
+{{- end }}
+{{- $external := and .Params.linkToSource .Params.sourceCodeUrl }}
+
+{{/* Build domain list for data attribute */}}
+{{- $domains := slice }}
+{{- with .Params.projectType }}
+  {{- if reflect.IsSlice . }}{{- $domains = . }}{{- else }}{{- $domains = slice . }}{{- end }}
+{{- end }}
+{{- $domainParts := slice }}
+{{- range $domains }}{{- $domainParts = $domainParts | append (lower .) }}{{- end }}
+
+<article class="proj-card"
+  data-status="{{ lower .Params.status }}"
+  data-domains="{{ delimit $domainParts " " }}">
+  <a class="proj-card__link" href="{{ $href }}"{{ if $external }} target="_blank" rel="noopener noreferrer"{{ end }}>
+    <div class="proj-card__img-wrap">
+      {{- with .Params.thumbnail }}
+        <img class="proj-card__img" src="{{ . }}" alt="{{ $.Title }}">
+      {{- else }}
+        <div class="proj-card__img-placeholder"></div>
+      {{- end }}
+    </div>
+    <div class="proj-card__body">
+      <span class="proj-card__title">{{ .Title }}</span>
+      <div class="proj-card__meta">
+        {{ partial "badge-status.html" . }}
+        {{ partial "badge-domains.html" . }}
+      </div>
+      {{- with .Params.description }}
+        <p class="proj-card__desc">{{ . }}</p>
+      {{- end }}
+      <div class="proj-card__dates">
+        <span>Started {{ .Date | time.Format "2 Jan 2006" }}</span>
+        {{- if ne (.Lastmod.Format "2006-01-02") (.Date.Format "2006-01-02") }}
+          <span>│ Updated {{ .Lastmod | time.Format "2 Jan 2006" }}</span>
+        {{- end }}
+      </div>
+    </div>
+  </a>
+</article>

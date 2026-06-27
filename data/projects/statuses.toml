@@ -1,0 +1,51 @@
+# Project lifecycle statuses, keyed by identifier.
+# order: controls display order on the index (lower = first).
+# color: any CSS color value — used for badge and chip styling.
+
+[research]
+label       = "Research"
+description = "Early investigation, planning and technology exploration."
+color       = "#38BDF8"
+order       = 1
+
+[planning]
+label       = "Planning"
+description = "Architecture defined. Implementation not yet started."
+color       = "#38BDF8"
+order       = 2
+
+[prototype]
+label       = "Prototype"
+description = "Proof-of-concept focused on experimentation."
+color       = "#F59E0B"
+order       = 3
+
+[active]
+label       = "Active"
+description = "Currently under active development."
+color       = "#38BDF8"
+order       = 4
+
+[testing]
+label       = "Testing"
+description = "Implementation complete. Under evaluation and refinement."
+color       = "#F59E0B"
+order       = 5
+
+[deployed]
+label       = "Deployed"
+description = "Publicly available while continuing active development."
+color       = "#22C55E"
+order       = 6
+
+[complete]
+label       = "Complete"
+description = "Engineering goals achieved. Stable with no planned development."
+color       = "#6B7280"
+order       = 7
+
+[archived]
+label       = "Archived"
+description = "Preserved for historical reference."
+color       = "#4B5563"
+order       = 8

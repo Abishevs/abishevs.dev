@@ -6,7 +6,7 @@ description = ""
 keywords = ["3D Printing", "Split Keyboard"]
 
 status = "active"
-projectType = "embedded"
+projectType = ["embedded", "mechanical", "firmware"]
 thumbnail = "/images/split-keyboard/kb_dual_no_kc.webp"
 
 sourceCodeUrl = ""

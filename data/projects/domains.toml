@@ -1,0 +1,62 @@
+# Engineering domains, keyed by identifier.
+# order: controls display order on the index.
+
+[embedded]
+label       = "Embedded"
+description = "Firmware, microcontrollers and low-level hardware."
+order       = 1
+
+[firmware]
+label       = "Firmware"
+description = "Low-level software running directly on hardware."
+order       = 2
+
+[electronics]
+label       = "Electronics"
+description = "Circuit design, PCB layout and electronic systems."
+order       = 3
+
+[mechanical]
+label       = "Mechanical"
+description = "Mechanical design, CAD and physical systems."
+order       = 4
+
+[robotics]
+label       = "Robotics"
+description = "Autonomous and semi-autonomous mechanical systems."
+order       = 5
+
+[simulation]
+label       = "Simulation"
+description = "Digital models and virtual environments."
+order       = 6
+
+[cli]
+label       = "CLI"
+description = "Command-line tools and terminal applications."
+order       = 7
+
+[tooling]
+label       = "Tooling"
+description = "Developer tools, workflows and automation utilities."
+order       = 8
+
+[website]
+label       = "Website"
+description = "Websites, static sites and web presence."
+order       = 9
+
+[web-app]
+label       = "Web App"
+description = "Dynamic web applications, APIs and browser-based interfaces."
+order       = 10
+
+[linux]
+label       = "Linux"
+description = "Linux systems, configuration and administration."
+order       = 11
+
+[automation]
+label       = "Automation"
+description = "Scripts and systems that automate repetitive tasks."
+order       = 12

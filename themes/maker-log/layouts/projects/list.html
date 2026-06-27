@@ -1,0 +1,122 @@
+{{ define "main" }}
+  {{- $projects   := .Pages }}
+  {{- $statusData := hugo.Data.projects.statuses }}
+  {{- $domainData := hugo.Data.projects.domains }}
+
+  {{/* Count projects per status */}}
+  {{- $statusCounts := dict }}
+  {{- range $projects }}
+    {{- $s := lower .Params.status }}
+    {{- if $s }}
+      {{- $statusCounts = merge $statusCounts (dict $s (add (index $statusCounts $s | default 0) 1)) }}
+    {{- end }}
+  {{- end }}
+
+  {{/* Count projects per domain */}}
+  {{- $domainCounts := dict }}
+  {{- range $projects }}
+    {{- $pt := .Params.projectType }}
+    {{- $ds := slice }}
+    {{- if reflect.IsSlice $pt }}{{- $ds = $pt }}{{- else if $pt }}{{- $ds = slice $pt }}{{- end }}
+    {{- range $ds }}
+      {{- $d := lower . }}
+      {{- $domainCounts = merge $domainCounts (dict $d (add (index $domainCounts $d | default 0) 1)) }}
+    {{- end }}
+  {{- end }}
+
+  {{/* Build ordered status list from data (only those with projects) */}}
+  {{- $orderedStatuses := slice }}
+  {{- range $id, $def := $statusData }}
+    {{- if index $statusCounts $id }}
+      {{- $orderedStatuses = $orderedStatuses | append (merge $def (dict "id" $id "count" (index $statusCounts $id))) }}
+    {{- end }}
+  {{- end }}
+  {{- $orderedStatuses = sort $orderedStatuses "order" }}
+
+  {{/* Build ordered domain list (only those with projects) */}}
+  {{- $orderedDomains := slice }}
+  {{- range $id, $def := $domainData }}
+    {{- if index $domainCounts $id }}
+      {{- $orderedDomains = $orderedDomains | append (merge $def (dict "id" $id "count" (index $domainCounts $id))) }}
+    {{- end }}
+  {{- end }}
+  {{- $orderedDomains = sort $orderedDomains "order" }}
+
+  <header class="page-header">
+    <h1 class="page-header__title">{{ .Title }}</h1>
+    {{- with .Description }}<p class="page-header__desc">{{ . }}</p>{{ end }}
+  </header>
+
+  {{- $cfg := hugo.Data.projects.config }}
+
+  {{/* ─── FILTERS ─── */}}
+  <details class="proj-section">
+    <summary class="proj-section__title">{{ $cfg.filters.title }}<span class="proj-section__hint">{{ $cfg.filters.hint }}</span></summary>
+    <div class="proj-filters" id="proj-filters">
+      <div class="proj-filters__row">
+        <span class="proj-filters__label">{{ $cfg.filters.statusLabel }}</span>
+        <div class="proj-filters__chips" role="group" aria-label="Filter by status">
+          {{- range $orderedStatuses }}
+            <button class="filter-chip filter-chip--status"
+              style="--chip-color:{{ .color }}"
+              data-filter="status" data-value="{{ .id }}" type="button">
+              {{- .label }}<span class="filter-chip__count">{{ .count }}</span>
+            </button>
+          {{- end }}
+        </div>
+      </div>
+      {{- with $orderedDomains }}
+        <div class="proj-filters__row">
+          <span class="proj-filters__label">{{ $cfg.filters.domainLabel }}</span>
+          <div class="proj-filters__chips" role="group" aria-label="Filter by domain">
+            {{- range . }}
+              <button class="filter-chip filter-chip--domain"
+                data-filter="domain" data-value="{{ .id }}" type="button">
+                {{- .label }}<span class="filter-chip__count">{{ .count }}</span>
+              </button>
+            {{- end }}
+          </div>
+        </div>
+      {{- end }}
+      <button class="filter-reset" id="filter-reset" type="button" hidden>Clear filters</button>
+    </div>
+  </details>
+
+  {{/* ─── REFERENCE ─── */}}
+  <details class="proj-section">
+    <summary class="proj-section__title">{{ $cfg.reference.title }}<span class="proj-section__hint">{{ $cfg.reference.hint }}</span></summary>
+    <div class="proj-reference-group">
+      <h3 class="proj-reference__title">{{ $cfg.reference.statusTitle }}</h3>
+      <dl class="proj-reference__list">
+        {{- range $orderedStatuses }}
+          <div class="proj-reference__item">
+            <dt class="proj-reference__term" style="color:{{ .color }}">{{ .label }}</dt>
+            <dd class="proj-reference__desc">{{ .description }}</dd>
+          </div>
+        {{- end }}
+      </dl>
+      {{- with $orderedDomains }}
+        <h3 class="proj-reference__title">{{ $cfg.reference.domainTitle }}</h3>
+        <dl class="proj-reference__list">
+          {{- range . }}
+            <div class="proj-reference__item">
+              <dt class="proj-reference__term">{{ .label }}</dt>
+              <dd class="proj-reference__desc">{{ .description }}</dd>
+            </div>
+          {{- end }}
+        </dl>
+      {{- end }}
+    </div>
+  </details>
+
+  {{/* ─── ALL PROJECTS ─── */}}
+  <section class="proj-section">
+    <h2 class="proj-section__title">All Projects<span class="proj-section__count">{{ len $projects }}</span></h2>
+    <div class="proj-grid" id="proj-grid">
+      {{- range $projects }}
+        {{ partial "project-card.html" . }}
+      {{- end }}
+    </div>
+    <p class="proj-empty" id="proj-empty" hidden>No projects match the selected filters.</p>
+  </section>
+{{ end }}

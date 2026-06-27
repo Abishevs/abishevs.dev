@@ -1,0 +1,13 @@
+# Display labels for the projects index page.
+
+[filters]
+statusLabel = "Status"
+domainLabel = "Domain"
+title       = "Filters"
+hint        = "filter by status or domain"
+
+[reference]
+statusTitle = "Project Status"
+domainTitle = "Engineering Domains"
+title       = "Reference"
+hint        = "expand for status & domain descriptions"

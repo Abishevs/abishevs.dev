@@ -1,13 +1,14 @@
 +++
 draft = false
-date = 2026-06-14T16:03:56+02:00
+date = 2026-05-07T20:05:00+02:00
+lastmod = 2026-05-23T17:16:00+02:00
 
 title = "Modular pOkerchip DispEnsing SysTem (MODEST)"
 description = ""
 keywords = ["3D Printing"]
 
 status = "active"
-projectType = "embedded"
+projectType = ["embedded", "mechanical"]
 thumbnail = "/images/modest/modest_thumnail.webp"
 
 sourceCodeUrl = ""
