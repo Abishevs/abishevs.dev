@@ -60,3 +60,11 @@ desc = "Articles on things I've learned."
 name = "Project Journal"
 url  = "project-journal/"
 desc = "Build logs and day-to-day engineering notes."
+
+[[direct]]
+name = "About"
+url  = "about/"
+
+[[direct]]
+name = "Search"
+url  = "search/"

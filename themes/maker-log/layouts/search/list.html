@@ -1,0 +1,13 @@
+{{ define "main" }}
+  <header class="page-header">
+    <h1 class="page-header__title">{{ .Title }}</h1>
+  </header>
+
+  <div class="search-page">
+    <input type="text" class="search-input" id="search-input" placeholder="Search knowledge nodes..." autocomplete="off" autofocus />
+    <p class="search-hint" id="search-hint">Type to search across projects, technologies, workflows, books, experience and writing.</p>
+    <div class="search-results" id="search-results"></div>
+  </div>
+
+  <script src="{{ (resources.Get "js/search.js" | fingerprint).RelPermalink }}"></script>
+{{ end }}

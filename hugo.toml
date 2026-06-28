@@ -58,10 +58,11 @@ unsafe = true
 
 
 [taxonomies]
-  category = "categories"
-  series = "series"
-  tag = "tags"
-  author = "authors"
+# Disabled — the Knowledge Node architecture handles relationships
+# through related fields, auto-discovery, and backlinks instead.
+
+[outputs]
+  home = ["HTML", "JSON"]
 
 # Social links
 [[params.social]]

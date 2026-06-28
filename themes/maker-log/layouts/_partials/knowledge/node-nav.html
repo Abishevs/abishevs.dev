@@ -16,15 +16,6 @@
     {{- end }}
   {{- end }}
 
-  {{/* Tags as exploration paths */}}
-  {{- with $page.GetTerms "tags" }}
-    <div class="node-nav__tags">
-      {{- range . }}
-        <a class="node-nav__tag" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
-      {{- end }}
-    </div>
-  {{- end }}
-
   {{/* Prev/next — secondary, unobtrusive */}}
   {{- $prev := $page.PrevInSection }}
   {{- $next := $page.NextInSection }}

@@ -281,6 +281,4 @@ Fonts:
 - Technologies (content type with category/firstUsed/favorite/dailyDriver metadata, auto-discovery from keywords/technologies/tools across site)
 
 ### Not Yet Implemented
-- Search
 - Tag enrichment (existing content mostly has empty tags)
-- 404 page styling

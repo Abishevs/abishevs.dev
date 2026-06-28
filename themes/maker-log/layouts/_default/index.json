@@ -1,0 +1,15 @@
+{{- $pages := slice }}
+{{- $sections := slice "projects" "work-experience" "education" "technologies" "workflows" "books" "project-journal" "posts" }}
+{{- range $section := $sections }}
+  {{- range (where site.RegularPages "Section" $section) }}
+    {{- $pages = $pages | append (dict
+      "title" .Title
+      "url" .RelPermalink
+      "section" .Section
+      "desc" (.Description | default "")
+      "date" (.Date.Format "2006-01-02")
+      "tags" (.Params.tags | default slice)
+    ) }}
+  {{- end }}
+{{- end }}
+{{- $pages | jsonify }}

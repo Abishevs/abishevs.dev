@@ -22,7 +22,9 @@
       </div>
     </li>
   {{- end }}
-  <li class="nav-cat nav-cat--direct">
-    <a class="nav-cat__link" href="{{ "about/" | relLangURL }}">About</a>
-  </li>
+  {{- range $nav.direct }}
+    <li class="nav-cat nav-cat--direct">
+      <a class="nav-cat__link" href="{{ .url | relLangURL }}">{{ .name }}</a>
+    </li>
+  {{- end }}
 </ul>

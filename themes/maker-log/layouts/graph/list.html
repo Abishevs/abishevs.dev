@@ -4,28 +4,31 @@
     {{- with .Description }}<p class="page-header__desc">{{ . }}</p>{{ end }}
   </header>
 
-  <div class="graph-legend">
-    <span class="graph-legend__item"><span class="graph-legend__dot" style="background:#38BDF8"></span>Projects</span>
-    <span class="graph-legend__item"><span class="graph-legend__dot" style="background:#22C55E"></span>Work Experience</span>
-    <span class="graph-legend__item"><span class="graph-legend__dot" style="background:#F59E0B"></span>Education</span>
-    <span class="graph-legend__item"><span class="graph-legend__dot" style="background:#9F7AEA"></span>Technologies</span>
-    <span class="graph-legend__item"><span class="graph-legend__dot" style="background:#EC4899"></span>Workflows</span>
-    <span class="graph-legend__item"><span class="graph-legend__dot" style="background:#FB923C"></span>Books</span>
-    <span class="graph-legend__item"><span class="graph-legend__dot" style="background:#6EE7B7"></span>Journals</span>
-    <span class="graph-legend__item"><span class="graph-legend__dot" style="background:#E5E7EB"></span>Posts</span>
+  <div class="graph-controls">
+    <input type="text" class="graph-search" id="graph-search" placeholder="Search nodes..." autocomplete="off" />
+    <div class="graph-filters" id="graph-filters">
+      <button class="graph-filter is-active" data-section="projects" style="--dot-color:#38BDF8" type="button">Projects</button>
+      <button class="graph-filter is-active" data-section="work-experience" style="--dot-color:#22C55E" type="button">Work Exp</button>
+      <button class="graph-filter is-active" data-section="education" style="--dot-color:#F59E0B" type="button">Education</button>
+      <button class="graph-filter is-active" data-section="technologies" style="--dot-color:#9F7AEA" type="button">Technologies</button>
+      <button class="graph-filter is-active" data-section="workflows" style="--dot-color:#EC4899" type="button">Workflows</button>
+      <button class="graph-filter is-active" data-section="books" style="--dot-color:#FB923C" type="button">Books</button>
+      <button class="graph-filter is-active" data-section="project-journal" style="--dot-color:#6EE7B7" type="button">Journals</button>
+      <button class="graph-filter is-active" data-section="posts" style="--dot-color:#E5E7EB" type="button">Posts</button>
+    </div>
   </div>
 
   <div class="graph-container" id="graph-container">
     <svg id="graph-svg"></svg>
   </div>
 
-  {{/* ─── Generate graph data ─── */}}
+  {{/* ─── Generate graph data with descriptions ─── */}}
   {{- $nodes := slice }}
   {{- $edges := slice }}
   {{- $sections := slice "projects" "work-experience" "education" "technologies" "workflows" "books" "project-journal" "posts" }}
   {{- range $section := $sections }}
     {{- range (where site.RegularPages "Section" $section) }}
-      {{- $nodes = $nodes | append (dict "id" .RelPermalink "title" .Title "section" .Section) }}
+      {{- $nodes = $nodes | append (dict "id" .RelPermalink "title" .Title "section" .Section "desc" (.Description | default "")) }}
       {{- $src := .RelPermalink }}
       {{- range .Params.related }}
         {{- with site.GetPage . }}
