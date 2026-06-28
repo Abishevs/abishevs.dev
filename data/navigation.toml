@@ -34,6 +34,11 @@ url  = "timeline/"
 desc = "Chronological view across projects, work and education."
 
 [[journey.items]]
+name = "Knowledge Graph"
+url  = "graph/"
+desc = "Interactive visualization of how all knowledge connects."
+
+[[journey.items]]
 name = "Work Experience"
 url  = "work-experience/"
 desc = "Professional engineering — challenges, technologies and lessons."

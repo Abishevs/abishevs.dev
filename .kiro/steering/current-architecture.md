@@ -282,6 +282,5 @@ Fonts:
 
 ### Not Yet Implemented
 - Search
-- Knowledge graph visualization
 - Tag enrichment (existing content mostly has empty tags)
 - 404 page styling

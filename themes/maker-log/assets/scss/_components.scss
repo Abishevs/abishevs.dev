@@ -1469,3 +1469,49 @@ h2.proj-section__title {
   margin-left: auto;
   font-size: 0.9rem;
 }
+
+// ─── Knowledge Graph ────────────────────────────────────────
+
+.graph-container {
+  position: relative;
+  width: 100%;
+  margin-top: 1.5rem;
+  border: 1px solid $color-border;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.graph-tooltip {
+  position: absolute;
+  pointer-events: none;
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  padding: 0.25rem 0.5rem;
+  color: $color-text;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.graph-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.graph-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: $font-mono;
+  font-size: 0.65rem;
+  color: $color-muted;
+}
+
+.graph-legend__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}

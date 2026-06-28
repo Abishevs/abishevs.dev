@@ -1,0 +1,43 @@
+{{ define "main" }}
+  <header class="page-header">
+    <h1 class="page-header__title">{{ .Title }}</h1>
+    {{- with .Description }}<p class="page-header__desc">{{ . }}</p>{{ end }}
+  </header>
+
+  <div class="graph-legend">
+    <span class="graph-legend__item"><span class="graph-legend__dot" style="background:#38BDF8"></span>Projects</span>
+    <span class="graph-legend__item"><span class="graph-legend__dot" style="background:#22C55E"></span>Work Experience</span>
+    <span class="graph-legend__item"><span class="graph-legend__dot" style="background:#F59E0B"></span>Education</span>
+    <span class="graph-legend__item"><span class="graph-legend__dot" style="background:#9F7AEA"></span>Technologies</span>
+    <span class="graph-legend__item"><span class="graph-legend__dot" style="background:#EC4899"></span>Workflows</span>
+    <span class="graph-legend__item"><span class="graph-legend__dot" style="background:#FB923C"></span>Books</span>
+    <span class="graph-legend__item"><span class="graph-legend__dot" style="background:#6EE7B7"></span>Journals</span>
+    <span class="graph-legend__item"><span class="graph-legend__dot" style="background:#E5E7EB"></span>Posts</span>
+  </div>
+
+  <div class="graph-container" id="graph-container">
+    <svg id="graph-svg"></svg>
+  </div>
+
+  {{/* ─── Generate graph data ─── */}}
+  {{- $nodes := slice }}
+  {{- $edges := slice }}
+  {{- $sections := slice "projects" "work-experience" "education" "technologies" "workflows" "books" "project-journal" "posts" }}
+  {{- range $section := $sections }}
+    {{- range (where site.RegularPages "Section" $section) }}
+      {{- $nodes = $nodes | append (dict "id" .RelPermalink "title" .Title "section" .Section) }}
+      {{- $src := .RelPermalink }}
+      {{- range .Params.related }}
+        {{- with site.GetPage . }}
+          {{- $edges = $edges | append (dict "source" $src "target" .RelPermalink) }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+
+  <script>
+    window.__graphData = {{ dict "nodes" $nodes "edges" $edges | jsonify | safeJS }};
+  </script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="{{ (resources.Get "js/graph.js" | fingerprint).RelPermalink }}"></script>
+{{ end }}
