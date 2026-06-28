@@ -30,7 +30,7 @@
       <time datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date | time.Format "2 Jan 2006" }}</time>
       {{- if ne ($page.Lastmod.Format "2006-01-02") ($page.Date.Format "2006-01-02") }}
         <span class="node-meta__sep">·</span>
-        <span class="node-meta__updated">Updated {{ $page.Lastmod | time.Format "2 Jan 2006" }}</span>
+        <span class="node-meta__updated">{{ site.Data.knowledge.labels.meta.updated }} {{ $page.Lastmod | time.Format "2 Jan 2006" }}</span>
       {{- end }}
     </span>
   {{- end }}

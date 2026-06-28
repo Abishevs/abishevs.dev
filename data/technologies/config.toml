@@ -1,3 +1,6 @@
+[section]
+emptyState = "No technologies match the selected filters."
+
 [filters]
 title         = "Filters"
 hint          = "filter by category"

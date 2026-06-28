@@ -1,5 +1,9 @@
 # Display labels for the projects index page.
 
+[section]
+allTitle = "All Projects"
+emptyState = "No projects match the selected filters."
+
 [filters]
 statusLabel = "Status"
 domainLabel = "Domain"

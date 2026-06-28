@@ -111,12 +111,12 @@
 
   {{/* ─── ALL PROJECTS ─── */}}
   <section class="proj-section">
-    <h2 class="proj-section__title">All Projects<span class="proj-section__count">{{ len $projects }}</span></h2>
+    <h2 class="proj-section__title">{{ site.Data.projects.config.section.allTitle }}<span class="proj-section__count">{{ len $projects }}</span></h2>
     <div class="proj-grid" id="proj-grid">
       {{- range $projects }}
         {{ partial "project-card.html" . }}
       {{- end }}
     </div>
-    <p class="proj-empty" id="proj-empty" hidden>No projects match the selected filters.</p>
+    <p class="proj-empty" id="proj-empty" hidden>{{ site.Data.projects.config.section.emptyState }}</p>
   </section>
 {{ end }}

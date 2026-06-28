@@ -1,0 +1,25 @@
+# Shared UI labels — used across multiple templates
+# Change wording here, not in templates.
+
+[relationships]
+related = "Continue Exploring"
+backlinks = "Linked From"
+discovered = "Appears In"
+
+[meta]
+updated = "Updated"
+started = "Started"
+
+[navigation]
+allPrefix = "← All"
+
+[search]
+graphPlaceholder = "Search nodes..."
+sitePlaceholder = "Search knowledge nodes..."
+siteHint = "Type to search across projects, technologies, workflows, books, experience and writing."
+
+[empty]
+default = "No items match the selected filters."
+
+[footer]
+buildingSince = "building since"

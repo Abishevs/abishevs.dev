@@ -7,7 +7,7 @@
   {{- $tracks := site.Data.knowledge.tracks }}
 
   <div class="graph-controls">
-    <input type="text" class="graph-search" id="graph-search" placeholder="Search nodes..." autocomplete="off" />
+    <input type="text" class="graph-search" id="graph-search" placeholder="{{ site.Data.knowledge.labels.search.graphPlaceholder }}" autocomplete="off" />
     <div class="graph-filters" id="graph-filters">
       {{- range $key, $t := $tracks }}
         <button class="graph-filter is-active" data-section="{{ $t.section }}" style="--dot-color:{{ $t.color }}" type="button">{{ $t.label }}</button>

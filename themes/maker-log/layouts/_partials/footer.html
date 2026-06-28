@@ -4,11 +4,11 @@
   {{- $postCount := len (where site.RegularPages "Section" "posts") }}
   {{- $oldest := (where site.RegularPages "Section" "projects").ByDate | first 1 }}
   <div class="site-footer__stats">
-    <a href="/projects/">{{ $projectCount }} projects</a>
-    <a href="/project-journal/">{{ $journalCount }} journals</a>
-    <a href="/posts/">{{ $postCount }} posts</a>
+    <a href="/projects/">{{ $projectCount }} {{ lower site.Data.knowledge.tracks.project.label }}</a>
+    <a href="/project-journal/">{{ $journalCount }} {{ lower site.Data.knowledge.tracks.journal.label }}</a>
+    <a href="/posts/">{{ $postCount }} {{ lower site.Data.knowledge.tracks.post.label }}</a>
     {{- with $oldest }}
-      <span>building since {{ (index . 0).Date.Year }}</span>
+      <span>{{ site.Data.knowledge.labels.footer.buildingSince }} {{ (index . 0).Date.Year }}</span>
     {{- end }}
   </div>
   <div class="site-footer__copy">© {{ site.Params.since }}–{{ now.Year }} {{ site.Params.author }}</div>

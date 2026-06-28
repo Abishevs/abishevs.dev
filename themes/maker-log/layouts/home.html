@@ -22,6 +22,7 @@
   {{- end }}
 
   {{/* ─── 2. Featured Work ─── */}}
+  {{- $hp := site.Data.homepage }}
   {{- $pinned := slice }}
   {{- range site.Params.pinnedProjects }}
     {{- $p := site.GetPage . }}
@@ -29,11 +30,11 @@
   {{- end }}
   {{- with $pinned }}
     <section class="home-section">
-      <h2 class="home-section__title">Featured Work</h2>
+      <h2 class="home-section__title">{{ $hp.featured.title }}</h2>
       <div class="proj-card-grid">
         {{- range . }}{{ partial "project-card.html" . }}{{ end }}
       </div>
-      <a class="home-section__more" href="/projects/">All projects →</a>
+      <a class="home-section__more" href="{{ $hp.featured.moreUrl }}">{{ $hp.featured.moreLabel }}</a>
     </section>
   {{- end }}
 
@@ -45,7 +46,7 @@
     (dict "label" "Writing" "desc" $nav.writing.description "items" $nav.writing.items)
   }}
   <section class="home-section">
-    <h2 class="home-section__title">Knowledge System</h2>
+    <h2 class="home-section__title">{{ $hp.knowledge.title }}</h2>
     {{- range $groups }}
       <div class="home-explore-group">
         <h3 class="home-explore-group__label">{{ .label }} <span class="home-explore-group__desc">— {{ .desc }}</span></h3>
@@ -64,7 +65,7 @@
   {{/* ─── 4. Now ─── */}}
   {{- with $nowContent }}
     <section class="home-section">
-      <h2 class="home-section__title">Now</h2>
+      <h2 class="home-section__title">{{ $hp.now.title }}</h2>
       <div class="home-now">{{ . | safeHTML }}</div>
     </section>
   {{- end }}
@@ -98,7 +99,7 @@
 
   {{- with $changes }}
     <section class="home-section">
-      <h2 class="home-section__title">Recent Changes</h2>
+      <h2 class="home-section__title">{{ $hp.recentChanges.title }}</h2>
       <ul class="home-activity">
         {{- range . }}
           <li class="home-activity__item">

@@ -1,3 +1,7 @@
+[section]
+allTitle = "All Workflows"
+emptyState = "No workflows match the selected filters."
+
 [filters]
 title       = "Filters"
 hint        = "filter by status or domain"

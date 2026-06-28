@@ -1,0 +1,15 @@
+# Homepage section configuration
+
+[featured]
+title = "Featured Work"
+moreLabel = "All projects →"
+moreUrl = "/projects/"
+
+[knowledge]
+title = "Knowledge System"
+
+[now]
+title = "Now"
+
+[recentChanges]
+title = "Recent Changes"
