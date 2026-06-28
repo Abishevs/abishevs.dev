@@ -1067,7 +1067,7 @@ h2.proj-section__title {
   margin-top: 0.5rem;
 }
 
-// ─── Timeline Index ──────────────────────────────────────────
+// ─── Timeline Index — Signal Traces ─────────────────────────
 
 .timeline {
   --tl-project: #38BDF8;
@@ -1078,90 +1078,162 @@ h2.proj-section__title {
   margin-top: 1rem;
 }
 
-// Gantt chart
-.gantt {
-  position: relative;
-  display: grid;
-  grid-template-columns: 3rem 1fr;
-  overflow-x: hidden;
+// Range selector — year pills
+.signal-range {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  margin-bottom: 0.75rem;
 }
 
-.gantt-axis {
-  position: relative;
-  border-right: 1px solid $color-border;
-}
-
-.gantt-axis__year {
-  position: absolute;
-  left: 0;
-  font-family: $font-mono;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: $color-text;
-}
-
-.gantt-axis__month {
-  position: absolute;
-  left: 0;
+.signal-range__year {
   font-family: $font-mono;
   font-size: 0.6rem;
-  color: $color-muted;
-}
-
-.gantt-items {
-  position: relative;
-}
-
-// Individual Gantt items
-.gantt-item {
-  position: absolute;
-  display: block;
-  text-decoration: none;
-  border-radius: 3px;
-  overflow: hidden;
-  min-height: 20px;
-  cursor: pointer;
-  transition: transform 0.1s;
-
-  &:hover { transform: translateX(2px); z-index: 10; }
-  &:hover .gantt-item__label { opacity: 1; }
-}
-
-.gantt-item__bar {
-  position: absolute;
-  inset: 0;
-  border-radius: 3px;
-}
-
-.gantt-item__activity {
-  position: absolute;
-  left: 0;
-  right: 0;
+  padding: 0.15rem 0.35rem;
+  border: 1px solid transparent;
   border-radius: 2px;
-  opacity: 0.85;
+  background: transparent;
+  color: $color-muted;
+  cursor: pointer;
+
+  &.is-active { color: $color-text; background: rgba($color-blue, 0.1); border-color: $color-border; }
+  &:hover:not(.is-active) { color: $color-text; }
 }
 
-.gantt-item__milestone {
-  position: absolute;
-  left: 2px;
-  font-size: 0.5rem;
-  color: $color-warning;
-  z-index: 2;
-}
-
-.gantt-item__label {
+// Time axis
+.signal-axis {
   position: relative;
-  z-index: 1;
-  display: block;
-  padding: 0.2rem 0.4rem;
-  font-family: $font-heading;
+  height: 1.5rem;
+  border-bottom: 1px solid $color-border;
+  margin-bottom: 0.5rem;
+  margin-left: 10rem;
+}
+
+.signal-axis__year {
+  position: absolute;
+  top: 0;
+  font-family: $font-mono;
   font-size: 0.65rem;
   font-weight: 600;
+  color: $color-muted;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 1px;
+    height: 0.35rem;
+    background: $color-border;
+  }
+}
+
+.signal-axis__now {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  background: rgba($color-blue, 0.5);
+  pointer-events: none;
+}
+
+// Track groups
+.signal-group {
+  margin-bottom: 0.5rem;
+}
+
+.signal-group__header {
+  font-family: $font-mono;
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--track-color);
+  padding: 0.3rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+// Individual signal row
+.signal-row {
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+  align-items: center;
+  height: 1.75rem;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background 0.1s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.03);
+    .signal-row__active { opacity: 1; }
+  }
+}
+
+.signal-row__label {
+  font-family: $font-heading;
+  font-size: 0.7rem;
+  font-weight: 500;
   color: $color-text;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-right: 0.5rem;
+}
+
+.signal-row__trace {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+// Lifetime — dim background trace
+.signal-row__lifetime {
+  position: absolute;
+  height: 2px;
+  opacity: 0.2;
+  border-radius: 1px;
+}
+
+// Activity — bright segments
+.signal-row__active {
+  position: absolute;
+  height: 6px;
+  border-radius: 1px;
+  opacity: 0.85;
+  transition: opacity 0.1s;
+}
+
+// Point event
+.signal-row__point {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transform: translateX(-50%);
   opacity: 0.9;
+}
+
+// Ongoing indicator
+.signal-row__ongoing {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 6px solid;
+  opacity: 0.7;
+}
+
+// Milestones
+.signal-row__milestone {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: $color-warning;
+  transform: translateX(-50%) rotate(45deg);
+  top: calc(50% - 2px);
+  z-index: 2;
 }
 
 // Timeline filters
@@ -1196,6 +1268,14 @@ h2.proj-section__title {
 
   &.is-active { color: $color-text; border-color: var(--track-color); }
   &:not(.is-active) { opacity: 0.4; }
+}
+
+// Mobile
+@media (max-width: 768px) {
+  .signal-axis { margin-left: 7rem; }
+  .signal-axis__year { font-size: 0.55rem; }
+  .signal-row { grid-template-columns: 7rem 1fr; height: 1.5rem; }
+  .signal-row__label { font-size: 0.6rem; }
 }
 
 // ─── Workflow Pages ──────────────────────────────────────────
