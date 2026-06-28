@@ -1,0 +1,109 @@
+{{/*
+  Generic profile-driven Knowledge Node header.
+  Resolves the page's profile and renders title, subtitle, meta, tech badges, and resources.
+  Context: dict "page" (the page object)
+*/}}
+{{- $page := .page }}
+{{- $profiles := hugo.Data.knowledge.profiles }}
+{{- $statuses := hugo.Data.knowledge.statuses }}
+{{- $domainData := hugo.Data.knowledge.domains }}
+
+{{/* ─── Resolve profile ─── */}}
+{{- $profileKey := "" }}
+{{- with $page.Params.profile }}
+  {{- $profileKey = . }}
+{{- else }}
+  {{- $profileKey = index $profiles._defaults $page.Section }}
+{{- end }}
+{{- $profile := index $profiles $profileKey }}
+
+{{/* ─── Title ─── */}}
+{{- $titleText := $page.Title }}
+{{- with $profile.title }}
+  {{- $titleText = index $page.Params . | default $page.Title }}
+{{- end }}
+<h1 class="article-title">{{ $titleText }}{{- if $profile.titleSuffix }}{{- $sv := index $page.Params $profile.titleSuffix }}{{- with $sv }} <span class="article-title__suffix">by {{ . }}</span>{{ end }}{{- end }}</h1>
+
+{{/* ─── Subtitle fields ─── */}}
+{{- with $profile.subtitle }}
+  <div class="work-meta">
+    {{- range . }}
+      {{- $cls := .class }}
+      {{- if eq .field "_duration" }}
+        <span{{ with $cls }} class="{{ . }}"{{ end }}>
+          {{- $page.Params.startDate | time.Format "Jan 2006" }}
+          {{- if $page.Params.current }} – Present
+          {{- else if $page.Params.endDate }} – {{ $page.Params.endDate | time.Format "Jan 2006" }}
+          {{- end }}
+        </span>
+      {{- else }}
+        {{- $val := index $page.Params .field }}
+        {{- with $val }}<span{{ with $cls }} class="{{ . }}"{{ end }}>{{ $val }}</span>{{ end }}
+      {{- end }}
+    {{- end }}
+  </div>
+{{- end }}
+
+{{/* ─── Meta fields ─── */}}
+{{- with $profile.meta }}
+  <div class="node-meta">
+    {{- range . }}
+      {{- $field := .field }}
+      {{- $type := .type }}
+      {{- $label := .label }}
+      {{- $prefix := .prefix }}
+      {{- $domainKey := .domainKey | default "projectType" }}
+      {{- if eq $type "status" }}
+        {{- with index $page.Params $field }}
+          {{ partial "knowledge/badge-status.html" (dict "status" . "statuses" $statuses) }}
+        {{- end }}
+      {{- else if eq $type "domains" }}
+        {{- $raw := index $page.Params $domainKey }}
+        {{- $domains := slice }}
+        {{- with $raw }}
+          {{- if reflect.IsSlice . }}{{- $domains = . }}{{- else }}{{- $domains = slice . }}{{- end }}
+        {{- end }}
+        {{- with $domains }}
+          {{ partial "knowledge/badge-domains.html" (dict "domains" . "domainData" $domainData) }}
+        {{- end }}
+      {{- else if eq $type "badge" }}
+        {{- $val := index $page.Params $field }}
+        {{- with $val }}
+          <span class="badge badge--tech">{{ . | humanize | title }}</span>
+        {{- end }}
+      {{- else if eq $type "flag" }}
+        {{- $val := index $page.Params $field }}
+        {{- if $val }}
+          <span class="tech-meta__tag">{{ $label }}</span>
+        {{- end }}
+      {{- else if eq $type "text" }}
+        {{- $val := index $page.Params $field }}
+        {{- with $val }}
+          <span class="node-meta__text">{{ with $prefix }}{{ . }} {{ end }}{{ $val }}</span>
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  </div>
+{{- end }}
+
+{{/* ─── Tech badges (linked if technology page exists) ─── */}}
+{{- with $profile.techField }}
+  {{- $techs := index $page.Params . }}
+  {{- with $techs }}
+    <div class="work-meta__tech">
+      {{- range . }}
+        {{- $techPage := site.GetPage (printf "/technologies/%s" (. | urlize)) }}
+        {{- if $techPage }}
+          <a class="badge badge--tech is-link" href="{{ $techPage.RelPermalink }}">{{ . }}</a>
+        {{- else }}
+          <span class="badge badge--tech">{{ . }}</span>
+        {{- end }}
+      {{- end }}
+    </div>
+  {{- end }}
+{{- end }}
+
+{{/* ─── Links (generic [[links]] in frontmatter) ─── */}}
+{{- with $page.Params.links }}
+  {{ partial "knowledge/external-links.html" (dict "links" .) }}
+{{- end }}

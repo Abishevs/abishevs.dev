@@ -98,7 +98,7 @@
 
   {{/* ─── ALL WORKFLOWS ─── */}}
   <section class="proj-section">
-    <h2 class="proj-section__title">{{ site.Data.workflows.config.section.allTitle }}<span class="proj-section__count">{{ len $workflows }}</span></h2>
+    <h2 class="proj-section__title">{{ hugo.Data.workflows.config.section.allTitle }}<span class="proj-section__count">{{ len $workflows }}</span></h2>
     <div class="work-list" id="proj-grid">
       {{- range $workflows }}
         {{- $domains := .Params.domains | default slice }}
@@ -125,6 +125,6 @@
         </a>
       {{- end }}
     </div>
-    <p class="proj-empty" id="proj-empty" hidden>{{ site.Data.workflows.config.section.emptyState }}</p>
+    <p class="proj-empty" id="proj-empty" hidden>{{ hugo.Data.workflows.config.section.emptyState }}</p>
   </section>
 {{ end }}

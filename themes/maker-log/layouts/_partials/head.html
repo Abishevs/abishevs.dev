@@ -1,5 +1,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
 <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-sMigJq9UtDFBFmGG3mDBXO/kiOJLmSxMoMYSS4PYL9G8PdlMfvNMq4mSAu7SiJ0" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js" integrity="sha384-cMkvdnFRHLBQIBMLe77sJeraxBFUMQ5guf6oFfgMxMSN3LWqtNrgsyFz4HMdAbp" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrKI0kfiTgwDEMfUaOCHpRIFkPY+HZs9L0SBNoLaRq2gPGJIt/I6VGmTnFbY" crossorigin="anonymous"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var interval = setInterval(function() {
+    if (typeof renderMathInElement !== "undefined") {
+      clearInterval(interval);
+      renderMathInElement(document.body, {
+        delimiters: [
+          {left: "$$", right: "$$", display: true},
+          {left: "$", right: "$", display: false}
+        ]
+      });
+    }
+  }, 50);
+});
+</script>
 {{ partialCached "head/css.html" . }}
 {{ partialCached "head/js.html" . }}

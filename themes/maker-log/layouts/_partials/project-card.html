@@ -1,8 +1,11 @@
 {{- $href := .RelPermalink }}
-{{- if and .Params.linkToSource .Params.sourceCodeUrl }}
-  {{- $href = .Params.sourceCodeUrl }}
+{{- $external := false }}
+{{- if .Params.linkToSource }}
+  {{- range first 1 .Params.links }}
+    {{- $href = .url }}
+    {{- $external = true }}
+  {{- end }}
 {{- end }}
-{{- $external := and .Params.linkToSource .Params.sourceCodeUrl }}
 
 {{/* Build domain list for data attribute */}}
 {{- $domains := slice }}
@@ -33,7 +36,7 @@
         <p class="proj-card__desc">{{ . }}</p>
       {{- end }}
       <div class="proj-card__dates">
-        <span>{{ site.Data.knowledge.labels.meta.started }} {{ .Date | time.Format "2 Jan 2006" }}</span>
+        <span>{{ hugo.Data.knowledge.labels.meta.started }} {{ .Date | time.Format "2 Jan 2006" }}</span>
         {{- if ne (.Lastmod.Format "2006-01-02") (.Date.Format "2006-01-02") }}
           <span>│ Updated {{ .Lastmod | time.Format "2 Jan 2006" }}</span>
         {{- end }}

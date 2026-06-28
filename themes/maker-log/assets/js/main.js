@@ -108,3 +108,20 @@ if (grid) {
     });
   }
 }
+
+// ─── Code block copy buttons ─────────────────────────────────
+document.querySelectorAll('.highlight').forEach(block => {
+  const btn = document.createElement('button');
+  btn.className = 'code-copy';
+  btn.textContent = 'Copy';
+  btn.addEventListener('click', () => {
+    const code = block.querySelector('code');
+    if (!code) return;
+    navigator.clipboard.writeText(code.textContent).then(() => {
+      btn.textContent = 'Copied!';
+      btn.classList.add('is-copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('is-copied'); }, 1500);
+    });
+  });
+  block.appendChild(btn);
+});

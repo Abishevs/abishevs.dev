@@ -9,6 +9,10 @@ Project pages should automatically detect:
 
 and render appropriate badges and links.
 
+NOTE: sourceCodeUrl and journalUrl have been replaced by the generic `[[links]]`
+system. The `linkToSource` flag now reads the first `[[links]]` entry URL as
+the card fallback target.
+
 Examples:
 
 status = "active"

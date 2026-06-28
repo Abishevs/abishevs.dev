@@ -1005,6 +1005,12 @@ h2.proj-section__title {
   border: 1px solid $color-border;
   background: transparent;
   font-size: 0.6rem;
+
+  &.is-link {
+    text-decoration: none;
+    cursor: pointer;
+    &:hover { border-color: $color-blue; color: $color-blue; }
+  }
 }
 
 // Work experience list page
@@ -1966,3 +1972,68 @@ mark {
   padding: 0 0.1em;
   border-radius: 1px;
 }
+
+// ─── Code Blocks ─────────────────────────────────────────────
+
+.highlight {
+  position: relative;
+  margin: 1.5rem 0;
+
+  pre {
+    padding: 1rem;
+    overflow-x: auto;
+    border: 1px solid $color-border;
+    border-radius: 2px;
+    background: $color-bg !important;
+    font-family: $font-mono;
+    font-size: 0.8rem;
+    line-height: 1.55;
+
+    code { background: none; padding: 0; border: none; font-size: inherit; }
+  }
+}
+
+// Copy button
+.code-copy {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  font-family: $font-mono;
+  font-size: 0.55rem;
+  padding: 0.2rem 0.4rem;
+  border: 1px solid $color-border;
+  border-radius: 2px;
+  background: $color-surface;
+  color: $color-muted;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s;
+
+  .highlight:hover & { opacity: 1; }
+  &:hover { color: $color-text; border-color: $color-blue; }
+  &.is-copied { color: $color-success; border-color: $color-success; }
+}
+
+// Inline code
+:not(pre) > code {
+  font-family: $font-mono;
+  font-size: 0.82em;
+  padding: 0.15em 0.35em;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: 2px;
+  color: $color-text;
+}
+
+// ─── KaTeX Overrides ─────────────────────────────────────────
+
+.katex-display {
+  margin: 1.5rem 0;
+  padding: 0.75rem 1rem;
+  background: rgba($color-surface, 0.5);
+  border: 1px solid $color-border;
+  border-radius: 2px;
+  overflow-x: auto;
+}
+
+.katex { color: $color-text; }

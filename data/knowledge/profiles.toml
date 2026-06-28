@@ -1,0 +1,155 @@
+# Content Profiles — controls how Knowledge Nodes are rendered.
+#
+# Each profile defines:
+#   title       — frontmatter field used as h1 (default: "title")
+#   subtitle    — list of fields rendered below title as text
+#   meta        — list of metadata field renderers
+#   techField   — frontmatter field containing technology badges
+#
+# Meta field types:
+#   text     — plain text span
+#   badge    — colored badge
+#   duration — startDate/endDate range
+#   flag     — boolean rendered as label (e.g. ★ Favorite)
+#
+# Profile is resolved via:
+#   1. Page.Params.profile (explicit override)
+#   2. Section → default profile mapping (see [_defaults])
+
+[_defaults]
+projects = "project"
+workflows = "workflow"
+technologies = "technology"
+books = "book"
+work-experience = "career"
+education = "education"
+posts = "post"
+project-journal = "journal"
+
+# ─── Project Profile ─────────────────────────────────────────
+
+[project]
+techField = "technologies"
+
+[[project.meta]]
+field = "status"
+type = "status"
+
+[[project.meta]]
+field = "projectType"
+type = "domains"
+
+# ─── Workflow Profile ────────────────────────────────────────
+
+[workflow]
+techField = "tools"
+
+[[workflow.meta]]
+field = "status"
+type = "status"
+
+[[workflow.meta]]
+field = "domains"
+type = "domains"
+domainKey = "domains"
+
+# ─── Technology Profile ──────────────────────────────────────
+
+[technology]
+
+[[technology.meta]]
+field = "category"
+type = "badge"
+label = ""
+
+[[technology.meta]]
+field = "favorite"
+type = "flag"
+label = "★ Favorite"
+
+[[technology.meta]]
+field = "dailyDriver"
+type = "flag"
+label = "◆ Daily Driver"
+
+[[technology.meta]]
+field = "firstUsed"
+type = "text"
+prefix = "Since"
+
+# ─── Book Profile ────────────────────────────────────────────
+
+[book]
+titleSuffix = "author"
+
+[[book.meta]]
+field = "year"
+type = "text"
+
+[[book.meta]]
+field = "readingStatus"
+type = "badge"
+
+[[book.meta]]
+field = "favorite"
+type = "flag"
+label = "★ Favorite"
+
+# ─── Career Profile ──────────────────────────────────────────
+
+[career]
+title = "position"
+techField = "technologies"
+
+[[career.subtitle]]
+field = "organization"
+class = "work-meta__org"
+
+[[career.subtitle]]
+field = "_duration"
+class = "work-meta__duration"
+
+[[career.subtitle]]
+field = "location"
+class = "work-meta__location"
+
+[[career.subtitle]]
+field = "employmentType"
+class = "work-meta__type"
+
+[[career.meta]]
+field = "status"
+type = "status"
+
+# ─── Education Profile ───────────────────────────────────────
+
+[education]
+title = "programme"
+
+[[education.subtitle]]
+field = "institution"
+class = "work-meta__org"
+
+[[education.subtitle]]
+field = "degree"
+class = ""
+
+[[education.subtitle]]
+field = "_duration"
+class = "work-meta__duration"
+
+[[education.subtitle]]
+field = "location"
+class = ""
+
+[[education.meta]]
+field = "status"
+type = "status"
+
+# ─── Post Profile ────────────────────────────────────────────
+
+[post]
+
+# ─── Journal Profile ─────────────────────────────────────────
+
+[journal]

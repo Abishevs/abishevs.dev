@@ -10,9 +10,17 @@ disqusShortname = "Abishevs"
 
 [markup.highlight]
 style = "github-dark"
+noClasses = false
 
 [markup.goldmark.renderer]
 unsafe = true
+
+[markup.goldmark.extensions.passthrough]
+enable = true
+
+[markup.goldmark.extensions.passthrough.delimiters]
+inline = [['$', '$'], ['\(', '\)']]
+block = [['$$', '$$'], ['\[', '\]']]
 
 [params]
   author = "Eduards Abishevs"

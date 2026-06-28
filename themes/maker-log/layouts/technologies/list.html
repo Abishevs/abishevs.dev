@@ -25,7 +25,7 @@
   <div class="proj-filters" id="proj-filters">
     {{- if gt (len $catCounts) 1 }}
       <div class="proj-filters__row">
-        <span class="proj-filters__label">{{ site.Data.technologies.config.filters.categoryLabel }}</span>
+        <span class="proj-filters__label">{{ hugo.Data.technologies.config.filters.categoryLabel }}</span>
         <div class="proj-filters__chips" role="group" aria-label="Filter by category">
           {{- range $cat, $count := $catCounts }}
             <button class="filter-chip" data-filter="domains" data-value="{{ $cat }}" type="button">{{ $cat | humanize | title }}<span class="filter-chip__count">{{ $count }}</span></button>
@@ -75,5 +75,5 @@
       </section>
     {{- end }}
   </div>
-  <p class="proj-empty" id="proj-empty" hidden>{{ site.Data.technologies.config.section.emptyState }}</p>
+  <p class="proj-empty" id="proj-empty" hidden>{{ hugo.Data.technologies.config.section.emptyState }}</p>
 {{ end }}

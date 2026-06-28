@@ -1,15 +1,7 @@
 {{ define "main" }}
   <article>
     <header class="article-header">
-      <h1 class="article-title">{{ .Title }}</h1>
-      {{ partial "knowledge/node-meta.html" (dict "page" .) }}
-      {{ partial "knowledge/external-links.html" (dict "links" (slice
-        (dict "label" "Source" "url" .Params.sourceCodeUrl)
-        (dict "label" "Demo" "url" .Params.demoUrl)
-        (dict "label" "Live" "url" .Params.liveUrl)
-        (dict "label" "Journal" "url" .Params.journalUrl)
-        (dict "label" "Report" "url" .Params.reportUrl)
-      )) }}
+      {{ partial "knowledge/profile-header.html" (dict "page" .) }}
     </header>
     <div class="article-body">
       {{ .Content }}

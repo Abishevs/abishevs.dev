@@ -27,7 +27,7 @@
 {{- end }}
 {{- with $backlinks }}
   <aside class="node-backlinks">
-    <h2 class="node-backlinks__title">{{ site.Data.knowledge.labels.relationships.backlinks }}</h2>
+    <h2 class="node-backlinks__title">{{ hugo.Data.knowledge.labels.relationships.backlinks }}</h2>
     <ul class="node-backlinks__list">
       {{- range . }}
         <li><a href="{{ .RelPermalink }}">{{ .Title }}</a><span class="node-backlinks__section">{{ .Section | humanize }}</span></li>

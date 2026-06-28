@@ -11,7 +11,7 @@
   {{- with $section }}
     {{- if ne .RelPermalink "/" }}
       <div class="node-nav__section">
-        <a href="{{ .RelPermalink }}">{{ site.Data.knowledge.labels.navigation.allPrefix }} {{ .Title }}</a>
+        <a href="{{ .RelPermalink }}">{{ hugo.Data.knowledge.labels.navigation.allPrefix }} {{ .Title }}</a>
       </div>
     {{- end }}
   {{- end }}

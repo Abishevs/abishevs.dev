@@ -1,19 +1,7 @@
 {{ define "main" }}
   <article>
     <header class="article-header">
-      <h1 class="article-title">{{ .Params.programme }}</h1>
-      <div class="work-meta">
-        <span class="work-meta__org">{{ .Params.institution }}</span>
-        {{- with .Params.degree }}<span>{{ . }}</span>{{ end }}
-        <span class="work-meta__duration">
-          {{- .Params.startDate | time.Format "Jan 2006" }}
-          {{- if .Params.current }} – Present
-          {{- else if .Params.endDate }} – {{ .Params.endDate | time.Format "Jan 2006" }}
-          {{- end }}
-        </span>
-        {{- with .Params.location }}<span>{{ . }}</span>{{ end }}
-      </div>
-      {{ partial "knowledge/node-meta.html" (dict "page" . "showDates" false) }}
+      {{ partial "knowledge/profile-header.html" (dict "page" .) }}
     </header>
     <div class="article-body">
       {{ .Content }}

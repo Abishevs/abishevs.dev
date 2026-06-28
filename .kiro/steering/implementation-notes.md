@@ -99,7 +99,10 @@ Existing project fields in use:
 - `status` — active | archived | prototype | testing | research | planning | complete
 - `projectType` — embedded | web | cli | simulation | tooling
 - `thumbnail` — path to image
-- `sourceCodeUrl`, `linkToSource`, `demoUrl`, `liveUrl`, `reportUrl`, `journalUrl`
+- `technologies` — array of technology/tool names (auto-linked to /technologies/ pages)
+- `linkToSource` — boolean, card links to first [[links]] URL instead of internal page
+- `[[links]]` — generic external links (label + url pairs)
+- `related` — array of internal page paths
 
 Do not rename or replace these.
 
@@ -155,3 +158,75 @@ Use `else if .Params.field` and access the param explicitly:
 ## Hugo Version
 
 Updated to Hugo v0.163.3+extended (detected during build verification).
+
+## Hugo API
+
+Use `hugo.Data` not `site.Data` (deprecated in v0.156.0).
+All templates have been migrated. Never use `site.Data`.
+
+## Content Profile System
+
+All single.html templates are identical — they call `profile-header.html`.
+Do not add domain-specific logic to single.html files.
+
+To add a new content type:
+1. Define profile in `data/knowledge/profiles.toml`
+2. Add section→profile mapping in `[_defaults]`
+3. Create content directory + `_index.md`
+4. Copy any existing `single.html`
+5. Done — the profile drives all rendering
+
+## Resource System (Links)
+
+Hugo reserves `[[resources]]` — we use `[[links]]` instead.
+
+```toml
+[[links]]
+label = "Source"
+url = "https://github.com/..."
+```
+
+Rendered by `external-links.html` (generic, takes any slice of label/url).
+Labels are freeform — "Source", "Live Site", "Documentation", "PCB Schematic", etc.
+
+## Technology Badge Auto-Linking
+
+Tech badges in `profile-header.html` resolve against `/technologies/{slug}`.
+If the page exists → clickable `<a>`. If not → plain `<span>`.
+No manual linking required.
+
+## Track System
+
+Single source of truth: `data/knowledge/tracks.toml`.
+Timeline and Graph JS receive track config from Hugo templates.
+No hardcoded colors in JS or SCSS.
+
+To add/remove/reorder timeline tracks: edit `tracks.toml`.
+To add a new section to the timeline: also add a `range` block in `timeline/list.html`.
+
+## Timeline Enrichment
+
+External data (git history, scripts) → `data/timeline/*.json`.
+Hugo merges all JSON files in that directory into timeline items.
+JS deduplicates by URL — same URL from frontmatter + JSON = merged activity/milestones.
+
+## Configuration-Driven Content
+
+All user-facing text lives in `data/` files:
+- `data/knowledge/labels.toml` — shared labels
+- `data/homepage.toml` — homepage section titles
+- `data/*/config.toml` — per-section labels
+
+Templates contain ZERO editable prose.
+
+## Math Rendering
+
+Hugo passthrough delimiters: `$...$` (inline), `$$...$$` (block).
+KaTeX loaded from CDN in `head.html`. Auto-renders on page load.
+Block math styled with surface background + border radius.
+
+## Code Blocks
+
+`noClasses = false` in hugo.toml enables class-based syntax highlighting.
+Copy button added via JS in `main.js` (appended to `.highlight` blocks).
+Appears on hover, shows "Copied!" feedback.

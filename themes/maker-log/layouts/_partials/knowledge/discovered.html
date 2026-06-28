@@ -21,7 +21,7 @@
 {{- end }}
 {{- with $groups }}
   <aside class="node-discovered">
-    <h2 class="node-discovered__title">{{ site.Data.knowledge.labels.relationships.discovered }}</h2>
+    <h2 class="node-discovered__title">{{ hugo.Data.knowledge.labels.relationships.discovered }}</h2>
     {{- range $section, $pages := . }}
       <div class="node-related__group">
         <h3 class="node-related__section">{{ $section | humanize | title }}</h3>

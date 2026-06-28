@@ -22,7 +22,7 @@
   {{- end }}
 
   {{/* ─── 2. Featured Work ─── */}}
-  {{- $hp := site.Data.homepage }}
+  {{- $hp := hugo.Data.homepage }}
   {{- $pinned := slice }}
   {{- range site.Params.pinnedProjects }}
     {{- $p := site.GetPage . }}

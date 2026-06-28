@@ -23,7 +23,7 @@
   {{/* ─── FILTERS ─── */}}
   <div class="proj-filters" id="proj-filters">
     <div class="proj-filters__row">
-      <span class="proj-filters__label">{{ site.Data.books.config.filters.statusLabel }}</span>
+      <span class="proj-filters__label">{{ hugo.Data.books.config.filters.statusLabel }}</span>
       <div class="proj-filters__chips" role="group" aria-label="Filter by reading status">
         {{- range $s := $sections }}
           {{- $count := 0 }}
@@ -71,5 +71,5 @@
       {{- end }}
     {{- end }}
   </div>
-  <p class="proj-empty" id="proj-empty" hidden>{{ site.Data.books.config.section.emptyState }}</p>
+  <p class="proj-empty" id="proj-empty" hidden>{{ hugo.Data.books.config.section.emptyState }}</p>
 {{ end }}

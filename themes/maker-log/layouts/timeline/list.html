@@ -5,7 +5,7 @@
   </header>
 
   {{/* ─── Track config from data ─── */}}
-  {{- $tracks := site.Data.knowledge.tracks }}
+  {{- $tracks := hugo.Data.knowledge.tracks }}
 
   {{/* Build ordered timeline tracks (only those with timelineOrder) */}}
   {{- $tlPairs := slice }}
@@ -122,7 +122,7 @@
   {{- end }}
 
   {{/* ─── Merge external enrichment data ─── */}}
-  {{- with site.Data.timeline }}
+  {{- with hugo.Data.timeline }}
     {{- range $file, $entries := . }}
       {{- range $entries }}
         {{- $items = $items | append . }}

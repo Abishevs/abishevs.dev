@@ -1,8 +1,12 @@
 {{- $href := .RelPermalink }}
-{{- if and .Params.linkToSource .Params.sourceCodeUrl }}
-  {{- $href = .Params.sourceCodeUrl }}
+{{- $external := false }}
+{{- if .Params.linkToSource }}
+  {{- range first 1 .Params.links }}
+    {{- $href = .url }}
+    {{- $external = true }}
+  {{- end }}
 {{- end }}
-<a class="proj-card" href="{{ $href }}"{{ if and .Params.linkToSource .Params.sourceCodeUrl }} target="_blank" rel="noopener noreferrer"{{ end }}>
+<a class="proj-card" href="{{ $href }}"{{ if $external }} target="_blank" rel="noopener noreferrer"{{ end }}>
   <div class="proj-card__img-wrap">
     {{- with .Params.thumbnail }}
       <img class="proj-card__img" src="{{ . }}" alt="{{ $.Title }}">
