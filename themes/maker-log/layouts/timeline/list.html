@@ -121,6 +121,15 @@
     ) }}
   {{- end }}
 
+  {{/* ─── Merge external enrichment data ─── */}}
+  {{- with site.Data.timeline }}
+    {{- range $file, $entries := . }}
+      {{- range $entries }}
+        {{- $items = $items | append . }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+
   {{/* ─── Build track config for JS (with order) ─── */}}
   {{- $trackConfig := dict }}
   {{- range $tlPairs }}

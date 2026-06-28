@@ -1157,6 +1157,7 @@ h2.proj-section__title {
   height: 1.75rem;
   text-decoration: none;
   border-radius: 2px;
+  cursor: pointer;
   transition: background 0.1s;
 
   &:hover {
@@ -1224,12 +1225,23 @@ h2.proj-section__title {
 // Milestones
 .signal-row__milestone {
   position: absolute;
+  display: block;
   width: 4px;
   height: 4px;
   background: $color-warning;
   transform: translateX(-50%) rotate(45deg);
   top: calc(50% - 2px);
   z-index: 2;
+
+  &.is-link {
+    cursor: pointer;
+    width: 6px;
+    height: 6px;
+    top: calc(50% - 3px);
+    text-decoration: none;
+
+    &:hover { background: $color-text; transform: translateX(-50%) rotate(45deg) scale(1.4); }
+  }
 }
 
 // Timeline filters

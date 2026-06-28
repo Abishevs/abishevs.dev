@@ -15,6 +15,31 @@
   const activeFilters = new Set(Object.keys(colors));
   const now = new Date();
 
+  // Deduplicate: merge items with same url (combine activity + milestones)
+  const merged = [];
+  const byUrl = {};
+  data.forEach(item => {
+    if (byUrl[item.url]) {
+      const existing = byUrl[item.url];
+      if (item.activity && item.activity.length) {
+        existing.activity = (existing.activity || []).concat(item.activity);
+      }
+      if (item.milestones && item.milestones.length) {
+        existing.milestones = (existing.milestones || []).concat(item.milestones);
+      }
+      // Prefer wider time range
+      if (item.start && (!existing.start || item.start < existing.start)) existing.start = item.start;
+      if (item.end && (!existing.end || item.end > existing.end)) existing.end = item.end;
+      if (item.current) existing.current = true;
+    } else {
+      const copy = Object.assign({}, item);
+      copy.activity = (item.activity || []).slice();
+      copy.milestones = (item.milestones || []).slice();
+      byUrl[item.url] = copy;
+      merged.push(copy);
+    }
+  });
+
   function parseDate(s) {
     if (!s) return null;
     if (s.length === 4) return new Date(parseInt(s), 0, 1);
@@ -23,7 +48,7 @@
 
   // Absolute bounds
   let absMin = now, absMax = new Date(2000, 0, 1);
-  data.forEach(item => {
+  merged.forEach(item => {
     const s = parseDate(item.start);
     if (!s) return;
     const e = item.current ? now : (parseDate(item.end) || s);
@@ -50,7 +75,7 @@
     const vMin = new Date(viewStartYear, 0, 1);
     const vMax = new Date(viewEndYear + 1, 0, 1);
 
-    const visible = data.filter(d => activeFilters.has(d.track) && parseDate(d.start));
+    const visible = merged.filter(d => activeFilters.has(d.track) && parseDate(d.start));
 
     // Group by track, filter to visible range
     const groups = {};
@@ -117,7 +142,7 @@
         const endPct = toPercent(e);
         const isPoint = (endPct - startPct) < 0.5;
 
-        html += `<a class="signal-row" href="${item.url}" title="${item.title}">`;
+        html += `<div class="signal-row" data-href="${item.url}" title="${item.title}">`;
         html += `<span class="signal-row__label">${item.title}</span>`;
         html += `<span class="signal-row__trace">`;
 
@@ -144,16 +169,31 @@
         if (item.milestones && item.milestones.length) {
           item.milestones.forEach(m => {
             const md = parseDate(m.date);
-            if (md) html += `<span class="signal-row__milestone" style="left:${toPercent(md)}%" title="${m.title}"></span>`;
+            if (md) {
+              const mPct = toPercent(md);
+              if (m.url) {
+                html += `<a class="signal-row__milestone is-link" href="${m.url}" style="left:${mPct}%" title="${m.title}"></a>`;
+              } else {
+                html += `<span class="signal-row__milestone" style="left:${mPct}%" title="${m.title}"></span>`;
+              }
+            }
           });
         }
 
-        html += `</span></a>`;
+        html += `</span></div>`;
       });
       html += `</div>`;
     });
 
     container.innerHTML = html;
+
+    // Row click → navigate (unless clicking a milestone link)
+    container.querySelectorAll('.signal-row[data-href]').forEach(row => {
+      row.addEventListener('click', (e) => {
+        if (e.target.closest('.signal-row__milestone')) return;
+        window.location.href = row.dataset.href;
+      });
+    });
 
     // Year pill interaction: first click sets start, second click sets end
     container.querySelectorAll('.signal-range__year').forEach(btn => {
