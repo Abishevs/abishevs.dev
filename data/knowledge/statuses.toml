@@ -1,5 +1,5 @@
 # Knowledge Node lifecycle statuses, keyed by identifier.
-# Shared across all content types (projects, workflows, books, etc.)
+# Shared across all content types (projects, workflows, reading, etc.)
 # order: controls display order (lower = first).
 # color: CSS color value for badge and chip styling.
 

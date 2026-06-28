@@ -107,12 +107,26 @@
     ) }}
   {{- end }}
 
-  {{/* Books */}}
-  {{- range (where site.RegularPages "Section" "books") }}
+  {{/* Reading */}}
+  {{- range (where site.RegularPages "Section" "reading") }}
     {{- $items = $items | append (dict
       "title" .Title
       "url" .RelPermalink
-      "track" "book"
+      "track" "reading"
+      "start" (.Date.Format "2006-01-02")
+      "end" ""
+      "current" false
+      "activity" slice
+      "milestones" slice
+    ) }}
+  {{- end }}
+
+  {{/* Media */}}
+  {{- range (where site.RegularPages "Section" "media") }}
+    {{- $items = $items | append (dict
+      "title" .Title
+      "url" .RelPermalink
+      "track" "media"
       "start" (.Date.Format "2006-01-02")
       "end" ""
       "current" false

@@ -1,0 +1,8 @@
+[section]
+emptyState = "No media matches the selected filters."
+
+[filters]
+title = "Filters"
+statusLabel = "Status"
+typeLabel = "Type"
+techLabel = "Topics"

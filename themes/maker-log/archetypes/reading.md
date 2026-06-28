@@ -6,8 +6,10 @@ description = ''
 
 author = ''
 year = ''
+readingType = 'book'  # book | paper | standard | specification | rfc | report | manual
 readingStatus = 'want-to-read'  # reading | completed | want-to-read | abandoned
 favorite = false
+technologies = []
 related = []
 +++
 

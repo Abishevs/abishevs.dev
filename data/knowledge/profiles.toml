@@ -20,7 +20,8 @@
 projects = "project"
 workflows = "workflow"
 technologies = "technology"
-books = "book"
+reading = "reading"
+media = "media"
 work-experience = "career"
 education = "education"
 posts = "post"
@@ -77,20 +78,48 @@ field = "firstUsed"
 type = "text"
 prefix = "Since"
 
-# ─── Book Profile ────────────────────────────────────────────
+# ─── Reading Profile ──────────────────────────────────────────
 
-[book]
+[reading]
 titleSuffix = "author"
+techField = "technologies"
 
-[[book.meta]]
+[[reading.meta]]
 field = "year"
 type = "text"
 
-[[book.meta]]
+[[reading.meta]]
+field = "readingType"
+type = "badge"
+
+[[reading.meta]]
 field = "readingStatus"
 type = "badge"
 
-[[book.meta]]
+[[reading.meta]]
+field = "favorite"
+type = "flag"
+label = "★ Favorite"
+
+# ─── Media Profile ───────────────────────────────────────────
+
+[media]
+titleSuffix = "creator"
+techField = "technologies"
+
+[[media.meta]]
+field = "year"
+type = "text"
+
+[[media.meta]]
+field = "mediaType"
+type = "badge"
+
+[[media.meta]]
+field = "watchStatus"
+type = "badge"
+
+[[media.meta]]
 field = "favorite"
 type = "flag"
 label = "★ Favorite"

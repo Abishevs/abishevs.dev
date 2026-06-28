@@ -22,7 +22,7 @@
   {{/* ─── Generate graph data with descriptions ─── */}}
   {{- $nodes := slice }}
   {{- $edges := slice }}
-  {{- $sections := slice "projects" "work-experience" "education" "technologies" "workflows" "books" "project-journal" "posts" }}
+  {{- $sections := slice "projects" "work-experience" "education" "technologies" "workflows" "reading" "media" "project-journal" "posts" }}
   {{- range $section := $sections }}
     {{- range (where site.RegularPages "Section" $section) }}
       {{- $nodes = $nodes | append (dict "id" .RelPermalink "title" .Title "section" .Section "desc" (.Description | default "")) }}

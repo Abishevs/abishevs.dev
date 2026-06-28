@@ -1,0 +1,22 @@
+{{ define "main" }}
+  <header class="page-header">
+    <h1 class="page-header__title">{{ .Title }}</h1>
+    {{- with .Description }}<p class="page-header__desc">{{ . }}</p>{{ end }}
+  </header>
+
+  {{- $sections := slice
+    (dict "id" "reading" "label" "Currently Reading" "color" "#38BDF8")
+    (dict "id" "completed" "label" "Completed" "color" "#22C55E")
+    (dict "id" "want-to-read" "label" "Want to Read" "color" "#9F7AEA")
+    (dict "id" "abandoned" "label" "Abandoned" "color" "#9CA3AF")
+  }}
+
+  {{ partial "knowledge/influence-list.html" (dict
+    "pages" .Pages
+    "statusField" "readingStatus"
+    "typeField" "readingType"
+    "sections" $sections
+    "config" hugo.Data.reading.config
+    "creatorField" "author"
+  ) }}
+{{ end }}

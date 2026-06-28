@@ -1,0 +1,144 @@
+{{- /*
+  Shared list layout for Influence Nodes (Reading, Media).
+  Expects context dict:
+    .pages       — page collection
+    .statusField — frontmatter field for status (readingStatus / watchStatus)
+    .typeField   — frontmatter field for type (readingType / mediaType)
+    .sections    — slice of (dict "id" "label" "color")
+    .config      — section config (from data/)
+    .creatorField — "author" or "creator"
+*/ -}}
+{{- $pages := .pages -}}
+{{- $statusField := .statusField -}}
+{{- $typeField := .typeField -}}
+{{- $sections := .sections -}}
+{{- $config := .config -}}
+{{- $creatorField := .creatorField -}}
+
+{{- /* Count favorites */ -}}
+{{- $favCount := 0 }}
+{{- range $pages }}
+  {{- if .Params.favorite }}{{ $favCount = add $favCount 1 }}{{ end }}
+{{- end }}
+
+{{- /* Collect unique technologies */ -}}
+{{- $techMap := dict }}
+{{- range $pages }}
+  {{- with .Params.technologies }}
+    {{- range . }}
+      {{- $techMap = merge $techMap (dict . true) }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{/* ─── FILTERS ─── */}}
+<div class="proj-filters" id="proj-filters">
+  <div class="proj-filters__row">
+    <span class="proj-filters__label">{{ $config.filters.statusLabel }}</span>
+    <div class="proj-filters__chips" role="group" aria-label="Filter by status">
+      {{- range $s := $sections }}
+        {{- $count := 0 }}
+        {{- range $pages }}
+          {{- if eq (index .Params $statusField) $s.id }}{{ $count = add $count 1 }}{{ end }}
+        {{- end }}
+        {{- if gt $count 0 }}
+          <button class="filter-chip" data-filter="status" data-value="{{ $s.id }}" type="button">{{ $s.label }}<span class="filter-chip__count">{{ $count }}</span></button>
+        {{- end }}
+      {{- end }}
+    </div>
+  </div>
+  {{- if gt (len $techMap) 0 }}
+    <div class="proj-filters__row">
+      <span class="proj-filters__label">{{ $config.filters.typeLabel }}</span>
+      <div class="proj-filters__chips" role="group" aria-label="Filter by type">
+        {{- range $pages.GroupByParam $typeField }}
+          {{- if .Key }}
+            <button class="filter-chip" data-filter="type" data-value="{{ .Key }}" type="button">{{ .Key | humanize | title }}<span class="filter-chip__count">{{ len .Pages }}</span></button>
+          {{- end }}
+        {{- end }}
+      </div>
+    </div>
+    <div class="proj-filters__row">
+      <span class="proj-filters__label">{{ $config.filters.techLabel | default "Topics" }}</span>
+      <div class="proj-filters__chips" role="group" aria-label="Filter by technology">
+        {{- range $tech, $_ := $techMap }}
+          {{- $count := 0 }}
+          {{- range $pages }}
+            {{- if in .Params.technologies $tech }}{{ $count = add $count 1 }}{{ end }}
+          {{- end }}
+          {{- $techPage := site.GetPage (printf "/technologies/%s" ($tech | urlize)) }}
+          {{- if $techPage }}
+            <button class="filter-chip filter-chip--linked" data-filter="tech" data-value="{{ $tech }}" type="button" data-href="{{ $techPage.RelPermalink }}">{{ $tech }}<span class="filter-chip__count">{{ $count }}</span></button>
+          {{- else }}
+            <button class="filter-chip" data-filter="tech" data-value="{{ $tech }}" type="button">{{ $tech }}<span class="filter-chip__count">{{ $count }}</span></button>
+          {{- end }}
+        {{- end }}
+      </div>
+    </div>
+  {{- else }}
+    {{- if gt (len ($pages.GroupByParam $typeField)) 1 }}
+      <div class="proj-filters__row">
+        <span class="proj-filters__label">{{ $config.filters.typeLabel }}</span>
+        <div class="proj-filters__chips" role="group" aria-label="Filter by type">
+          {{- range $pages.GroupByParam $typeField }}
+            {{- if .Key }}
+              <button class="filter-chip" data-filter="type" data-value="{{ .Key }}" type="button">{{ .Key | humanize | title }}<span class="filter-chip__count">{{ len .Pages }}</span></button>
+            {{- end }}
+          {{- end }}
+        </div>
+      </div>
+    {{- end }}
+  {{- end }}
+  {{- if gt $favCount 0 }}
+    <div class="proj-filters__row">
+      <span class="proj-filters__label">Traits</span>
+      <div class="proj-filters__chips" role="group" aria-label="Filter by trait">
+        <button class="filter-chip" data-filter="favorite" data-value="true" type="button">★ Favorite<span class="filter-chip__count">{{ $favCount }}</span></button>
+      </div>
+    </div>
+  {{- end }}
+  <button class="filter-reset" id="filter-reset" type="button" hidden>Clear filters</button>
+</div>
+
+{{/* ─── GROUPED BY STATUS ─── */}}
+<div id="proj-grid">
+  {{- range $section := $sections }}
+    {{- $sectionPages := where $pages (printf ".Params.%s" $statusField) $section.id }}
+    {{- with $sectionPages }}
+      <section class="influence-section">
+        <h2 class="influence-section__title" style="--section-color:{{ $section.color }}">{{ $section.label }}</h2>
+        <div class="work-list">
+          {{- range . }}
+            <a class="work-entry proj-card" href="{{ .RelPermalink }}" data-status="{{ index .Params $statusField }}" data-type="{{ index .Params $typeField }}" data-favorite="{{ if .Params.favorite }}true{{ end }}" data-tech="{{ delimit (default slice .Params.technologies) " " }}">
+              <div class="work-entry__header">
+                <span class="influence-type-badge">{{ index .Params $typeField | humanize | title }}</span>
+                <span class="work-entry__title">{{ .Title }}{{- with index .Params $creatorField }} <span class="influence-meta__by">by</span> <span class="influence-meta__creator">{{ . }}</span>{{ end }}</span>
+                {{- if .Params.favorite }}<span class="influence-entry__fav" aria-label="Favorite">★</span>{{ end }}
+              </div>
+              {{- with .Description }}
+                <p class="work-entry__desc">{{ . }}</p>
+              {{- end }}
+              {{- with .Params.technologies }}
+                <div class="influence-tech">
+                  {{- $linked := slice }}
+                  {{- $unlinked := slice }}
+                  {{- range . }}
+                    {{- $techPage := site.GetPage (printf "/technologies/%s" (. | urlize)) }}
+                    {{- if $techPage }}
+                      {{- $linked = $linked | append . }}
+                    {{- else }}
+                      {{- $unlinked = $unlinked | append . }}
+                    {{- end }}
+                  {{- end }}
+                  {{- range $linked }}<span class="badge badge--tech is-link">{{ . }}</span>{{ end }}
+                  {{- range $unlinked }}<span class="badge badge--tech">{{ . }}</span>{{ end }}
+                </div>
+              {{- end }}
+            </a>
+          {{- end }}
+        </div>
+      </section>
+    {{- end }}
+  {{- end }}
+</div>
+<p class="proj-empty" id="proj-empty" hidden>{{ $config.section.emptyState }}</p>

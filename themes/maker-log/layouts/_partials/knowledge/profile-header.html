@@ -86,18 +86,26 @@
   </div>
 {{- end }}
 
-{{/* ─── Tech badges (linked if technology page exists) ─── */}}
+{{/* ─── Tech badges (linked if technology page exists, sorted: linked first) ─── */}}
 {{- with $profile.techField }}
   {{- $techs := index $page.Params . }}
   {{- with $techs }}
     <div class="work-meta__tech">
+      {{- $linked := slice }}
+      {{- $unlinked := slice }}
       {{- range . }}
         {{- $techPage := site.GetPage (printf "/technologies/%s" (. | urlize)) }}
         {{- if $techPage }}
-          <a class="badge badge--tech is-link" href="{{ $techPage.RelPermalink }}">{{ . }}</a>
+          {{- $linked = $linked | append (dict "name" . "page" $techPage) }}
         {{- else }}
-          <span class="badge badge--tech">{{ . }}</span>
+          {{- $unlinked = $unlinked | append . }}
         {{- end }}
+      {{- end }}
+      {{- range $linked }}
+        <a class="badge badge--tech is-link" href="{{ .page.RelPermalink }}">{{ .name }}</a>
+      {{- end }}
+      {{- range $unlinked }}
+        <span class="badge badge--tech">{{ . }}</span>
       {{- end }}
     </div>
   {{- end }}

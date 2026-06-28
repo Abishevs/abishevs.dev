@@ -82,8 +82,11 @@
   {{- range (where site.RegularPages "Section" "workflows") }}
     {{- $changes = $changes | append (dict "date" (.Date.Format "2006-01-02") "type" "workflow" "title" .Title "url" .RelPermalink) }}
   {{- end }}
-  {{- range (where site.RegularPages "Section" "books") }}
-    {{- $changes = $changes | append (dict "date" (.Date.Format "2006-01-02") "type" "book" "title" .Title "url" .RelPermalink) }}
+  {{- range (where site.RegularPages "Section" "reading") }}
+    {{- $changes = $changes | append (dict "date" (.Date.Format "2006-01-02") "type" "reading" "title" .Title "url" .RelPermalink) }}
+  {{- end }}
+  {{- range (where site.RegularPages "Section" "media") }}
+    {{- $changes = $changes | append (dict "date" (.Date.Format "2006-01-02") "type" "media" "title" .Title "url" .RelPermalink) }}
   {{- end }}
   {{- range (where site.RegularPages "Section" "posts") }}
     {{- $changes = $changes | append (dict "date" (.Date.Format "2006-01-02") "type" "post" "title" .Title "url" .RelPermalink) }}

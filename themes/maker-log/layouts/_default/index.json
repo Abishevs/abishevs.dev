@@ -1,5 +1,5 @@
 {{- $pages := slice }}
-{{- $sections := slice "projects" "work-experience" "education" "technologies" "workflows" "books" "project-journal" "posts" }}
+{{- $sections := slice "projects" "work-experience" "education" "technologies" "workflows" "reading" "media" "project-journal" "posts" }}
 {{- range $section := $sections }}
   {{- range (where site.RegularPages "Section" $section) }}
     {{- $pages = $pages | append (dict

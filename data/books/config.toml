@@ -1,6 +1,0 @@
-[section]
-emptyState = "No books match the selected filters."
-
-[filters]
-title = "Filters"
-statusLabel = "Status"

@@ -10,12 +10,13 @@
     'education': 'Education',
     'technologies': 'Technologies',
     'workflows': 'Workflows',
-    'books': 'Books',
+    'reading': 'Reading',
+    'media': 'Media',
     'project-journal': 'Project Journal',
     'posts': 'Posts'
   };
 
-  const sectionOrder = ['projects', 'technologies', 'workflows', 'work-experience', 'education', 'books', 'project-journal', 'posts'];
+  const sectionOrder = ['projects', 'technologies', 'workflows', 'work-experience', 'education', 'reading', 'media', 'project-journal', 'posts'];
 
   let index = null;
 

@@ -16,7 +16,7 @@ allPrefix = "← All"
 [search]
 graphPlaceholder = "Search nodes..."
 sitePlaceholder = "Search knowledge nodes..."
-siteHint = "Type to search across projects, technologies, workflows, books, experience and writing."
+siteHint = "Type to search across projects, technologies, workflows, reading, media, experience and writing."
 
 [empty]
 default = "No items match the selected filters."

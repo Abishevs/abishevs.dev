@@ -1001,12 +1001,16 @@ h2.proj-section__title {
 
 // Technology badge (reusable across content types)
 .badge--tech {
-  color: $color-muted;
-  border: 1px solid $color-border;
-  background: transparent;
   font-size: 0.6rem;
+  color: $color-muted;
+  border: none;
+  background: transparent;
+  opacity: 0.6;
 
   &.is-link {
+    border: 1px solid $color-border;
+    opacity: 1;
+    color: $color-muted;
     text-decoration: none;
     cursor: pointer;
     &:hover { border-color: $color-blue; color: $color-blue; }
@@ -1658,59 +1662,24 @@ h2.proj-section__title {
   margin-top: 0.15rem;
 }
 
-// ─── Book Pages ─────────────────────────────────────────────
+// ─── Influence Pages (Reading / Media) ──────────────────────
 
-.book-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 0.75rem;
-}
-
-.book-meta__by {
+.influence-meta__by {
   font-style: italic;
   font-weight: 400;
   color: $color-muted;
 }
 
-.book-meta__author {
+.influence-meta__creator {
   font-weight: 600;
   color: $color-text;
 }
 
-.book-meta__year {
-  font-family: $font-mono;
-  font-size: 0.8rem;
-  color: $color-muted;
-}
-
-.book-meta__fav {
-  color: $color-warning;
-  font-size: 0.85rem;
-}
-
-.book-badge {
-  font-family: $font-mono;
-  font-size: 0.65rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 0.1rem 0.4rem;
-  border-radius: 2px;
-  border: 1px solid;
-}
-
-.book-badge--reading { color: $color-blue; border-color: $color-blue; }
-.book-badge--completed { color: $color-success; border-color: $color-success; }
-.book-badge--want-to-read { color: $color-purple; border-color: $color-purple; }
-.book-badge--abandoned { color: $color-muted; border-color: $color-border; }
-
-.book-section {
+.influence-section {
   margin-top: 1.5rem;
 }
 
-.book-section__title {
+.influence-section__title {
   font-family: $font-mono;
   font-size: 0.7rem;
   font-weight: 400;
@@ -1722,10 +1691,35 @@ h2.proj-section__title {
   border-bottom: 1px solid $color-border;
 }
 
-.book-entry__fav {
+.influence-entry__fav {
   color: $color-warning;
   margin-left: auto;
   font-size: 0.9rem;
+}
+
+.influence-type-badge {
+  font-family: $font-mono;
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.1rem 0.35rem;
+  border: 1px solid $color-border;
+  border-radius: 2px;
+  color: $color-muted;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.influence-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.4rem;
+}
+
+.filter-chip--linked {
+  border-style: dashed;
 }
 
 // ─── Knowledge Graph ────────────────────────────────────────

@@ -32,11 +32,17 @@ label = "Workflows"
 color = "#EC4899"
 timelineOrder = 3
 
-[book]
-section = "books"
-label = "Books"
+[reading]
+section = "reading"
+label = "Reading"
 color = "#FB923C"
 timelineOrder = 5
+
+[media]
+section = "media"
+label = "Media"
+color = "#F472B6"
+timelineOrder = 6
 
 # ─── Graph-only tracks (not on timeline) ─────────────────────
 

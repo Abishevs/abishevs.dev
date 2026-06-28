@@ -25,7 +25,8 @@ abishevs.dev/
 │   ├── work-experience/       ← Professional engineering case studies
 │   ├── education/             ← Educational environments
 │   ├── technologies/          ← Knowledge hubs (languages, tools, platforms)
-│   ├── books/                 ← Influential ideas
+│   ├── reading/               ← Influential ideas (books, papers, standards)
+│   ├── media/                 ← Audiovisual knowledge (talks, courses, films)
 │   ├── timeline/              ← Chronological View (signal traces)
 │   ├── graph/                 ← Knowledge Graph View (D3 force-directed)
 │   ├── search/                ← Site-wide search
@@ -42,7 +43,8 @@ abishevs.dev/
 │   ├── navigation.toml         ← Nav categories + items + direct links
 │   ├── projects/config.toml    ← Project list page labels
 │   ├── technologies/config.toml ← Technology list page labels
-│   ├── books/config.toml       ← Book list page labels
+│   ├── reading/config.toml     ← Reading list page labels
+│   ├── media/config.toml       ← Media list page labels
 │   ├── workflows/config.toml   ← Workflow list page labels
 │   └── timeline/
 │       └── enrichment.json     ← External timeline data (merged at build)
@@ -62,7 +64,8 @@ abishevs.dev/
     │   ├── education/             ← Education layouts
     │   ├── workflows/             ← Workflow layouts
     │   ├── technologies/          ← Technology layouts
-    │   ├── books/                 ← Book layouts
+    │   ├── reading/               ← Reading layouts
+    │   ├── media/                 ← Media layouts
     │   ├── timeline/              ← Timeline View (signal traces)
     │   ├── graph/                 ← Knowledge Graph layout
     │   ├── search/                ← Search layout
@@ -391,7 +394,8 @@ Track Colors (from tracks.toml):
   Career:     #22C55E
   Education:  #F59E0B
   Workflow:   #EC4899
-  Book:       #FB923C
+  Reading:    #FB923C
+  Media:      #F472B6
   Technology: #9F7AEA
   Journal:    #6EE7B7
   Post:       #E5E7EB
@@ -439,7 +443,8 @@ Fonts:
 - Education (Chalmers, education profile)
 - Workflows (tools, filtering, workflow profile)
 - Technologies (auto-discovery, filtering, technology profile)
-- Books (readingStatus/favorite, book profile)
+- Reading (readingType/readingStatus, influence list, reading profile)
+- Media (mediaType/watchStatus, influence list, media profile)
 - Knowledge Graph (D3 force-directed, filtering, search, focus mode)
 - Search (client-side, instant, grouped by section)
 - Navigation (intent-based, contextual panels, data-driven)
