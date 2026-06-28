@@ -1,0 +1,28 @@
+{{ define "main" }}
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">{{ .Title }}</h1>
+      <div class="tech-meta">
+        {{- with .Params.category }}
+          <span class="badge badge--tech">{{ . | humanize | title }}</span>
+        {{- end }}
+        {{- if .Params.favorite }}
+          <span class="tech-meta__tag tech-meta__tag--fav">★ Favorite</span>
+        {{- end }}
+        {{- if .Params.dailyDriver }}
+          <span class="tech-meta__tag tech-meta__tag--daily">◆ Daily Driver</span>
+        {{- end }}
+        {{- with .Params.firstUsed }}
+          <span class="tech-meta__since">Since {{ . }}</span>
+        {{- end }}
+      </div>
+    </header>
+    <div class="article-body">
+      {{ .Content }}
+    </div>
+    {{ partial "knowledge/discovered.html" (dict "page" . "term" .Title) }}
+    {{ partial "knowledge/related.html" (dict "page" .) }}
+    {{ partial "knowledge/backlinks.html" (dict "page" .) }}
+    {{ partial "knowledge/node-nav.html" (dict "page" .) }}
+  </article>
+{{ end }}

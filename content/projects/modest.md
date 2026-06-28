@@ -16,6 +16,7 @@ demoUrl = ""
 reportUrl = ""
 
 linkToSource = false
+related = ["/project-journal/modest", "/education/chalmers-mechatronics", "/workflows/linux-desktop"]
 +++
 
 # Overview

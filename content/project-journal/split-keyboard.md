@@ -3,6 +3,7 @@ title = "My Split Keyboard Journey"
 date = 2023-12-28
 draft = false
 toc = true
+related = ["/projects/split-keyboard"]
 +++
 
 ## <span class="timestamp-wrapper"><span class="timestamp">[2023-12-28 Thu 08:00]</span></span> From ErgoDox EZ to a custom board, why? {#from-ergodox-ez-to-a-custom-board-why}

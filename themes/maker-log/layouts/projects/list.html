@@ -50,7 +50,7 @@
   {{- $cfg := hugo.Data.projects.config }}
 
   {{/* ─── FILTERS ─── */}}
-  <details class="proj-section">
+  <details class="proj-section" open>
     <summary class="proj-section__title">{{ $cfg.filters.title }}<span class="proj-section__hint">{{ $cfg.filters.hint }}</span></summary>
     <div class="proj-filters" id="proj-filters">
       <div class="proj-filters__row">
@@ -71,7 +71,7 @@
           <div class="proj-filters__chips" role="group" aria-label="Filter by domain">
             {{- range . }}
               <button class="filter-chip filter-chip--domain"
-                data-filter="domain" data-value="{{ .id }}" type="button">
+                data-filter="domains" data-value="{{ .id }}" type="button">
                 {{- .label }}<span class="filter-chip__count">{{ .count }}</span>
               </button>
             {{- end }}

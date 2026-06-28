@@ -6,7 +6,8 @@ description = ''
 
 author = ''
 year = ''
-status = 'complete'
+readingStatus = 'reading'  # reading | completed | abandoned
+favorite = false
 related = []
 +++
 

@@ -1,0 +1,11 @@
+[filters]
+title       = "Filters"
+hint        = "filter by status or domain"
+statusLabel = "Status"
+domainLabel = "Domain"
+
+[reference]
+title       = "Reference"
+hint        = "expand for status & domain descriptions"
+statusTitle = "Workflow Status"
+domainTitle = "Engineering Domains"

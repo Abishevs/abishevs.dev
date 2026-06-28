@@ -1,17 +1,22 @@
 {{ define "main" }}
   <article>
     <header class="article-header">
-      <h1 class="article-title">{{ .Title }}</h1>
-      <div class="work-meta">
-        {{- with .Params.author }}<span class="work-meta__org">{{ . }}</span>{{ end }}
-        {{- with .Params.year }}<span>{{ . }}</span>{{ end }}
+      <h1 class="article-title">{{ .Title }}{{- with .Params.author }} <span class="book-meta__by">by</span> <span class="book-meta__author">{{ . }}</span>{{ end }}</h1>
+      <div class="book-meta">
+        {{- with .Params.year }}<span class="book-meta__year">{{ . }}</span>{{ end }}
+        {{- with .Params.readingStatus }}
+          <span class="book-badge book-badge--{{ . }}">{{ . | title }}</span>
+        {{- end }}
+        {{- if .Params.favorite }}
+          <span class="book-meta__fav">★ Favorite</span>
+        {{- end }}
       </div>
-      {{ partial "knowledge/node-meta.html" (dict "page" . "showDates" false) }}
     </header>
     <div class="article-body">
       {{ .Content }}
     </div>
     {{ partial "knowledge/related.html" (dict "page" .) }}
+    {{ partial "knowledge/backlinks.html" (dict "page" .) }}
     {{ partial "knowledge/node-nav.html" (dict "page" .) }}
   </article>
 {{ end }}

@@ -2,6 +2,7 @@
   {{- $workflows := .Pages }}
   {{- $statusData := hugo.Data.knowledge.statuses }}
   {{- $domainData := hugo.Data.knowledge.domains }}
+  {{- $cfg := hugo.Data.workflows.config }}
 
   {{/* Count per status */}}
   {{- $statusCounts := dict }}
@@ -15,14 +16,12 @@
   {{/* Count per domain */}}
   {{- $domainCounts := dict }}
   {{- range $workflows }}
-    {{- $ds := .Params.domains | default slice }}
-    {{- range $ds }}
+    {{- range (.Params.domains | default slice) }}
       {{- $d := lower . }}
       {{- $domainCounts = merge $domainCounts (dict $d (add (index $domainCounts $d | default 0) 1)) }}
     {{- end }}
   {{- end }}
 
-  {{/* Ordered statuses (only those with workflows) */}}
   {{- $orderedStatuses := slice }}
   {{- range $id, $def := $statusData }}
     {{- if index $statusCounts $id }}
@@ -31,7 +30,6 @@
   {{- end }}
   {{- $orderedStatuses = sort $orderedStatuses "order" }}
 
-  {{/* Ordered domains (only those with workflows) */}}
   {{- $orderedDomains := slice }}
   {{- range $id, $def := $domainData }}
     {{- if index $domainCounts $id }}
@@ -45,59 +43,88 @@
     {{- with .Description }}<p class="page-header__desc">{{ . }}</p>{{ end }}
   </header>
 
-  {{/* Filters */}}
-  {{- if or $orderedStatuses $orderedDomains }}
+  {{/* ─── FILTERS ─── */}}
+  <details class="proj-section" open>
+    <summary class="proj-section__title">{{ $cfg.filters.title }}<span class="proj-section__hint">{{ $cfg.filters.hint }}</span></summary>
     <div class="proj-filters" id="proj-filters">
-      {{- with $orderedStatuses }}
-        <div class="proj-filters__row">
-          <span class="proj-filters__label">Status</span>
-          <div class="proj-filters__chips" role="group" aria-label="Filter by status">
-            {{- range . }}
-              <button class="filter-chip" style="--chip-color:{{ .color }}" data-filter="status" data-value="{{ .id }}" type="button">{{ .label }}<span class="filter-chip__count">{{ .count }}</span></button>
-            {{- end }}
-          </div>
+      <div class="proj-filters__row">
+        <span class="proj-filters__label">{{ $cfg.filters.statusLabel }}</span>
+        <div class="proj-filters__chips" role="group" aria-label="Filter by status">
+          {{- range $orderedStatuses }}
+            <button class="filter-chip" style="--chip-color:{{ .color }}" data-filter="status" data-value="{{ .id }}" type="button">{{ .label }}<span class="filter-chip__count">{{ .count }}</span></button>
+          {{- end }}
         </div>
-      {{- end }}
+      </div>
       {{- with $orderedDomains }}
         <div class="proj-filters__row">
-          <span class="proj-filters__label">Domain</span>
+          <span class="proj-filters__label">{{ $cfg.filters.domainLabel }}</span>
           <div class="proj-filters__chips" role="group" aria-label="Filter by domain">
             {{- range . }}
-              <button class="filter-chip" data-filter="domain" data-value="{{ .id }}" type="button">{{ .label }}<span class="filter-chip__count">{{ .count }}</span></button>
+              <button class="filter-chip" data-filter="domains" data-value="{{ .id }}" type="button">{{ .label }}<span class="filter-chip__count">{{ .count }}</span></button>
             {{- end }}
           </div>
         </div>
       {{- end }}
       <button class="filter-reset" id="filter-reset" type="button" hidden>Clear filters</button>
     </div>
-  {{- end }}
+  </details>
 
-  {{/* Workflow list */}}
-  <div class="work-list" id="proj-grid">
-    {{- range $workflows }}
-      {{- $domains := .Params.domains | default slice }}
-      {{- $domainStr := delimit $domains " " | lower }}
-      <article class="proj-card work-entry" data-status="{{ lower .Params.status }}" data-domains="{{ $domainStr }}">
-        <div class="work-entry__header">
-          <h2 class="work-entry__title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-          {{ partial "badge-status.html" . }}
-        </div>
-        <div class="work-entry__meta">
-          {{- .Params.startDate | time.Format "Jan 2006" }}
-          {{- if .Params.current }} – Present
-          {{- else if .Params.endDate }} – {{ .Params.endDate | time.Format "Jan 2006" }}
-          {{- end }}
-        </div>
-        {{- with .Params.tools }}
-          <div class="work-entry__tech">
-            {{- range . }}<span class="badge badge--tech">{{ . }}</span>{{ end }}
+  {{/* ─── REFERENCE ─── */}}
+  <details class="proj-section">
+    <summary class="proj-section__title">{{ $cfg.reference.title }}<span class="proj-section__hint">{{ $cfg.reference.hint }}</span></summary>
+    <div class="proj-reference-group">
+      <h3 class="proj-reference__title">{{ $cfg.reference.statusTitle }}</h3>
+      <dl class="proj-reference__list">
+        {{- range $orderedStatuses }}
+          <div class="proj-reference__item">
+            <dt class="proj-reference__term" style="color:{{ .color }}">{{ .label }}</dt>
+            <dd class="proj-reference__desc">{{ .description }}</dd>
           </div>
         {{- end }}
-        {{- with .Description }}
-          <p class="work-entry__desc">{{ . }}</p>
-        {{- end }}
-      </article>
-    {{- end }}
-  </div>
-  <p class="proj-empty" id="proj-empty" hidden>No workflows match the selected filters.</p>
+      </dl>
+      {{- with $orderedDomains }}
+        <h3 class="proj-reference__title">{{ $cfg.reference.domainTitle }}</h3>
+        <dl class="proj-reference__list">
+          {{- range . }}
+            <div class="proj-reference__item">
+              <dt class="proj-reference__term">{{ .label }}</dt>
+              <dd class="proj-reference__desc">{{ .description }}</dd>
+            </div>
+          {{- end }}
+        </dl>
+      {{- end }}
+    </div>
+  </details>
+
+  {{/* ─── ALL WORKFLOWS ─── */}}
+  <section class="proj-section">
+    <h2 class="proj-section__title">All Workflows<span class="proj-section__count">{{ len $workflows }}</span></h2>
+    <div class="work-list" id="proj-grid">
+      {{- range $workflows }}
+        {{- $domains := .Params.domains | default slice }}
+        {{- $domainStr := delimit $domains " " | lower }}
+        <a class="proj-card work-entry" href="{{ .RelPermalink }}" data-status="{{ lower .Params.status }}" data-domains="{{ $domainStr }}">
+          <div class="work-entry__header">
+            <span class="work-entry__title">{{ .Title }}</span>
+            {{ partial "badge-status.html" . }}
+          </div>
+          <div class="work-entry__meta">
+            {{- .Params.startDate | time.Format "Jan 2006" }}
+            {{- if .Params.current }} – Present
+            {{- else if .Params.endDate }} – {{ .Params.endDate | time.Format "Jan 2006" }}
+            {{- end }}
+          </div>
+          {{- with .Params.tools }}
+            <div class="work-entry__tech">
+              {{- range . }}<span class="badge badge--tech">{{ . }}</span>{{ end }}
+            </div>
+          {{- end }}
+          {{- with .Description }}
+            <p class="work-entry__desc">{{ . }}</p>
+          {{- end }}
+        </a>
+      {{- end }}
+    </div>
+    <p class="proj-empty" id="proj-empty" hidden>No workflows match the selected filters.</p>
+  </section>
 {{ end }}

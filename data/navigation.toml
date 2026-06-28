@@ -15,6 +15,16 @@ name = "Workflows"
 url  = "workflows/"
 desc = "Engineering environments, tooling and how I work."
 
+[[explore.items]]
+name = "Books"
+url  = "books/"
+desc = "Ideas that influenced my engineering thinking."
+
+[[explore.items]]
+name = "Technologies"
+url  = "technologies/"
+desc = "Engineering concepts that connect the knowledge system."
+
 [journey]
 description = "How this engineering journey evolved over time."
 

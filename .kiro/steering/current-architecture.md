@@ -265,7 +265,7 @@ Fonts:
 ### Implemented ✓
 - Knowledge Node architecture (shared partials, data, relationships)
 - Projects (with filtering, cards, linkToSource fallback)
-- Project Journal (org-mode timestamp extraction)
+- Project Journal (org-mode timestamp extraction, entry index, dedicated list layout)
 - Work Experience (3 Ericsson entries)
 - Education (Chalmers)
 - Workflows (Linux Desktop, Development Environment)
@@ -273,11 +273,15 @@ Fonts:
 - Navigation (intent-based, contextual panels, data-driven)
 - Homepage (intro, now, featured, activity feed)
 - Footer (knowledge base stats)
+- Books (content type with readingStatus/favorite metadata, filters, backlinks, sample content)
+- About page (philosophy-focused, no résumé)
+- Backlinks (automatic "Linked From" on every Knowledge Node)
+- Taxonomy/tag page styling
+- Insight Purple accent (research, knowledge, learning)
+- Technologies (content type with category/firstUsed/favorite/dailyDriver metadata, auto-discovery from keywords/technologies/tools across site)
 
 ### Not Yet Implemented
-- Books / reading log
-- Technologies (pages connecting projects/work by tech)
 - Search
-- Backlinks
-- Tag/taxonomy page styling
 - Knowledge graph visualization
+- Tag enrichment (existing content mostly has empty tags)
+- 404 page styling

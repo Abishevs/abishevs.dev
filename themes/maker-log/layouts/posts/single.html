@@ -1,0 +1,19 @@
+{{ define "main" }}
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">{{ .Title }}</h1>
+      <div class="article-meta">
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format "2 Jan 2006" }}</time>
+        {{- with .Params.authors }}{{ range . }} · <span>{{ . }}</span>{{ end }}{{ end }}
+        {{- with .ReadingTime }} · <span>{{ . }} min read</span>{{ end }}
+      </div>
+    </header>
+    <div class="article-body">
+      {{ .Content }}
+    </div>
+    {{ partial "knowledge/related.html" (dict "page" .) }}
+    {{ partial "knowledge/backlinks.html" (dict "page" .) }}
+    {{- partial "terms.html" (dict "taxonomy" "tags" "page" .) }}
+    {{ partial "knowledge/node-nav.html" (dict "page" .) }}
+  </article>
+{{ end }}

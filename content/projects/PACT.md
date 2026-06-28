@@ -6,6 +6,7 @@ status = "complete"
 projectType = ["cli", "tooling"]
 thumbnail = '/images/pactthumbnail.png'
 description = 'lightweight command-line utility written in C. It simplifies the process of creating and managing project directories.'
+related = ["/workflows/development-environment"]
 +++
 
 ## The Vision

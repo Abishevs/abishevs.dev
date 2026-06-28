@@ -585,6 +585,8 @@ h2.proj-section__title {
   padding-top: 1.5rem;
   border-top: 1px solid $color-border;
 
+  &:first-child { border-top: none; margin-top: 0; padding-top: 0; }
+
   .timestamp-wrapper, .timestamp { color: $color-blue; }
 }
 
@@ -733,7 +735,6 @@ h2.proj-section__title {
 
 .proj-card {
   display: block;
-  background: $color-surface;
   border: 1px solid $color-border;
   text-decoration: none;
   overflow: hidden;
@@ -929,14 +930,20 @@ h2.proj-section__title {
 
 // Work experience list page
 .work-list {
+  display: grid;
+  gap: 0.75rem;
   margin-top: 1.5rem;
 }
 
 .work-entry {
-  padding: 1rem 0;
-  border-bottom: 1px solid $color-border;
+  display: block;
+  padding: 1rem 1.25rem;
+  border: 1px solid $color-border;
+  border-radius: 2px;
+  text-decoration: none;
+  color: inherit;
 
-  &:last-child { border-bottom: none; }
+  &:hover { border-color: $color-blue; text-decoration: none; }
 }
 
 .work-entry__header {
@@ -1188,4 +1195,277 @@ h2.proj-section__title {
   color: $color-muted;
   margin-top: 0.5rem;
   line-height: 1.5;
+}
+
+// ─── Project Journal ─────────────────────────────────────────
+
+// List page
+.journal-list { margin-top: 1.5rem; }
+
+.journal-page {
+  padding: 1rem 0;
+  border-bottom: 1px solid $color-border;
+  &:last-child { border-bottom: none; }
+}
+
+.journal-page__header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.journal-page__title {
+  font-family: $font-heading;
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0;
+  a { color: $color-text; &:hover { color: $color-blue; } }
+}
+
+.journal-page__count {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  color: $color-muted;
+}
+
+.journal-page__entries {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+
+  li {
+    padding: 0.2rem 0;
+    font-family: $font-heading;
+    font-size: 0.85rem;
+  }
+  a { color: $color-text; &:hover { color: $color-blue; text-decoration: none; } }
+}
+
+.journal-page__date {
+  font-family: $font-mono;
+  font-size: 0.65rem;
+  color: $color-blue;
+  margin-right: 0.5rem;
+}
+
+// Single page entry index
+.journal-index {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid $color-border;
+}
+
+.journal-index__title {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $color-muted;
+  margin: 0 0 0.5rem;
+}
+
+.journal-index__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: none;
+
+  li {
+    padding: 0.25rem 0;
+    font-family: $font-heading;
+    font-size: 0.8rem;
+  }
+  a { color: $color-text; &:hover { color: $color-blue; text-decoration: none; } }
+}
+
+.journal-index__date {
+  font-family: $font-mono;
+  font-size: 0.65rem;
+  color: $color-blue;
+  margin-right: 0.5rem;
+}
+
+// Journal media
+.journal-body video,
+.journal-body img {
+  max-width: 100%;
+  max-height: 420px;
+  width: auto;
+  height: auto;
+  display: block;
+  margin: 1.5rem auto;
+  border: 1px solid $color-border;
+}
+
+// ─── Technology Pages ────────────────────────────────────────
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.tech-card {
+  display: block;
+  position: relative;
+  padding: 0.75rem 1rem;
+  border: 1px solid $color-border;
+  text-decoration: none;
+
+  &:hover { border-color: $color-blue; text-decoration: none; }
+}
+
+.tech-card__name {
+  display: block;
+  font-family: $font-heading;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: $color-text;
+  margin-bottom: 0.25rem;
+}
+
+.tech-card__desc {
+  display: block;
+  font-size: 0.75rem;
+  color: $color-muted;
+  margin-top: 0.25rem;
+}
+
+.node-discovered {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid $color-border;
+}
+
+.node-discovered__title {
+  font-family: $font-mono;
+  font-size: 0.75rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $color-purple;
+  margin: 0 0 1rem;
+}
+
+.tech-group {
+  margin-top: 2rem;
+}
+
+.tech-group__title {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $color-muted;
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid $color-border;
+}
+
+// ─── Technology Metadata (single page) ──────────────────────
+
+.tech-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.tech-meta__tag {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 2px;
+}
+
+.tech-meta__tag--fav {
+  color: $color-warning;
+}
+
+.tech-meta__tag--daily {
+  color: $color-blue;
+}
+
+.tech-meta__since {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  color: $color-muted;
+}
+
+// ─── Technology Card indicators (list page) ─────────────────
+
+.tech-card__fav {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.5rem;
+  color: $color-warning;
+  font-size: 0.85rem;
+}
+
+.tech-card__daily {
+  display: block;
+  font-family: $font-mono;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $color-blue;
+  margin-top: 0.15rem;
+}
+
+// ─── Book Pages ─────────────────────────────────────────────
+
+.book-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.book-meta__by {
+  font-style: italic;
+  font-weight: 400;
+  color: $color-muted;
+}
+
+.book-meta__author {
+  font-weight: 600;
+  color: $color-text;
+}
+
+.book-meta__year {
+  font-family: $font-mono;
+  font-size: 0.8rem;
+  color: $color-muted;
+}
+
+.book-meta__fav {
+  color: $color-warning;
+  font-size: 0.85rem;
+}
+
+.book-badge {
+  font-family: $font-mono;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.1rem 0.4rem;
+  border-radius: 2px;
+  border: 1px solid;
+}
+
+.book-badge--reading { color: $color-blue; border-color: $color-blue; }
+.book-badge--completed { color: $color-success; border-color: $color-success; }
+.book-badge--abandoned { color: $color-muted; border-color: $color-border; }
+
+.book-entry__fav {
+  color: $color-warning;
+  margin-left: auto;
+  font-size: 0.9rem;
 }

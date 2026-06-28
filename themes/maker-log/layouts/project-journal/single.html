@@ -4,6 +4,27 @@
       <h1 class="article-title">{{ .Title }}</h1>
       {{ partial "knowledge/node-meta.html" (dict "page" . "showDates" true) }}
     </header>
+
+    {{/* Entry index */}}
+    {{- $h2s := findRE `<h2 id="([^"]+)">.*?<span class="timestamp">\[([^\]]+)\]</span></span>\s*([^<]+)` .Content }}
+    {{- with $h2s }}
+      <nav class="journal-index" aria-label="Journal entries">
+        <h2 class="journal-index__title">Entries</h2>
+        <ol class="journal-index__list">
+          {{- range . }}
+            {{- $h2 := . }}
+            {{- $id := index (findRE `id="([^"]+)"` $h2) 0 | replaceRE `id="|"` "" }}
+            {{- $ts := index (findRE `\[([^\]]+)\]` $h2) 0 | replaceRE `\[|\]` "" }}
+            {{- $label := $h2 | replaceRE `<[^>]+>` "" | replaceRE `^\s*\[[^\]]+\]\s*` "" | strings.TrimSpace }}
+            <li>
+              <span class="journal-index__date">{{ $ts }}</span>
+              <a href="#{{ $id }}">{{ $label }}</a>
+            </li>
+          {{- end }}
+        </ol>
+      </nav>
+    {{- end }}
+
     <div class="article-body journal-body">
       {{ .Content }}
     </div>

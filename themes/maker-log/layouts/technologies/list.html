@@ -1,0 +1,79 @@
+{{ define "main" }}
+  {{- $techs := .Pages }}
+
+  {{/* Count per category */}}
+  {{- $catCounts := dict }}
+  {{- range $techs }}
+    {{- $c := .Params.category | default "other" }}
+    {{- $catCounts = merge $catCounts (dict $c (add (index $catCounts $c | default 0) 1)) }}
+  {{- end }}
+
+  {{/* Count favorites and daily drivers */}}
+  {{- $favCount := 0 }}
+  {{- $dailyCount := 0 }}
+  {{- range $techs }}
+    {{- if .Params.favorite }}{{ $favCount = add $favCount 1 }}{{ end }}
+    {{- if .Params.dailyDriver }}{{ $dailyCount = add $dailyCount 1 }}{{ end }}
+  {{- end }}
+
+  <header class="page-header">
+    <h1 class="page-header__title">{{ .Title }}</h1>
+    {{- with .Description }}<p class="page-header__desc">{{ . }}</p>{{ end }}
+  </header>
+
+  {{/* ─── FILTERS ─── */}}
+  <div class="proj-filters" id="proj-filters">
+    {{- if gt (len $catCounts) 1 }}
+      <div class="proj-filters__row">
+        <span class="proj-filters__label">Category</span>
+        <div class="proj-filters__chips" role="group" aria-label="Filter by category">
+          {{- range $cat, $count := $catCounts }}
+            <button class="filter-chip" data-filter="domains" data-value="{{ $cat }}" type="button">{{ $cat | humanize | title }}<span class="filter-chip__count">{{ $count }}</span></button>
+          {{- end }}
+        </div>
+      </div>
+    {{- end }}
+    <div class="proj-filters__row">
+      <span class="proj-filters__label">Traits</span>
+      <div class="proj-filters__chips" role="group" aria-label="Filter by trait">
+        {{- if gt $favCount 0 }}
+          <button class="filter-chip" data-filter="favorite" data-value="true" type="button">★ Favorite<span class="filter-chip__count">{{ $favCount }}</span></button>
+        {{- end }}
+        {{- if gt $dailyCount 0 }}
+          <button class="filter-chip" data-filter="daily" data-value="true" type="button">◆ Daily Driver<span class="filter-chip__count">{{ $dailyCount }}</span></button>
+        {{- end }}
+      </div>
+    </div>
+    <button class="filter-reset" id="filter-reset" type="button" hidden>Clear filters</button>
+  </div>
+
+  {{/* ─── GROUPED BY CATEGORY ─── */}}
+  {{- $categories := slice }}
+  {{- range $cat, $_ := $catCounts }}
+    {{- $categories = $categories | append $cat }}
+  {{- end }}
+  {{- $categories = sort $categories }}
+
+  <div id="proj-grid">
+    {{- range $cat := $categories }}
+      <section class="tech-group">
+        <h2 class="tech-group__title">{{ $cat | humanize | title }}</h2>
+        <div class="tech-grid">
+          {{- range $techs }}
+            {{- if eq (.Params.category | default "other") $cat }}
+              <a class="tech-card proj-card" href="{{ .RelPermalink }}" data-domains="{{ .Params.category | default "other" }}" data-favorite="{{ if .Params.favorite }}true{{ end }}" data-daily="{{ if .Params.dailyDriver }}true{{ end }}">
+                {{- if .Params.favorite }}<span class="tech-card__fav" aria-label="Favorite">★</span>{{ end -}}
+                <span class="tech-card__name">{{ .Title }}</span>
+                {{- if .Params.dailyDriver }}
+                  <span class="tech-card__daily">daily driver</span>
+                {{- end }}
+                {{- with .Description }}<span class="tech-card__desc">{{ . }}</span>{{ end }}
+              </a>
+            {{- end }}
+          {{- end }}
+        </div>
+      </section>
+    {{- end }}
+  </div>
+  <p class="proj-empty" id="proj-empty" hidden>No technologies match the selected filters.</p>
+{{ end }}

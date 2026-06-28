@@ -76,7 +76,7 @@ Do not require changing journal structure.
 
 ## Books
 
-Reading log and reviews.
+Ideas that influenced engineering thinking.
 
 ## Movies
 

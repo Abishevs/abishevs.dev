@@ -1,0 +1,4 @@
+[filters]
+title         = "Filters"
+hint          = "filter by category"
+categoryLabel = "Category"

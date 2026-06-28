@@ -1,12 +1,21 @@
 {{/*
   Renders backlinks — pages whose `related` field contains this page's path.
+  Excludes pages already listed in this page's own `related` to avoid duplicates.
   Context: dict "page" (the page object)
 */}}
 {{- $page := .page }}
 {{- $pagePath := $page.RelPermalink }}
+{{- $ownRelated := $page.Params.related | default slice }}
+{{- $ownRelatedURLs := slice }}
+{{- range $ownRelated }}
+  {{- $r := site.GetPage . }}
+  {{- with $r }}{{- $ownRelatedURLs = $ownRelatedURLs | append .RelPermalink }}{{- end }}
+{{- end }}
 {{- $backlinks := slice }}
 {{- range site.RegularPages }}
   {{- $candidate := . }}
+  {{- if eq $candidate.RelPermalink $pagePath }}{{- continue }}{{- end }}
+  {{- if in $ownRelatedURLs $candidate.RelPermalink }}{{- continue }}{{- end }}
   {{- with .Params.related }}
     {{- range . }}
       {{- $target := site.GetPage . }}

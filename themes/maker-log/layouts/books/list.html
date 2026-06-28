@@ -1,24 +1,68 @@
 {{ define "main" }}
+  {{- $books := .Pages }}
+
+  {{/* Count per reading status */}}
+  {{- $statusCounts := dict }}
+  {{- range $books }}
+    {{- $s := .Params.readingStatus | default "" }}
+    {{- if $s }}
+      {{- $statusCounts = merge $statusCounts (dict $s (add (index $statusCounts $s | default 0) 1)) }}
+    {{- end }}
+  {{- end }}
+
+  {{/* Count favorites */}}
+  {{- $favCount := 0 }}
+  {{- range $books }}
+    {{- if .Params.favorite }}{{ $favCount = add $favCount 1 }}{{ end }}
+  {{- end }}
+
   <header class="page-header">
     <h1 class="page-header__title">{{ .Title }}</h1>
     {{- with .Description }}<p class="page-header__desc">{{ . }}</p>{{ end }}
   </header>
 
-  <div class="work-list">
-    {{- range .Pages }}
-      <article class="work-entry">
+  {{/* ─── FILTERS ─── */}}
+  <div class="proj-filters" id="proj-filters">
+    {{- with $statusCounts }}
+      <div class="proj-filters__row">
+        <span class="proj-filters__label">Status</span>
+        <div class="proj-filters__chips" role="group" aria-label="Filter by reading status">
+          {{- range $s, $count := . }}
+            <button class="filter-chip" data-filter="status" data-value="{{ $s }}" type="button">{{ $s | title }}<span class="filter-chip__count">{{ $count }}</span></button>
+          {{- end }}
+        </div>
+      </div>
+    {{- end }}
+    {{- if gt $favCount 0 }}
+      <div class="proj-filters__row">
+        <span class="proj-filters__label">Traits</span>
+        <div class="proj-filters__chips" role="group" aria-label="Filter by trait">
+          <button class="filter-chip" data-filter="favorite" data-value="true" type="button">★ Favorite<span class="filter-chip__count">{{ $favCount }}</span></button>
+        </div>
+      </div>
+    {{- end }}
+    <button class="filter-reset" id="filter-reset" type="button" hidden>Clear filters</button>
+  </div>
+
+  {{/* ─── BOOK LIST ─── */}}
+  <div class="work-list" id="proj-grid">
+    {{- range $books }}
+      <a class="work-entry proj-card" href="{{ .RelPermalink }}" data-status="{{ .Params.readingStatus }}" data-favorite="{{ if .Params.favorite }}true{{ end }}">
         <div class="work-entry__header">
-          <h2 class="work-entry__title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-          {{- with .Params.author }}<span class="work-entry__org">{{ . }}</span>{{ end }}
+          <span class="work-entry__title">{{ .Title }}{{- with .Params.author }} <span class="book-meta__by">by</span> <span class="book-meta__author">{{ . }}</span>{{ end }}</span>
+          {{- if .Params.favorite }}<span class="book-entry__fav" aria-label="Favorite">★</span>{{ end }}
         </div>
         <div class="work-entry__meta">
           {{- with .Params.year }}<span>{{ . }}</span>{{ end }}
-          {{ partial "badge-status.html" . }}
+          {{- with .Params.readingStatus }}
+            <span class="book-badge book-badge--{{ . }}">{{ . | title }}</span>
+          {{- end }}
         </div>
         {{- with .Description }}
           <p class="work-entry__desc">{{ . }}</p>
         {{- end }}
-      </article>
+      </a>
     {{- end }}
   </div>
+  <p class="proj-empty" id="proj-empty" hidden>No books match the selected filters.</p>
 {{ end }}

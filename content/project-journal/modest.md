@@ -3,6 +3,7 @@ title = "MODEST Build Logs"
 date = 2026-05-07
 draft = false
 toc = true
+related = ["/projects/modest"]
 +++
 
 ## <span class="timestamp-wrapper"><span class="timestamp">[2026-05-08 Fri 01:30]</span></span> First ever test fit prototype &amp; disc mechanism. {#first-ever-test-fit-prototype-and-disc-mechanism-dot}

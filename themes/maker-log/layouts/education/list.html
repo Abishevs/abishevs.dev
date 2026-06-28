@@ -6,9 +6,9 @@
 
   <div class="work-list">
     {{- range .Pages.ByParam "startDate" | collections.Reverse }}
-      <article class="work-entry">
+      <a class="work-entry" href="{{ .RelPermalink }}">
         <div class="work-entry__header">
-          <h2 class="work-entry__title"><a href="{{ .RelPermalink }}">{{ .Params.programme }}</a></h2>
+          <span class="work-entry__title">{{ .Params.programme }}</span>
           <span class="work-entry__org">{{ .Params.institution }}</span>
         </div>
         <div class="work-entry__meta">
@@ -24,7 +24,7 @@
         {{- with .Description }}
           <p class="work-entry__desc">{{ . }}</p>
         {{- end }}
-      </article>
+      </a>
     {{- end }}
   </div>
 {{ end }}

@@ -69,20 +69,23 @@ if (grid) {
   const emptyMsg  = document.getElementById('proj-empty');
   const chips     = filtersEl ? Array.from(filtersEl.querySelectorAll('.filter-chip')) : [];
 
-  const active = { status: null, domain: null };
+  const active = {};
 
   function applyFilters() {
     const cards = Array.from(grid.querySelectorAll('.proj-card'));
     let visible = 0;
     cards.forEach(card => {
-      const statusMatch = !active.status || card.dataset.status === active.status;
-      const domainMatch = !active.domain || (card.dataset.domains || '').split(' ').includes(active.domain);
-      const show = statusMatch && domainMatch;
+      let show = true;
+      for (const [dim, val] of Object.entries(active)) {
+        if (!val) continue;
+        const cardVal = card.dataset[dim] || '';
+        if (!cardVal.split(' ').includes(val)) { show = false; break; }
+      }
       card.hidden = !show;
       if (show) visible++;
     });
     if (emptyMsg) emptyMsg.hidden = visible > 0;
-    if (resetBtn) resetBtn.hidden = !active.status && !active.domain;
+    if (resetBtn) resetBtn.hidden = !Object.values(active).some(Boolean);
   }
 
   chips.forEach(chip => {
@@ -99,8 +102,7 @@ if (grid) {
 
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
-      active.status = null;
-      active.domain = null;
+      for (const k of Object.keys(active)) active[k] = null;
       chips.forEach(c => c.classList.remove('is-active'));
       applyFilters();
     });

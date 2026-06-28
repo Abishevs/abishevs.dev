@@ -1,0 +1,33 @@
+{{ define "main" }}
+  <header class="page-header">
+    <h1 class="page-header__title">{{ .Title }}</h1>
+    {{- with .Description }}<p class="page-header__desc">{{ . }}</p>{{ end }}
+  </header>
+
+  <div class="journal-list">
+    {{- range .Pages }}
+      {{- $page := . }}
+      {{- $h2s := findRE `<h2 id="([^"]+)">.*?<span class="timestamp">\[([^\]]+)\]</span></span>\s*([^<]+)` .Content }}
+      <article class="journal-page">
+        <div class="journal-page__header">
+          <h2 class="journal-page__title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+          <span class="journal-page__count">{{ len $h2s }} entries</span>
+        </div>
+        {{- with $h2s }}
+          <ul class="journal-page__entries">
+            {{- range last 3 . }}
+              {{- $h2 := . }}
+              {{- $id := index (findRE `id="([^"]+)"` $h2) 0 | replaceRE `id="|"` "" }}
+              {{- $ts := index (findRE `\[([^\]]+)\]` $h2) 0 | replaceRE `\[|\]` "" }}
+              {{- $label := $h2 | replaceRE `<[^>]+>` "" | replaceRE `^\s*\[[^\]]+\]\s*` "" | strings.TrimSpace }}
+              <li>
+                <span class="journal-page__date">{{ $ts }}</span>
+                <a href="{{ $page.RelPermalink }}#{{ $id }}">{{ $label }}</a>
+              </li>
+            {{- end }}
+          </ul>
+        {{- end }}
+      </article>
+    {{- end }}
+  </div>
+{{ end }}

@@ -17,6 +17,7 @@ journalUrl = ""
 
 sourceCodeUrl = ""
 linkToSource = false  # the card becomes a button to sourceCodeUrl
+related = ["/projects/modest"]
 +++
 
 # Background
