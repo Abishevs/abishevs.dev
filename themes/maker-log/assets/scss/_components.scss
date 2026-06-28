@@ -692,14 +692,18 @@ h2.proj-section__title {
   color: $color-muted;
 }
 
+.home-section a:hover { text-decoration: none; }
+
 .home-explore__item {
   display: block;
   padding: 0.75rem;
   border: 1px solid $color-border;
   border-radius: 2px;
   text-decoration: none;
+  transition: border-color 0.1s, background 0.1s;
 
-  &:hover { border-color: $color-blue; }
+  &:hover { border-color: $color-blue; background: rgba(255, 255, 255, 0.02); }
+  &:hover .home-explore__name { color: $color-blue; }
 }
 
 .home-explore__name {
@@ -722,6 +726,10 @@ h2.proj-section__title {
   font-size: 0.95rem;
   line-height: 1.6;
   color: $color-text;
+  padding: 0.75rem 1rem;
+  border-left: 2px solid $color-blue;
+  background: rgba($color-blue, 0.03);
+  border-radius: 0 2px 2px 0;
 
   p { margin: 0; }
 }
@@ -788,14 +796,30 @@ h2.proj-section__title {
   gap: 1rem;
 }
 
+@media (max-width: 768px) {
+  .proj-card-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .proj-card { display: grid; grid-template-columns: 5rem 1fr; }
+  .proj-card__img-wrap { aspect-ratio: 1; }
+  .proj-card__body { padding: 0.4rem 0.6rem; }
+  .proj-card__title { font-size: 0.8rem; }
+}
+
 .proj-card {
   display: block;
   border: 1px solid $color-border;
   text-decoration: none;
   overflow: hidden;
+  border-radius: 2px;
+  transition: border-color 0.1s, background 0.1s;
 
-  &:hover { border-color: $color-blue; text-decoration: none; }
+  &, &:hover, a, a:hover { text-decoration: none; }
+  &:hover { border-color: $color-blue; background: rgba(255, 255, 255, 0.02); }
   &:hover .proj-card__title { color: $color-blue; }
+  &:hover .proj-card__img { opacity: 0.9; }
 }
 
 .proj-card__img-wrap {
