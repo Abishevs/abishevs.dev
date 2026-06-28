@@ -6,13 +6,24 @@
 
   {{/* ─── Track config from data ─── */}}
   {{- $tracks := site.Data.knowledge.tracks }}
-  {{- $timelineTracks := slice "project" "career" "education" "workflow" "book" }}
 
-  {{/* ─── FILTERS (generated from data) ─── */}}
+  {{/* Build ordered timeline tracks (only those with timelineOrder) */}}
+  {{- $tlPairs := slice }}
+  {{- range $key, $t := $tracks }}
+    {{- if $t.timelineOrder }}
+      {{- $tlPairs = $tlPairs | append (dict "key" $key "order" $t.timelineOrder "label" $t.label "color" $t.color) }}
+    {{- end }}
+  {{- end }}
+  {{- $tlPairs = sort $tlPairs "order" }}
+  {{- $timelineTracks := slice }}
+  {{- range $tlPairs }}
+    {{- $timelineTracks = $timelineTracks | append .key }}
+  {{- end }}
+
+  {{/* ─── FILTERS (generated from data, in order) ─── */}}
   <div class="timeline-filters" id="timeline-filters">
-    {{- range $key := $timelineTracks }}
-      {{- $t := index $tracks $key }}
-      <button class="timeline-filter is-active" data-track="{{ $key }}" style="--track-color:{{ $t.color }}" type="button">{{ $t.label }}</button>
+    {{- range $tlPairs }}
+      <button class="timeline-filter is-active" data-track="{{ .key }}" style="--track-color:{{ .color }}" type="button">{{ .label }}</button>
     {{- end }}
   </div>
 
@@ -110,11 +121,10 @@
     ) }}
   {{- end }}
 
-  {{/* ─── Build track config for JS ─── */}}
+  {{/* ─── Build track config for JS (with order) ─── */}}
   {{- $trackConfig := dict }}
-  {{- range $key := $timelineTracks }}
-    {{- $t := index $tracks $key }}
-    {{- $trackConfig = merge $trackConfig (dict $key (dict "label" $t.label "color" $t.color)) }}
+  {{- range $tlPairs }}
+    {{- $trackConfig = merge $trackConfig (dict .key (dict "label" .label "color" .color "order" .order)) }}
   {{- end }}
 
   <script>

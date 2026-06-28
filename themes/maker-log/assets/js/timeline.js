@@ -5,7 +5,7 @@
   const tracks = window.__timelineTracks;
   if (!tracks) return;
 
-  const trackOrder = Object.keys(tracks);
+  const trackOrder = Object.keys(tracks).sort((a, b) => tracks[a].order - tracks[b].order);
   const colors = {};
   const trackLabels = {};
   trackOrder.forEach(k => { colors[k] = tracks[k].color; trackLabels[k] = tracks[k].label; });

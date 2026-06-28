@@ -2,9 +2,9 @@
 # Used by: timeline, graph, SCSS (via CSS custom properties)
 #
 # "section" = Hugo content section name
-# "track" = timeline track identifier (may differ from section)
 # "label" = display label
 # "color" = hex color
+# "timelineOrder" = display order on timeline (omit to exclude from timeline)
 
 # ─── Timeline tracks ─────────────────────────────────────────
 
@@ -12,26 +12,31 @@
 section = "projects"
 label = "Projects"
 color = "#38BDF8"
+timelineOrder = 4
 
 [career]
 section = "work-experience"
 label = "Career"
 color = "#22C55E"
+timelineOrder = 1
 
 [education]
 section = "education"
 label = "Education"
 color = "#F59E0B"
+timelineOrder = 2
 
 [workflow]
 section = "workflows"
 label = "Workflows"
 color = "#EC4899"
+timelineOrder = 3
 
 [book]
 section = "books"
 label = "Books"
 color = "#FB923C"
+timelineOrder = 5
 
 # ─── Graph-only tracks (not on timeline) ─────────────────────
 
