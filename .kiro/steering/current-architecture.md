@@ -285,11 +285,14 @@ Bidirectional discovery without manual `related` fields.
 ## Math & Code
 
 ### KaTeX Math Rendering
-- Inline: `$E = mc^2$`
-- Block: `$$\int_0^\infty ...$$ `
-- Hugo passthrough delimiters enabled in `hugo.toml`
-- KaTeX loaded from CDN, auto-renders on page load
-- Block math styled with surface background + border
+- Inline: `\( E = mc^2 \)` or `$E = mc^2$`
+- Block: `\[ \int_0^\infty ... \]` or `$$...$$`
+- Hugo passthrough delimiters match ox-hugo double-escaped output
+- Server-side rendered via `transform.ToMath` (Hugo's embedded KaTeX 0.17.0)
+- Render hook: `layouts/_markup/render-passthrough.html`
+- KaTeX CSS v0.17.0 from CDN (must match Hugo's embedded version)
+- Output mode: `htmlAndMathml` (accessible, MathML hidden by CSS)
+- Zero client-side JavaScript for math
 
 ### Code Blocks
 - Hugo Chroma syntax highlighting (class-based, `noClasses = false`)
@@ -381,6 +384,7 @@ Fonts:
 - KaTeX from CDN for math rendering
 - D3.js from CDN for graph visualization
 - `[[resources]]` is a Hugo reserved key — use `[[links]]` instead
+- Math passthrough enabled via `[markup.goldmark.extensions.passthrough]`
 - Math passthrough enabled via `[markup.goldmark.extensions.passthrough]`
 
 ---

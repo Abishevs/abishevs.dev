@@ -1989,7 +1989,23 @@ mark {
     font-size: 0.8rem;
     line-height: 1.55;
 
-    code { background: none; padding: 0; border: none; font-size: inherit; }
+    code { background: none; padding: 0; border: none; font-size: inherit; color: inherit; }
+  }
+
+  // Line number tables (ox-hugo #+begin_src with -n)
+  .lntable {
+    width: 100%;
+    border: 1px solid $color-border;
+    border-radius: 2px;
+    overflow: hidden;
+
+    td { padding: 0; vertical-align: top; }
+    pre { margin: 0; border: none; border-radius: 0; }
+  }
+
+  .lntd:first-child {
+    width: 2.5rem;
+    pre { padding-right: 0.5rem; text-align: right; color: $color-muted; user-select: none; }
   }
 }
 
@@ -2025,15 +2041,81 @@ mark {
   color: $color-text;
 }
 
-// ─── KaTeX Overrides ─────────────────────────────────────────
+// ─── KaTeX Math ──────────────────────────────────────────────
 
 .katex-display {
   margin: 1.5rem 0;
-  padding: 0.75rem 1rem;
-  background: rgba($color-surface, 0.5);
-  border: 1px solid $color-border;
-  border-radius: 2px;
-  overflow-x: auto;
 }
 
 .katex { color: $color-text; }
+
+// ─── Figures (ox-hugo {{ figure }} output) ───────────────────
+
+figure {
+  margin: 1.5rem 0;
+  padding: 0;
+
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid $color-border;
+    border-radius: 2px;
+  }
+
+  figcaption {
+    font-family: $font-mono;
+    font-size: 0.7rem;
+    color: $color-muted;
+    margin-top: 0.4rem;
+    padding-left: 0.25rem;
+
+    .figure-number { font-weight: 600; color: $color-text; }
+  }
+}
+
+// ─── Tables ──────────────────────────────────────────────────
+
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.85rem;
+
+  th, td {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid $color-border;
+    text-align: left;
+  }
+
+  th {
+    background: $color-surface;
+    font-family: $font-heading;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  tr:hover td { background: rgba(255, 255, 255, 0.02); }
+}
+
+// ─── Semantic Blocks (Org special blocks → admonitions) ──────
+// ox-hugo exports #+begin_note etc. as <div class="note">
+
+.note, .warning, .tip, .important, .definition {
+  margin: 1.5rem 0;
+  padding: 0.75rem 1rem;
+  border-radius: 2px;
+  border-left: 3px solid;
+  font-size: 0.9rem;
+
+  p:first-child { margin-top: 0; }
+  p:last-child { margin-bottom: 0; }
+}
+
+.note       { border-left-color: $color-blue; background: rgba($color-blue, 0.04); }
+.warning    { border-left-color: $color-warning; background: rgba($color-warning, 0.04); }
+.tip        { border-left-color: $color-success; background: rgba($color-success, 0.04); }
+.important  { border-left-color: $color-error; background: rgba($color-error, 0.04); }
+.definition { border-left-color: $color-purple; background: rgba($color-purple, 0.04); }

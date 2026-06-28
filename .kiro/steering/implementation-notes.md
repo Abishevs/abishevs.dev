@@ -221,9 +221,21 @@ Templates contain ZERO editable prose.
 
 ## Math Rendering
 
-Hugo passthrough delimiters: `$...$` (inline), `$$...$$` (block).
-KaTeX loaded from CDN in `head.html`. Auto-renders on page load.
-Block math styled with surface background + border radius.
+Hugo passthrough delimiters configured for ox-hugo output:
+```toml
+[markup.goldmark.extensions.passthrough.delimiters]
+inline = [['\\(', '\\)'], ['$', '$']]
+block = [['\\[', '\\]'], ['$$', '$$']]
+```
+
+Rendered server-side via `layouts/_markup/render-passthrough.html` which calls
+`transform.ToMath` (Hugo's embedded KaTeX engine). No client-side JS needed.
+
+KaTeX CSS v0.17.0 loaded from CDN (must match Hugo's embedded version).
+Output mode: `htmlAndMathml` for accessibility.
+
+ox-hugo exports `\\(` in markdown source. The passthrough config with `['\\(', '\\)']`
+matches this correctly.
 
 ## Code Blocks
 

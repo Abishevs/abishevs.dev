@@ -19,8 +19,8 @@ unsafe = true
 enable = true
 
 [markup.goldmark.extensions.passthrough.delimiters]
-inline = [['$', '$'], ['\(', '\)']]
-block = [['$$', '$$'], ['\[', '\]']]
+inline = [['\\(', '\\)'], ['\(', '\)'],['\$', '\$'], ['$', '$']]
+block = [['\\[', '\\]'], ['\[', '\]'], ['\$$', '\$$'], ['$$', '$$']]
 
 [params]
   author = "Eduards Abishevs"
