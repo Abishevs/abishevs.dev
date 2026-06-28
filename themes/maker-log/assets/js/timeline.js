@@ -2,23 +2,13 @@
   const data = window.__timelineData;
   if (!data || !data.length) return;
 
-  const colors = {
-    project: '#38BDF8',
-    career: '#22C55E',
-    education: '#F59E0B',
-    workflow: '#EC4899',
-    book: '#FB923C'
-  };
+  const tracks = window.__timelineTracks;
+  if (!tracks) return;
 
-  const trackLabels = {
-    career: 'Career',
-    education: 'Education',
-    workflow: 'Workflows',
-    project: 'Projects',
-    book: 'Books'
-  };
-
-  const trackOrder = ['career', 'education', 'workflow', 'project', 'book'];
+  const trackOrder = Object.keys(tracks);
+  const colors = {};
+  const trackLabels = {};
+  trackOrder.forEach(k => { colors[k] = tracks[k].color; trackLabels[k] = tracks[k].label; });
 
   const container = document.getElementById('timeline-container');
   const filtersEl = document.getElementById('timeline-filters');

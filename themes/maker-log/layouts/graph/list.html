@@ -4,17 +4,14 @@
     {{- with .Description }}<p class="page-header__desc">{{ . }}</p>{{ end }}
   </header>
 
+  {{- $tracks := site.Data.knowledge.tracks }}
+
   <div class="graph-controls">
     <input type="text" class="graph-search" id="graph-search" placeholder="Search nodes..." autocomplete="off" />
     <div class="graph-filters" id="graph-filters">
-      <button class="graph-filter is-active" data-section="projects" style="--dot-color:#38BDF8" type="button">Projects</button>
-      <button class="graph-filter is-active" data-section="work-experience" style="--dot-color:#22C55E" type="button">Work Exp</button>
-      <button class="graph-filter is-active" data-section="education" style="--dot-color:#F59E0B" type="button">Education</button>
-      <button class="graph-filter is-active" data-section="technologies" style="--dot-color:#9F7AEA" type="button">Technologies</button>
-      <button class="graph-filter is-active" data-section="workflows" style="--dot-color:#EC4899" type="button">Workflows</button>
-      <button class="graph-filter is-active" data-section="books" style="--dot-color:#FB923C" type="button">Books</button>
-      <button class="graph-filter is-active" data-section="project-journal" style="--dot-color:#6EE7B7" type="button">Journals</button>
-      <button class="graph-filter is-active" data-section="posts" style="--dot-color:#E5E7EB" type="button">Posts</button>
+      {{- range $key, $t := $tracks }}
+        <button class="graph-filter is-active" data-section="{{ $t.section }}" style="--dot-color:{{ $t.color }}" type="button">{{ $t.label }}</button>
+      {{- end }}
     </div>
   </div>
 
@@ -38,8 +35,15 @@
     {{- end }}
   {{- end }}
 
+  {{/* ─── Build graph track config for JS ─── */}}
+  {{- $graphTracks := dict }}
+  {{- range $key, $t := $tracks }}
+    {{- $graphTracks = merge $graphTracks (dict $t.section (dict "label" $t.label "color" $t.color)) }}
+  {{- end }}
+
   <script>
     window.__graphData = {{ dict "nodes" $nodes "edges" $edges | jsonify | safeJS }};
+    window.__graphTracks = {{ $graphTracks | jsonify | safeJS }};
   </script>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="{{ (resources.Get "js/graph.js" | fingerprint).RelPermalink }}"></script>

@@ -1,0 +1,51 @@
+# Track definitions — single source of truth for colors and labels
+# Used by: timeline, graph, SCSS (via CSS custom properties)
+#
+# "section" = Hugo content section name
+# "track" = timeline track identifier (may differ from section)
+# "label" = display label
+# "color" = hex color
+
+# ─── Timeline tracks ─────────────────────────────────────────
+
+[project]
+section = "projects"
+label = "Projects"
+color = "#38BDF8"
+
+[career]
+section = "work-experience"
+label = "Career"
+color = "#22C55E"
+
+[education]
+section = "education"
+label = "Education"
+color = "#F59E0B"
+
+[workflow]
+section = "workflows"
+label = "Workflows"
+color = "#EC4899"
+
+[book]
+section = "books"
+label = "Books"
+color = "#FB923C"
+
+# ─── Graph-only tracks (not on timeline) ─────────────────────
+
+[technology]
+section = "technologies"
+label = "Technologies"
+color = "#9F7AEA"
+
+[journal]
+section = "project-journal"
+label = "Journals"
+color = "#6EE7B7"
+
+[post]
+section = "posts"
+label = "Posts"
+color = "#E5E7EB"

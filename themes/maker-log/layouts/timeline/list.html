@@ -4,13 +4,16 @@
     {{- with .Description }}<p class="page-header__desc">{{ . }}</p>{{ end }}
   </header>
 
-  {{/* ─── FILTERS ─── */}}
+  {{/* ─── Track config from data ─── */}}
+  {{- $tracks := site.Data.knowledge.tracks }}
+  {{- $timelineTracks := slice "project" "career" "education" "workflow" "book" }}
+
+  {{/* ─── FILTERS (generated from data) ─── */}}
   <div class="timeline-filters" id="timeline-filters">
-    <button class="timeline-filter is-active" data-track="project" style="--track-color:var(--tl-project)" type="button">Projects</button>
-    <button class="timeline-filter is-active" data-track="career" style="--track-color:var(--tl-career)" type="button">Career</button>
-    <button class="timeline-filter is-active" data-track="education" style="--track-color:var(--tl-education)" type="button">Education</button>
-    <button class="timeline-filter is-active" data-track="workflow" style="--track-color:var(--tl-workflow)" type="button">Workflows</button>
-    <button class="timeline-filter is-active" data-track="book" style="--track-color:var(--tl-book)" type="button">Books</button>
+    {{- range $key := $timelineTracks }}
+      {{- $t := index $tracks $key }}
+      <button class="timeline-filter is-active" data-track="{{ $key }}" style="--track-color:{{ $t.color }}" type="button">{{ $t.label }}</button>
+    {{- end }}
   </div>
 
   <div class="timeline" id="timeline-container"></div>
@@ -107,8 +110,16 @@
     ) }}
   {{- end }}
 
+  {{/* ─── Build track config for JS ─── */}}
+  {{- $trackConfig := dict }}
+  {{- range $key := $timelineTracks }}
+    {{- $t := index $tracks $key }}
+    {{- $trackConfig = merge $trackConfig (dict $key (dict "label" $t.label "color" $t.color)) }}
+  {{- end }}
+
   <script>
     window.__timelineData = {{ $items | jsonify | safeJS }};
+    window.__timelineTracks = {{ $trackConfig | jsonify | safeJS }};
   </script>
   <script src="{{ (resources.Get "js/timeline.js" | fingerprint).RelPermalink }}"></script>
 {{ end }}

@@ -2,27 +2,10 @@
   const data = window.__graphData;
   if (!data || !data.nodes.length) return;
 
-  const colors = {
-    'projects': '#38BDF8',
-    'work-experience': '#22C55E',
-    'education': '#F59E0B',
-    'technologies': '#9F7AEA',
-    'workflows': '#EC4899',
-    'books': '#FB923C',
-    'project-journal': '#6EE7B7',
-    'posts': '#E5E7EB'
-  };
-
-  const sectionLabels = {
-    'projects': 'Project',
-    'work-experience': 'Work Experience',
-    'education': 'Education',
-    'technologies': 'Technology',
-    'workflows': 'Workflow',
-    'books': 'Book',
-    'project-journal': 'Journal',
-    'posts': 'Post'
-  };
+  const tracks = window.__graphTracks || {};
+  const colors = {};
+  const sectionLabels = {};
+  Object.keys(tracks).forEach(s => { colors[s] = tracks[s].color; sectionLabels[s] = tracks[s].label; });
 
   const container = document.getElementById('graph-container');
   const svgEl = document.getElementById('graph-svg');
