@@ -1109,13 +1109,14 @@ h2.proj-section__title {
   margin-left: 10rem;
 }
 
-.signal-axis__year {
+.signal-axis__tick {
   position: absolute;
   top: 0;
   font-family: $font-mono;
-  font-size: 0.65rem;
-  font-weight: 600;
+  font-size: 0.55rem;
   color: $color-muted;
+
+  &.is-year { font-weight: 600; font-size: 0.65rem; }
 
   &::after {
     content: '';
@@ -1273,7 +1274,7 @@ h2.proj-section__title {
 // Mobile
 @media (max-width: 768px) {
   .signal-axis { margin-left: 7rem; }
-  .signal-axis__year { font-size: 0.55rem; }
+  .signal-axis__tick { font-size: 0.5rem; &.is-year { font-size: 0.55rem; } }
   .signal-row { grid-template-columns: 7rem 1fr; height: 1.5rem; }
   .signal-row__label { font-size: 0.6rem; }
 }

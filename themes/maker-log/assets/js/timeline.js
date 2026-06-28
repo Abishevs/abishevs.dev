@@ -80,11 +80,34 @@
     }
     html += '</div>';
 
-    // Time axis
+    // Time axis — adaptive granularity
     html += '<div class="signal-axis">';
-    for (let y = viewStartYear; y <= viewEndYear + 1; y++) {
-      const pct = toPercent(new Date(y, 0, 1));
-      html += `<span class="signal-axis__year" style="left:${pct}%">${y}</span>`;
+    const rangeYears = viewEndYear - viewStartYear + 1;
+
+    if (rangeYears <= 1) {
+      // Monthly ticks
+      for (let m = 0; m < 12; m++) {
+        const d = new Date(viewStartYear, m, 1);
+        const pct = toPercent(d);
+        const label = d.toLocaleDateString('en-US', { month: 'short' });
+        html += `<span class="signal-axis__tick" style="left:${pct}%">${label}</span>`;
+      }
+    } else if (rangeYears <= 3) {
+      // Quarterly ticks
+      for (let y = viewStartYear; y <= viewEndYear; y++) {
+        for (let q = 0; q < 4; q++) {
+          const d = new Date(y, q * 3, 1);
+          const pct = toPercent(d);
+          const label = q === 0 ? `${y}` : `Q${q + 1}`;
+          html += `<span class="signal-axis__tick${q === 0 ? ' is-year' : ''}" style="left:${pct}%">${label}</span>`;
+        }
+      }
+    } else {
+      // Yearly ticks
+      for (let y = viewStartYear; y <= viewEndYear + 1; y++) {
+        const pct = toPercent(new Date(y, 0, 1));
+        html += `<span class="signal-axis__tick is-year" style="left:${pct}%">${y}</span>`;
+      }
     }
     html += `<span class="signal-axis__now" style="left:${toPercent(now)}%"></span>`;
     html += '</div>';
