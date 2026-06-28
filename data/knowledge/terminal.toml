@@ -1,0 +1,6 @@
+# Terminal prompt configuration for Engineering Semantics
+# Used by render-codeblock hooks for shell languages
+
+user = "frap"
+host = "dev"
+dir = "~"

@@ -1,0 +1,9 @@
+{{- /*
+  Engineering Semantics — Generic Code Block Renderer
+  Wraps all code blocks in semantic containers.
+  Language-specific hooks (bash, text, etc.) override this for specialized rendering.
+*/ -}}
+{{- $result := transform.HighlightCodeBlock . -}}
+<div class="engineering-code" data-lang="{{ .Type }}">
+  {{- $result.Wrapped -}}
+</div>

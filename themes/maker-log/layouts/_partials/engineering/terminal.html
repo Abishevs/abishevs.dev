@@ -1,0 +1,24 @@
+{{- /*
+  Engineering Semantics — Terminal Renderer (shared partial)
+  Renders shell blocks as terminal sessions with auto-generated prompts.
+  Prompt configuration from data/knowledge/terminal.toml.
+*/ -}}
+{{- $cfg := (index hugo.Data "knowledge" "terminal") | default dict -}}
+{{- $user := $cfg.user | default "user" -}}
+{{- $host := $cfg.host | default "dev" -}}
+{{- $dir := $cfg.dir | default "~" -}}
+{{- $prompt := printf "%s@%s:%s$" $user $host $dir -}}
+{{- $lines := split .Inner "\n" -}}
+<div class="engineering-terminal" data-lang="{{ .Type }}">
+  <div class="terminal-header">
+    <span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span>
+    <span class="terminal-title">{{ $user }}@{{ $host }}:{{ $dir }}</span>
+  </div>
+  <pre class="terminal-body"><code>
+{{- range $lines -}}
+{{- if ne . "" -}}
+<span class="terminal-prompt">{{ $prompt }} </span><span class="terminal-cmd">{{ . }}</span>
+{{ end -}}
+{{- end -}}
+</code></pre>
+</div>

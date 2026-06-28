@@ -1,0 +1,8 @@
+{{- /*
+  Engineering Semantics — Output Renderer
+  Renders `text` blocks as execution output rather than source code.
+  CSS sibling selectors pair this with the preceding source block.
+*/ -}}
+<div class="engineering-output">
+  <pre class="output-body"><code>{{ .Inner }}</code></pre>
+</div>

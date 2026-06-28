@@ -2025,6 +2025,9 @@ mark {
   opacity: 0;
   transition: opacity 0.15s;
 
+  .engineering-code:hover &,
+  .engineering-terminal:hover &,
+  .engineering-output:hover &,
   .highlight:hover & { opacity: 1; }
   &:hover { color: $color-text; border-color: $color-blue; }
   &.is-copied { color: $color-success; border-color: $color-success; }

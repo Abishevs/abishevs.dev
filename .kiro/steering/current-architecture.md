@@ -36,7 +36,8 @@ abishevs.dev/
 │   │   ├── domains.toml       ← Shared domain classifications
 │   │   ├── tracks.toml        ← Track colors, labels, timeline order (single source)
 │   │   ├── profiles.toml      ← Content Profile rendering definitions
-│   │   └── labels.toml        ← Shared UI labels (configuration-driven)
+│   │   ├── labels.toml        ← Shared UI labels (configuration-driven)
+│   │   └── terminal.toml      ← Terminal prompt config (Engineering Semantics)
 │   ├── homepage.toml           ← Homepage section config
 │   ├── navigation.toml         ← Nav categories + items + direct links
 │   ├── projects/config.toml    ← Project list page labels
@@ -72,6 +73,7 @@ abishevs.dev/
     │   ├── _reset.scss
     │   ├── _base.scss
     │   ├── _layout.scss
+    │   ├── _engineering.scss     ← Engineering Semantics styles
     │   └── _components.scss      ← All component styles
     └── assets/js/
         ├── main.js               ← Nav panels + filtering + code copy buttons
@@ -294,11 +296,41 @@ Bidirectional discovery without manual `related` fields.
 - Output mode: `htmlAndMathml` (accessible, MathML hidden by CSS)
 - Zero client-side JavaScript for math
 
-### Code Blocks
-- Hugo Chroma syntax highlighting (class-based, `noClasses = false`)
-- Copy button appears on hover (vanilla JS in `main.js`)
-- Styled with design system colors (`$color-bg`, `$color-border`)
-- Inline `code` gets surface background + border
+### Engineering Semantics (Code Blocks)
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                 ENGINEERING SEMANTICS                                 │
+│                                                                       │
+│  Org Mode source block                                                │
+│  └── ox-hugo exports as fenced code (```lang ... ```)                 │
+│       └── Hugo render-codeblock hook intercepts                       │
+│            └── Semantic wrapper + specialized rendering               │
+│                                                                       │
+│  Detection (language-based):                                          │
+│  ├── bash/sh/shell/zsh/fish → Terminal component                      │
+│  ├── text                   → Output component (execution result)     │
+│  └── everything else        → Engineering Code (Chroma highlighted)   │
+│                                                                       │
+│  Pairing (CSS sibling selectors):                                     │
+│  └── .engineering-code + .engineering-output → cohesive unit           │
+│       (removes gap, connects border-radius)                           │
+│                                                                       │
+│  Extensibility:                                                       │
+│  └── render-codeblock-{lang}.html → _partials/engineering/{x}.html    │
+│       New environments require ONE hook + ONE partial + SCSS class     │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+- Hugo render-codeblock hooks: `layouts/_markup/render-codeblock*.html`
+- Shared logic: `_partials/engineering/terminal.html`
+- Configuration: `data/knowledge/terminal.toml` (prompt user/host/dir)
+- Styles: `assets/scss/_engineering.scss`
+- Generic fallback: `render-codeblock.html` (wraps in `.engineering-code`)
+- Terminal: auto-generated prompt, copy strips prompts, terminal chrome
+- Output: green left border, muted color, communicates "this ran"
+- Copy button works on all engineering wrappers (JS in `main.js`)
+- No custom shortcodes — standard Org Mode authoring preserved
 
 ---
 
@@ -399,6 +431,7 @@ Fonts:
 - Technology auto-linking (badges link to existing technology pages)
 - Math rendering (KaTeX, inline + block)
 - Code blocks (syntax highlighting, copy button)
+- Engineering Semantics (semantic code rendering, terminal, output, extensible)
 - Resource system (generic [[links]] in frontmatter)
 - Projects (filtering by status + domain, cards, linkToSource fallback)
 - Project Journal (org-mode timestamp extraction, entry index)

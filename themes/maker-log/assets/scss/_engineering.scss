@@ -1,0 +1,135 @@
+// Engineering Semantics — code, terminal, and output rendering
+
+// Generic engineering code block
+.engineering-code {
+  position: relative;
+  margin: 1.5rem 0;
+
+  .highlight {
+    margin: 0;
+
+    pre {
+      padding: 1rem;
+      overflow-x: auto;
+      border: 1px solid $color-border;
+      border-radius: 2px;
+      background: $color-bg !important;
+      font-family: $font-mono;
+      font-size: 0.8rem;
+      line-height: 1.55;
+
+      code { background: none; padding: 0; border: none; font-size: inherit; color: inherit; }
+    }
+
+    .lntable {
+      width: 100%;
+      border: none;
+      border-spacing: 0;
+      td { padding: 0; vertical-align: top; }
+      pre { margin: 0; border: none; border-radius: 0; padding: 0.75rem; background: none !important; }
+    }
+
+    .lntd:first-child {
+      width: 2.5rem;
+      pre { padding-right: 0.5rem; text-align: right; color: $color-muted; user-select: none; }
+    }
+
+    .lntd:last-child {
+      pre { padding-left: 0; }
+    }
+
+    // When linenos are used, Hugo wraps in .chroma > table — style the wrapper
+    > .chroma {
+      border: 1px solid $color-border;
+      border-radius: 2px;
+      background: $color-bg;
+      overflow: hidden;
+    }
+  }
+}
+
+// Adjacent source+output pairing — removes gap, creates cohesive unit
+.engineering-code + .engineering-output {
+  margin-top: -1rem;
+
+  .output-body {
+    border-top: none;
+    border-radius: 0 0 2px 2px;
+  }
+}
+
+// Output block
+.engineering-output {
+  position: relative;
+  margin: 1.5rem 0;
+
+  .output-body {
+    padding: 0.75rem 1rem;
+    overflow-x: auto;
+    border: 1px solid $color-border;
+    border-radius: 2px;
+    background: $color-surface;
+    font-family: $font-mono;
+    font-size: 0.8rem;
+    line-height: 1.55;
+    color: $color-muted;
+    border-left: 2px solid $color-success;
+
+    code { background: none; padding: 0; border: none; font-size: inherit; color: inherit; }
+  }
+}
+
+// Terminal block
+.engineering-terminal {
+  position: relative;
+  margin: 1.5rem 0;
+  border: 1px solid $color-border;
+  border-radius: 2px;
+  overflow: hidden;
+
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.75rem;
+    background: $color-surface;
+    border-bottom: 1px solid $color-border;
+  }
+
+  .terminal-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $color-border;
+  }
+
+  .terminal-title {
+    margin-left: 0.5rem;
+    font-family: $font-mono;
+    font-size: 0.65rem;
+    color: $color-muted;
+  }
+
+  .terminal-body {
+    margin: 0;
+    padding: 0.75rem 1rem;
+    overflow-x: auto;
+    background: $color-bg;
+    font-family: $font-mono;
+    font-size: 0.8rem;
+    line-height: 1.7;
+    border: none;
+    border-radius: 0;
+
+    code { background: none; padding: 0; border: none; font-size: inherit; color: inherit; }
+  }
+
+  .terminal-prompt {
+    color: $color-success;
+    user-select: none;
+  }
+
+  .terminal-cmd {
+    color: $color-text;
+  }
+}

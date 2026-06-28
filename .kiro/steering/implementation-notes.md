@@ -242,3 +242,65 @@ matches this correctly.
 `noClasses = false` in hugo.toml enables class-based syntax highlighting.
 Copy button added via JS in `main.js` (appended to `.highlight` blocks).
 Appears on hover, shows "Copied!" feedback.
+
+## Engineering Semantics
+
+Hugo render-codeblock hooks intercept all fenced code blocks and wrap them
+in semantic containers. No custom shortcodes — authors write standard Org Mode.
+
+### Render Hook Files
+
+```
+layouts/_markup/
+├── render-codeblock.html         ← generic (wraps in .engineering-code)
+├── render-codeblock-bash.html    ← delegates to engineering/terminal.html
+├── render-codeblock-sh.html      ← delegates to engineering/terminal.html
+├── render-codeblock-shell.html   ← delegates to engineering/terminal.html
+├── render-codeblock-zsh.html     ← delegates to engineering/terminal.html
+├── render-codeblock-fish.html    ← delegates to engineering/terminal.html
+└── render-codeblock-text.html    ← output block (execution result)
+```
+
+### Detection Strategy
+
+Language determines semantic class:
+- Shell languages (bash/sh/shell/zsh/fish) → `.engineering-terminal`
+- `text` → `.engineering-output` (execution result)
+- Everything else → `.engineering-code` (Chroma highlighted)
+
+### Source+Output Pairing
+
+ox-hugo exports `#+RESULTS:` as a separate `text` code block immediately
+after the source block. CSS sibling selector handles pairing:
+
+```scss
+.engineering-code + .engineering-output { margin-top: -1rem; }
+```
+
+No JavaScript needed. No wrapper div needed. Pure CSS.
+
+### Terminal Configuration
+
+Prompt values from `data/knowledge/terminal.toml`:
+```toml
+user = "frap"
+host = "dev"
+dir = "~"
+```
+
+Renders as: `frap@dev:~$ command`
+
+### Copy Button
+
+JS updated to target `.engineering-code`, `.engineering-terminal`,
+`.engineering-output` instead of `.highlight` directly.
+
+For terminal blocks, copy extracts only `.terminal-cmd` text (strips prompts).
+
+### Adding New Execution Environments
+
+1. Create `render-codeblock-{lang}.html` (one line: calls a partial)
+2. Create `_partials/engineering/{renderer}.html`
+3. Add `.engineering-{type}` styles to `_engineering.scss`
+
+No modification to existing components required.

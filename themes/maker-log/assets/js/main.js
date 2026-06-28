@@ -110,14 +110,22 @@ if (grid) {
 }
 
 // ─── Code block copy buttons ─────────────────────────────────
-document.querySelectorAll('.highlight').forEach(block => {
+document.querySelectorAll('.engineering-code, .engineering-terminal, .engineering-output').forEach(block => {
   const btn = document.createElement('button');
   btn.className = 'code-copy';
   btn.textContent = 'Copy';
   btn.addEventListener('click', () => {
-    const code = block.querySelector('code');
-    if (!code) return;
-    navigator.clipboard.writeText(code.textContent).then(() => {
+    let text;
+    if (block.classList.contains('engineering-terminal')) {
+      text = Array.from(block.querySelectorAll('.terminal-cmd')).map(el => el.textContent).join('\n');
+    } else {
+      // For line-number tables, grab only the code column (second td)
+      const lntd = block.querySelector('.lntd:last-child code');
+      const code = lntd || block.querySelector('code');
+      if (!code) return;
+      text = code.textContent;
+    }
+    navigator.clipboard.writeText(text).then(() => {
       btn.textContent = 'Copied!';
       btn.classList.add('is-copied');
       setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('is-copied'); }, 1500);
