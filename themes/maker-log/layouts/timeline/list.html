@@ -4,117 +4,111 @@
     {{- with .Description }}<p class="page-header__desc">{{ . }}</p>{{ end }}
   </header>
 
-  {{/* Collect all timeline-participating nodes */}}
+  {{/* ─── FILTERS ─── */}}
+  <div class="timeline-filters" id="timeline-filters">
+    <button class="timeline-filter is-active" data-track="project" style="--track-color:var(--tl-project)" type="button">Projects</button>
+    <button class="timeline-filter is-active" data-track="career" style="--track-color:var(--tl-career)" type="button">Career</button>
+    <button class="timeline-filter is-active" data-track="education" style="--track-color:var(--tl-education)" type="button">Education</button>
+    <button class="timeline-filter is-active" data-track="workflow" style="--track-color:var(--tl-workflow)" type="button">Workflows</button>
+    <button class="timeline-filter is-active" data-track="book" style="--track-color:var(--tl-book)" type="button">Books</button>
+  </div>
+
+  <div class="timeline" id="timeline-container"></div>
+
+  {{/* ─── Generate temporal data ─── */}}
   {{- $items := slice }}
 
-  {{/* Projects — point events at their start date */}}
+  {{/* Projects */}}
   {{- range (where site.RegularPages "Section" "projects") }}
+    {{- $start := "" }}
+    {{- if .Params.startDate }}
+      {{- $start = .Params.startDate }}
+    {{- else }}
+      {{- $start = .Date.Format "2006-01-02" }}
+    {{- end }}
+    {{- $end := .Params.endDate | default "" }}
+    {{- $activity := slice }}
+    {{- range .Params.activity }}
+      {{- $activity = $activity | append (dict "start" .start "end" (.end | default "") "label" (.label | default "")) }}
+    {{- end }}
+    {{- $milestones := slice }}
+    {{- range .Params.milestones }}
+      {{- $milestones = $milestones | append (dict "date" .date "title" .title) }}
+    {{- end }}
     {{- $items = $items | append (dict
-      "year" (.Date.Year)
-      "date" (.Date.Format "2006-01-02")
-      "startDate" (.Date.Format "Jan 2006")
-      "endDate" ""
-      "current" false
-      "track" "project"
       "title" .Title
       "url" .RelPermalink
-      "status" .Params.status
+      "track" "project"
+      "start" $start
+      "end" $end
+      "current" false
+      "activity" $activity
+      "milestones" $milestones
     ) }}
   {{- end }}
 
-  {{/* Work Experience — duration events */}}
+  {{/* Work Experience */}}
   {{- range (where site.RegularPages "Section" "work-experience") }}
-    {{- $sd := .Params.startDate | time.Format "2006-01-02" }}
-    {{- $year := (time $sd).Year }}
-    {{- $ed := "" }}
-    {{- if .Params.current }}{{- $ed = "Present" }}
-    {{- else if .Params.endDate }}{{- $ed = (.Params.endDate | time.Format "Jan 2006") }}
-    {{- end }}
     {{- $items = $items | append (dict
-      "year" $year
-      "date" $sd
-      "startDate" (.Params.startDate | time.Format "Jan 2006")
-      "endDate" $ed
-      "track" "career"
       "title" (printf "%s — %s" .Params.position .Params.organization)
       "url" .RelPermalink
-      "status" .Params.status
+      "track" "career"
+      "start" .Params.startDate
+      "end" (.Params.endDate | default "")
+      "current" (.Params.current | default false)
+      "activity" slice
+      "milestones" slice
     ) }}
   {{- end }}
 
-  {{/* Education — duration events */}}
+  {{/* Education */}}
   {{- range (where site.RegularPages "Section" "education") }}
-    {{- $sd := .Params.startDate | time.Format "2006-01-02" }}
-    {{- $year := (time $sd).Year }}
-    {{- $ed := "" }}
-    {{- if .Params.current }}{{- $ed = "Present" }}
-    {{- else if .Params.endDate }}{{- $ed = (.Params.endDate | time.Format "Jan 2006") }}
-    {{- end }}
     {{- $items = $items | append (dict
-      "year" $year
-      "date" $sd
-      "startDate" (.Params.startDate | time.Format "Jan 2006")
-      "endDate" $ed
-      "track" "education"
       "title" (printf "%s — %s" .Params.programme .Params.institution)
       "url" .RelPermalink
-      "status" .Params.status
+      "track" "education"
+      "start" .Params.startDate
+      "end" (.Params.endDate | default "")
+      "current" (.Params.current | default false)
+      "activity" slice
+      "milestones" slice
     ) }}
   {{- end }}
 
-  {{/* Workflows — duration or point events */}}
+  {{/* Workflows */}}
   {{- range (where site.RegularPages "Section" "workflows") }}
-    {{- $sd := .Params.startDate | time.Format "2006-01-02" }}
-    {{- $year := (time $sd).Year }}
-    {{- $ed := "" }}
-    {{- if .Params.current }}{{- $ed = "Present" }}
-    {{- else if .Params.endDate }}{{- $ed = (.Params.endDate | time.Format "Jan 2006") }}
+    {{- $activity := slice }}
+    {{- range .Params.activity }}
+      {{- $activity = $activity | append (dict "start" .start "end" (.end | default "") "label" (.label | default "")) }}
     {{- end }}
     {{- $items = $items | append (dict
-      "year" $year
-      "date" $sd
-      "startDate" (.Params.startDate | time.Format "Jan 2006")
-      "endDate" $ed
-      "track" "workflow"
       "title" .Title
       "url" .RelPermalink
-      "status" .Params.status
+      "track" "workflow"
+      "start" .Params.startDate
+      "end" (.Params.endDate | default "")
+      "current" (.Params.current | default false)
+      "activity" $activity
+      "milestones" slice
     ) }}
   {{- end }}
 
-  {{/* Sort by date descending */}}
-  {{- $items = sort $items "date" "desc" }}
-
-  {{/* Group by year */}}
-  {{- $years := slice }}
-  {{- $currentYear := 0 }}
-  {{- range $items }}
-    {{- if ne .year $currentYear }}
-      {{- $years = $years | append .year }}
-      {{- $currentYear = .year }}
-    {{- end }}
+  {{/* Books */}}
+  {{- range (where site.RegularPages "Section" "books") }}
+    {{- $items = $items | append (dict
+      "title" .Title
+      "url" .RelPermalink
+      "track" "book"
+      "start" (.Date.Format "2006-01-02")
+      "end" ""
+      "current" false
+      "activity" slice
+      "milestones" slice
+    ) }}
   {{- end }}
 
-  {{/* Render by year */}}
-  <div class="timeline">
-    {{- range $year := $years }}
-      <section class="timeline__year">
-        <h2 class="timeline__year-label">{{ $year }}</h2>
-        <ul class="timeline__items">
-          {{- range $items }}
-            {{- if eq .year $year }}
-              <li class="timeline__item">
-                <span class="timeline__track">{{ .track }}</span>
-                <a class="timeline__title" href="{{ .url }}">{{ .title }}</a>
-                <span class="timeline__duration">
-                  {{- .startDate }}
-                  {{- with .endDate }} – {{ . }}{{ end }}
-                </span>
-              </li>
-            {{- end }}
-          {{- end }}
-        </ul>
-      </section>
-    {{- end }}
-  </div>
+  <script>
+    window.__timelineData = {{ $items | jsonify | safeJS }};
+  </script>
+  <script src="{{ (resources.Get "js/timeline.js" | fingerprint).RelPermalink }}"></script>
 {{ end }}

@@ -1,14 +1,13 @@
 {{ define "main" }}
   {{- $books := .Pages }}
 
-  {{/* Count per reading status */}}
-  {{- $statusCounts := dict }}
-  {{- range $books }}
-    {{- $s := .Params.readingStatus | default "" }}
-    {{- if $s }}
-      {{- $statusCounts = merge $statusCounts (dict $s (add (index $statusCounts $s | default 0) 1)) }}
-    {{- end }}
-  {{- end }}
+  {{/* Define section order and labels */}}
+  {{- $sections := slice
+    (dict "id" "reading" "label" "Currently Reading" "color" "#38BDF8")
+    (dict "id" "completed" "label" "Completed" "color" "#22C55E")
+    (dict "id" "want-to-read" "label" "Want to Read" "color" "#9F7AEA")
+    (dict "id" "abandoned" "label" "Abandoned" "color" "#9CA3AF")
+  }}
 
   {{/* Count favorites */}}
   {{- $favCount := 0 }}
@@ -23,16 +22,20 @@
 
   {{/* ─── FILTERS ─── */}}
   <div class="proj-filters" id="proj-filters">
-    {{- with $statusCounts }}
-      <div class="proj-filters__row">
-        <span class="proj-filters__label">Status</span>
-        <div class="proj-filters__chips" role="group" aria-label="Filter by reading status">
-          {{- range $s, $count := . }}
-            <button class="filter-chip" data-filter="status" data-value="{{ $s }}" type="button">{{ $s | title }}<span class="filter-chip__count">{{ $count }}</span></button>
+    <div class="proj-filters__row">
+      <span class="proj-filters__label">Status</span>
+      <div class="proj-filters__chips" role="group" aria-label="Filter by reading status">
+        {{- range $s := $sections }}
+          {{- $count := 0 }}
+          {{- range $books }}
+            {{- if eq .Params.readingStatus $s.id }}{{ $count = add $count 1 }}{{ end }}
           {{- end }}
-        </div>
+          {{- if gt $count 0 }}
+            <button class="filter-chip" data-filter="status" data-value="{{ $s.id }}" type="button">{{ $s.label }}<span class="filter-chip__count">{{ $count }}</span></button>
+          {{- end }}
+        {{- end }}
       </div>
-    {{- end }}
+    </div>
     {{- if gt $favCount 0 }}
       <div class="proj-filters__row">
         <span class="proj-filters__label">Traits</span>
@@ -44,24 +47,28 @@
     <button class="filter-reset" id="filter-reset" type="button" hidden>Clear filters</button>
   </div>
 
-  {{/* ─── BOOK LIST ─── */}}
-  <div class="work-list" id="proj-grid">
-    {{- range $books }}
-      <a class="work-entry proj-card" href="{{ .RelPermalink }}" data-status="{{ .Params.readingStatus }}" data-favorite="{{ if .Params.favorite }}true{{ end }}">
-        <div class="work-entry__header">
-          <span class="work-entry__title">{{ .Title }}{{- with .Params.author }} <span class="book-meta__by">by</span> <span class="book-meta__author">{{ . }}</span>{{ end }}</span>
-          {{- if .Params.favorite }}<span class="book-entry__fav" aria-label="Favorite">★</span>{{ end }}
-        </div>
-        <div class="work-entry__meta">
-          {{- with .Params.year }}<span>{{ . }}</span>{{ end }}
-          {{- with .Params.readingStatus }}
-            <span class="book-badge book-badge--{{ . }}">{{ . | title }}</span>
-          {{- end }}
-        </div>
-        {{- with .Description }}
-          <p class="work-entry__desc">{{ . }}</p>
-        {{- end }}
-      </a>
+  {{/* ─── GROUPED BY STATUS ─── */}}
+  <div id="proj-grid">
+    {{- range $section := $sections }}
+      {{- $sectionBooks := where $books ".Params.readingStatus" $section.id }}
+      {{- with $sectionBooks }}
+        <section class="book-section">
+          <h2 class="book-section__title" style="--section-color:{{ $section.color }}">{{ $section.label }}</h2>
+          <div class="work-list">
+            {{- range . }}
+              <a class="work-entry proj-card" href="{{ .RelPermalink }}" data-status="{{ .Params.readingStatus }}" data-favorite="{{ if .Params.favorite }}true{{ end }}">
+                <div class="work-entry__header">
+                  <span class="work-entry__title">{{ .Title }}{{- with .Params.author }} <span class="book-meta__by">by</span> <span class="book-meta__author">{{ . }}</span>{{ end }}</span>
+                  {{- if .Params.favorite }}<span class="book-entry__fav" aria-label="Favorite">★</span>{{ end }}
+                </div>
+                {{- with .Description }}
+                  <p class="work-entry__desc">{{ . }}</p>
+                {{- end }}
+              </a>
+            {{- end }}
+          </div>
+        </section>
+      {{- end }}
     {{- end }}
   </div>
   <p class="proj-empty" id="proj-empty" hidden>No books match the selected filters.</p>

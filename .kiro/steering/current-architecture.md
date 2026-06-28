@@ -1,6 +1,6 @@
 # Architecture — Current State
 
-Last updated: 2026-06-27
+Last updated: 2026-06-28
 
 ## Philosophy
 
@@ -21,36 +21,36 @@ abishevs.dev/
 │   ├── projects/              ← Engineering artefacts
 │   ├── project-journal/       ← Build logs (org-mode exported)
 │   ├── posts/                 ← Blog articles
-│   ├── workflows/             ← Engineering environments (rich pages)
-│   │                             Workflow pages are intentionally content-first.
-│   │                             Unlike Projects or Work Experience, the body
-│   │                             structure is not prescribed by the layout.
-│   │                             Authors are free to organize the document using
-│   │                             sections that best communicate the engineering
-│   │                             environment or practice. The template is
-│   │                             responsible for navigation, metadata,
-│   │                             relationships and presentation—not the
-│   │                             document's internal structure.
+│   ├── workflows/             ← Engineering environments
 │   ├── work-experience/       ← Professional engineering case studies
 │   ├── education/             ← Educational environments
-│   └── timeline/              ← Chronological View (no content, aggregates others)
+│   ├── technologies/          ← Knowledge hubs (languages, tools, platforms)
+│   ├── books/                 ← Influential ideas
+│   ├── timeline/              ← Chronological View (aggregates others)
+│   ├── graph/                 ← Knowledge Graph View (visualizes relationships)
+│   ├── search/                ← Site-wide search
+│   └── about.md               ← Philosophy, not résumé
 ├── data/
 │   ├── knowledge/
-│   │   ├── statuses.toml      ← Shared status definitions
+│   │   ├── statuses.toml      ← Shared status definitions (projects, workflows, work-exp)
 │   │   └── domains.toml       ← Shared domain classifications
-│   ├── navigation.toml        ← Nav panel content (categories + items + descriptions)
-│   └── projects/
-│       └── config.toml        ← Project list page UI labels
+│   ├── navigation.toml        ← Nav categories + items + direct links
+│   ├── projects/config.toml   ← Project list page UI labels
+│   └── technologies/config.toml ← Technology list page labels
 └── themes/maker-log/
     ├── layouts/
     │   ├── _partials/knowledge/   ← Shared Knowledge Node components
-    │   ├── projects/              ← Project-specific layouts
+    │   ├── projects/              ← Project layouts
     │   ├── project-journal/       ← Journal layout
     │   ├── work-experience/       ← Work experience layouts
     │   ├── education/             ← Education layouts
     │   ├── workflows/             ← Workflow layouts
+    │   ├── technologies/          ← Technology layouts
+    │   ├── books/                 ← Book layouts
     │   ├── timeline/              ← Timeline View layout
-    │   └── _default/             ← Fallback Knowledge Node layouts
+    │   ├── graph/                 ← Knowledge Graph layout
+    │   ├── search/                ← Search layout
+    │   └── _default/             ← Fallback layouts + index.json
     ├── assets/scss/
     │   ├── main.scss             ← Entry point (@import only)
     │   ├── _variables.scss       ← Colors, fonts, layout
@@ -58,7 +58,42 @@ abishevs.dev/
     │   ├── _base.scss
     │   ├── _layout.scss
     │   └── _components.scss      ← All component styles
-    └── assets/js/main.js         ← Nav panels + project filtering
+    └── assets/js/
+        ├── main.js               ← Nav panels + generic list filtering
+        ├── graph.js              ← D3 force-directed knowledge graph
+        └── search.js             ← Client-side search
+```
+
+---
+
+## How Everything Connects
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                        KNOWLEDGE SYSTEM                               │
+│                                                                       │
+│  Content (authored manually)                                          │
+│  ├── Projects, Workflows, Work Exp, Education, Books, Posts, Journals │
+│  ├── Each has: title, description, related = ["/path/..."]            │
+│  └── Each links to others via `related` frontmatter                   │
+│                                                                       │
+│  Relationships (bidirectional)                                        │
+│  ├── related.html    → "Continue Exploring" (outbound)                │
+│  ├── backlinks.html  → "Linked From" (inbound)                        │
+│  └── discovered.html → "Appears In" (Technology auto-discovery)       │
+│                                                                       │
+│  Views (no content, visualize existing nodes)                         │
+│  ├── Timeline  → chronological: groups by year, colored tracks        │
+│  ├── Graph     → topological: force-directed, shows all connections   │
+│  ├── Search    → textual: instant search across all nodes             │
+│  └── Homepage  → curated: featured + activity feed                    │
+│                                                                       │
+│  Navigation (data-driven from navigation.toml)                        │
+│  ├── Explore   → Projects, Workflows, Books, Technologies             │
+│  ├── Journey   → Timeline, Knowledge Graph, Work Exp, Education       │
+│  ├── Writing   → Blog, Project Journal                                │
+│  └── Direct    → About, Search                                        │
+└─────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -72,142 +107,137 @@ abishevs.dev/
 │  Frontmatter:                                                │
 │  ├── title, description, date                                │
 │  ├── status          → data/knowledge/statuses.toml          │
+│  │   (projects, workflows, work-exp only)                    │
 │  ├── domains/projectType → data/knowledge/domains.toml       │
 │  ├── related = ["/path/to/other/node", ...]                  │
-│  └── type-specific fields (tools, organization, etc.)        │
+│  └── type-specific fields (tools, category, author, etc.)    │
 │                                                              │
 │  Content: Rich markdown with ## sections                     │
 │                                                              │
 │  Rendered by:                                                │
 │  ├── knowledge/node-meta.html    (status + domains + dates)  │
 │  ├── knowledge/external-links.html                           │
-│  ├── knowledge/related.html      (generic, groups by section)│
-│  └── knowledge/node-nav.html     (exploration footer)        │
+│  ├── knowledge/related.html      (Continue Exploring)        │
+│  ├── knowledge/backlinks.html    (Linked From)               │
+│  ├── knowledge/discovered.html   (Appears In — tech only)    │
+│  └── knowledge/node-nav.html     (section link + prev/next)  │
 └─────────────────────────────────────────────────────────────┘
 ```
-
-### Shared Partials
-
-| Partial | Purpose | Interface |
-|---------|---------|-----------|
-| `knowledge/node-meta.html` | Status badge + domain badges + dates | `dict "page" . "domainKey" "projectType"` |
-| `knowledge/badge-status.html` | Single status badge | `dict "status" "active" "statuses" map` |
-| `knowledge/badge-domains.html` | Domain badge group | `dict "domains" slice "domainData" map` |
-| `knowledge/external-links.html` | Labeled external links | `dict "links" (slice of dicts)` |
-| `knowledge/related.html` | Resolve `related` paths, group by section | `dict "page" .` |
-| `knowledge/node-nav.html` | Section link + tags + prev/next | `dict "page" .` |
 
 ### Relationship Model
 
 ```
-Frontmatter:
-  related = ["/projects/modest", "/workflows/linux-desktop", "/work-experience/ericsson-summer-2025"]
-
-Resolution:
-  site.GetPage → group by .Section → render "Continue Exploring"
-
-Output:
-  Continue Exploring
-  ├── Projects
-  │   └── MODEST → /projects/modest/
-  ├── Workflows
-  │   └── Linux Desktop → /workflows/linux-desktop/
-  └── Work Experience
-      └── Summer Intern — Ericsson → /work-experience/ericsson-summer-2025/
+                    related (manual, bidirectional)
+    ┌──────────────────────────────────────────────────┐
+    │                                                  │
+    ▼                                                  ▼
+ Project ──related──▶ Technology ◀──discovered── Work Exp
+    │                     ▲                         │
+    │                     │ keywords match          │
+    └──related──▶ Workflow ──related──▶ Education   │
+                                                    │
+                 Book ──related──────────────────────┘
 ```
+
+- `related` → manually authored, rendered as "Continue Exploring"
+- `backlinks` → auto-computed inverse of `related`, rendered as "Linked From"
+- `discovered` → Technology pages scan all pages' `keywords`/`technologies`/`tools` fields
 
 ---
 
 ## Content Types
 
-### Duration-based (reuse .work-entry/.work-meta CSS)
+### Types with shared project statuses (statuses.toml)
 
-| Type | Key Fields | Track (Timeline) |
-|------|-----------|-----------------|
-| Work Experience | organization, position, startDate, endDate, current, technologies | career |
-| Education | institution, programme, degree, startDate, endDate, current | education |
-| Workflows | tools, domains, startDate, endDate, current | workflow |
+| Type | Key Fields | Timeline Track |
+|------|-----------|----------------|
+| Projects | status, projectType, keywords, sourceCodeUrl | project (point) |
+| Work Experience | organization, position, startDate, endDate, technologies | career (duration) |
+| Education | institution, programme, degree, startDate, endDate | education (duration) |
+| Workflows | tools, domains, startDate, endDate | workflow (duration) |
 
-### Artefact-based
+### Types with custom metadata (no shared statuses)
 
-| Type | Key Fields | Track (Timeline) |
-|------|-----------|-----------------|
-| Projects | status, projectType, thumbnail, sourceCodeUrl, linkToSource | project |
-| Project Journal | (markdown with timestamped ## entries) | — |
-| Posts | authors, tags, categories, series | — |
+| Type | Key Fields | Timeline Track |
+|------|-----------|----------------|
+| Technologies | category, firstUsed, favorite, dailyDriver | — |
+| Books | author, year, readingStatus, favorite | book (point) |
+| Posts | description | — |
+| Project Journal | toc, related | — |
+
+---
+
+## Views
+
+### Timeline
+
+Aggregates all content types chronologically. Groups by year, sorted descending.
+
+- **Point events**: Projects (by date), Books (by date)
+- **Duration events**: Work Experience, Education, Workflows (startDate–endDate)
+- **Visual**: Track-colored dots + duration bars
+- **Filtering**: Toggle tracks (project, career, education, workflow, book)
+- **Interaction**: Full-row clickable items, uses generic JS filter system
+
+### Knowledge Graph
+
+Interactive D3.js force-directed graph of all Knowledge Nodes and their relationships.
+
+- **Data**: Hugo generates nodes (id, title, section, description) + edges (from `related` fields) as inline JSON
+- **Filtering**: Toggle sections on/off
+- **Search**: Find node by title, highlight + center
+- **Focus mode**: Click node → fade unrelated, highlight neighbors; click again → navigate
+- **Zoom/pan**: Scroll + drag
+- **Scalability**: Node radius based on degree, zoom handles density
+
+### Search
+
+Client-side instant search across all Knowledge Nodes.
+
+- **Index**: Hugo generates `/index.json` at build time (title, url, section, description, tags)
+- **Matching**: Multi-word substring matching against title + description + tags
+- **Results**: Grouped by section, matching terms highlighted with `<mark>`
+- **Keyboard**: `/` to focus from anywhere, `Escape` to blur
+- **No external dependencies**: Vanilla JS
 
 ---
 
 ## Navigation
 
 ```
-┌────────────────────────────────────────────────────────────┐
-│ Eduards Abishevs         Explore   Journey   Writing  About │
-└────────────────────────────────────────────────────────────┘
-                              │
-                              ▼ (hover → contextual panel)
-                    ┌─────────────────────────────┐
-                    │ Engineering artefacts and    │
-                    │ long-term work.              │
-                    │─────────────────────────────│
-                    │ Projects                     │
-                    │ Systems I've built...        │
-                    │ Workflows                    │
-                    │ Engineering environments...  │
-                    └─────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────┐
+│ Eduards Abishevs    Explore   Journey   Writing   About   Search │
+└──────────────────────────────────────────────────────────────────┘
 
-Categories:
-  Explore  → Projects, Workflows
-  Journey  → Timeline, Work Experience, Education
+Categories (hover panels, data-driven from navigation.toml):
+  Explore  → Projects, Workflows, Books, Technologies
+  Journey  → Timeline, Knowledge Graph, Work Experience, Education
   Writing  → Blog, Project Journal
-  About    → Direct link
-```
 
-Data-driven from `data/navigation.toml`. Adding an item = one TOML block.
-
----
-
-## Timeline (View)
-
-The Timeline is **not a content type** — it's a View that aggregates existing nodes.
-
-```
-Timeline
-├── queries site.RegularPages by Section
-│   ├── projects      → point events (.Date)
-│   ├── work-experience → duration events (startDate–endDate)
-│   ├── education     → duration events (startDate–endDate)
-│   └── workflows     → duration events (startDate–endDate)
-├── sorts by date descending
-├── groups by year
-└── renders: track | title (linked) | duration
+Direct links:
+  About, Search
 ```
 
 ---
 
-## Homepage
+## Filtering Architecture
+
+All list pages share a single generic JS filter system in `main.js`:
 
 ```
-┌─────────────────────────────────────┐
-│ (from _index.md ## intro)           │  ← Who + what this site is
-│                                     │
-│ NOW                                 │  ← Hand-written current focus
-│ (from _index.md ## now)             │     (from _index.md body)
-│                                     │
-│ FEATURED WORK                       │  ← Pinned projects (hugo.toml)
-│ [card] [card]                       │
-│                   All projects →    │
-│                                     │
-│ ACTIVITY                            │  ← Unified feed (journals +
-│ journal  Before summer results  ... │     posts + projects, top 8)
-│ post     Is it time for Emacs?  ... │
-│ ...                                 │
-└─────────────────────────────────────┘
+Filter chip: data-filter="<dimension>" data-value="<value>"
+Card:        data-<dimension>="<value>"
 
-Footer (every page):
-  13 projects · 2 journals · 2 posts · building since 2024
-  © 2023–2026 Eduards Abishevs
+JS reads active[dim], checks card.dataset[dim].includes(val)
 ```
+
+| Page | Dimensions |
+|------|-----------|
+| Projects | `status`, `domains` |
+| Technologies | `domains`, `favorite`, `daily` |
+| Books | `status`, `favorite` |
+| Workflows | `status`, `domains` |
+| Timeline | `track` |
 
 ---
 
@@ -226,6 +256,16 @@ Success:      #22C55E
 Warning:      #F59E0B
 Error:        #EF4444
 
+Track Colors:
+  Project:    #38BDF8
+  Career:     #22C55E
+  Education:  #F59E0B
+  Workflow:   #EC4899
+  Book:       #FB923C
+  Technology: #9F7AEA
+  Journal:    #6EE7B7
+  Post:       #E5E7EB
+
 Fonts:
   Headings:   IBM Plex Sans
   Body:       Source Serif 4
@@ -239,13 +279,14 @@ Fonts:
 1. Create `themes/maker-log/archetypes/<section>.md`
 2. Create `content/<section>/_index.md`
 3. Create `layouts/<section>/list.html` and `single.html`
-4. Use `node-meta.html`, `related.html`, `node-nav.html` in layouts
-5. Add section-specific metadata rendering only for type-unique fields
+4. Use `related.html`, `backlinks.html`, `node-nav.html` in layouts
+5. Add section-specific metadata rendering for type-unique fields
 6. Add entry to `data/navigation.toml`
 7. Add `range` block to `layouts/timeline/list.html` if applicable
-8. Duration-based types reuse `.work-entry`, `.work-list`, `.work-meta` classes
+8. Add section to `layouts/graph/list.html` node generation
+9. Duration-based types reuse `.work-entry` class; cards reuse `.proj-card`
 
-**Zero changes needed to:** shared partials, SCSS (unless new visual pattern), JS, data files.
+**Zero changes needed to:** shared partials, JS filter system, search index, graph visualization.
 
 ---
 
@@ -254,31 +295,31 @@ Fonts:
 - Hugo v0.163.3+extended (LibSass, no Dart Sass)
 - SCSS: `@import` only, no `@use`/`@forward`
 - No `else with` in Hugo templates — use `else if`
-- `cond` evaluates both branches eagerly — use `if/else if` for nullable values
-- Site functional without JavaScript (desktop nav via CSS hover)
+- Hugo taxonomies disabled — Knowledge Node architecture handles relationships
+- Site functional without JavaScript (nav via CSS hover, content always visible)
 - Content authored in Org Mode, exported to Hugo markdown
+- D3.js loaded from CDN for graph visualization only
 
 ---
 
-## What Exists vs What's Planned
+## Implemented ✓
 
-### Implemented ✓
-- Knowledge Node architecture (shared partials, data, relationships)
-- Projects (with filtering, cards, linkToSource fallback)
-- Project Journal (org-mode timestamp extraction, entry index, dedicated list layout)
-- Work Experience (3 Ericsson entries)
-- Education (Chalmers)
-- Workflows (Linux Desktop, Development Environment)
-- Timeline Index (aggregates all duration-based types)
-- Navigation (intent-based, contextual panels, data-driven)
+- Knowledge Node architecture (shared partials, data, relationships, backlinks)
+- Projects (filtering by status + domain, cards, linkToSource fallback)
+- Project Journal (org-mode timestamp extraction, entry index)
+- Work Experience (3 entries, clickable cards)
+- Education (Chalmers, clickable cards)
+- Workflows (Linux Desktop, Development Environment, filtering)
+- Technologies (category/firstUsed/favorite/dailyDriver, auto-discovery, filtering)
+- Books (readingStatus/favorite, "Title by Author" display, filtering)
+- Timeline (all content types, track-colored duration bars, filtering by track)
+- Knowledge Graph (D3 force-directed, filtering, search, focus mode, zoom/pan)
+- Search (client-side, instant, grouped by section, keyboard shortcut)
+- Navigation (intent-based, contextual panels, data-driven, direct links)
 - Homepage (intro, now, featured, activity feed)
+- About page (philosophy-focused)
+- 404 page ("Signal Lost" themed)
 - Footer (knowledge base stats)
-- Books (content type with readingStatus/favorite metadata, filters, backlinks, sample content)
-- About page (philosophy-focused, no résumé)
-- Backlinks (automatic "Linked From" on every Knowledge Node)
-- Taxonomy/tag page styling
-- Insight Purple accent (research, knowledge, learning)
-- Technologies (content type with category/firstUsed/favorite/dailyDriver metadata, auto-discovery from keywords/technologies/tools across site)
 
 ### Not Yet Implemented
-- Tag enrichment (existing content mostly has empty tags)
+- Tag enrichment (existing content mostly has empty keywords)

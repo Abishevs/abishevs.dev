@@ -662,6 +662,61 @@ h2.proj-section__title {
   &:hover { color: $color-blue; }
 }
 
+.home-section__subtitle {
+  font-size: 0.8rem;
+  color: $color-muted;
+  margin: -0.5rem 0 1rem;
+}
+
+.home-explore {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.5rem;
+}
+
+.home-explore-group {
+  margin-bottom: 1rem;
+}
+
+.home-explore-group__label {
+  font-family: $font-heading;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: $color-text;
+  margin: 0 0 0.4rem;
+}
+
+.home-explore-group__desc {
+  font-weight: 400;
+  font-size: 0.7rem;
+  color: $color-muted;
+}
+
+.home-explore__item {
+  display: block;
+  padding: 0.75rem;
+  border: 1px solid $color-border;
+  border-radius: 2px;
+  text-decoration: none;
+
+  &:hover { border-color: $color-blue; }
+}
+
+.home-explore__name {
+  display: block;
+  font-family: $font-heading;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: $color-text;
+}
+
+.home-explore__desc {
+  display: block;
+  font-size: 0.7rem;
+  color: $color-muted;
+  margin-top: 0.15rem;
+}
+
 .home-now {
   font-family: $font-body;
   font-size: 0.95rem;
@@ -1015,64 +1070,132 @@ h2.proj-section__title {
 // ─── Timeline Index ──────────────────────────────────────────
 
 .timeline {
-  margin-top: 1.5rem;
+  --tl-project: #38BDF8;
+  --tl-career: #22C55E;
+  --tl-education: #F59E0B;
+  --tl-workflow: #EC4899;
+  --tl-book: #FB923C;
+  margin-top: 1rem;
 }
 
-.timeline__year {
-  margin-bottom: 2rem;
+// Gantt chart
+.gantt {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  overflow-x: hidden;
 }
 
-.timeline__year-label {
+.gantt-axis {
+  position: relative;
+  border-right: 1px solid $color-border;
+}
+
+.gantt-axis__year {
+  position: absolute;
+  left: 0;
   font-family: $font-mono;
-  font-size: 1.1rem;
+  font-size: 0.75rem;
   font-weight: 600;
   color: $color-text;
-  margin: 0 0 0.75rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid $color-border;
 }
 
-.timeline__items {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.timeline__item {
-  display: grid;
-  grid-template-columns: 5rem 1fr auto;
-  align-items: baseline;
-  gap: 0.75rem;
-  padding: 0.4rem 0;
-  border-bottom: 1px solid $color-border;
-
-  &:last-child { border-bottom: none; }
-}
-
-.timeline__track {
+.gantt-axis__month {
+  position: absolute;
+  left: 0;
   font-family: $font-mono;
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: 0.6rem;
   color: $color-muted;
 }
 
-.timeline__title {
+.gantt-items {
+  position: relative;
+}
+
+// Individual Gantt items
+.gantt-item {
+  position: absolute;
+  display: block;
+  text-decoration: none;
+  border-radius: 3px;
+  overflow: hidden;
+  min-height: 20px;
+  cursor: pointer;
+  transition: transform 0.1s;
+
+  &:hover { transform: translateX(2px); z-index: 10; }
+  &:hover .gantt-item__label { opacity: 1; }
+}
+
+.gantt-item__bar {
+  position: absolute;
+  inset: 0;
+  border-radius: 3px;
+}
+
+.gantt-item__activity {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-radius: 2px;
+  opacity: 0.85;
+}
+
+.gantt-item__milestone {
+  position: absolute;
+  left: 2px;
+  font-size: 0.5rem;
+  color: $color-warning;
+  z-index: 2;
+}
+
+.gantt-item__label {
+  position: relative;
+  z-index: 1;
+  display: block;
+  padding: 0.2rem 0.4rem;
   font-family: $font-heading;
-  font-size: 0.85rem;
+  font-size: 0.65rem;
+  font-weight: 600;
   color: $color-text;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-
-  &:hover { color: $color-blue; text-decoration: none; }
+  opacity: 0.9;
 }
 
-.timeline__duration {
+// Timeline filters
+.timeline-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-filter {
   font-family: $font-mono;
   font-size: 0.65rem;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid $color-border;
+  border-radius: 2px;
+  background: transparent;
   color: $color-muted;
-  white-space: nowrap;
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--track-color);
+    margin-right: 0.3rem;
+    vertical-align: middle;
+  }
+
+  &.is-active { color: $color-text; border-color: var(--track-color); }
+  &:not(.is-active) { opacity: 0.4; }
 }
 
 // ─── Workflow Pages ──────────────────────────────────────────
@@ -1462,7 +1585,24 @@ h2.proj-section__title {
 
 .book-badge--reading { color: $color-blue; border-color: $color-blue; }
 .book-badge--completed { color: $color-success; border-color: $color-success; }
+.book-badge--want-to-read { color: $color-purple; border-color: $color-purple; }
 .book-badge--abandoned { color: $color-muted; border-color: $color-border; }
+
+.book-section {
+  margin-top: 1.5rem;
+}
+
+.book-section__title {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--section-color, $color-muted);
+  margin: 0 0 0.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid $color-border;
+}
 
 .book-entry__fav {
   color: $color-warning;

@@ -4,34 +4,24 @@
   {{- $introContent := "" }}
   {{- $nowContent := "" }}
 
-  {{/* Extract intro section */}}
   {{- $introMatch := findRE `(?s)<h2 id="intro">.*?</h2>(.*?)(?:<h2|$)` $content }}
   {{- with $introMatch }}
     {{- $introContent = index . 0 | replaceRE `<h2 id="intro">.*?</h2>` "" | replaceRE `<h2$` "" }}
   {{- end }}
 
-  {{/* Extract now section */}}
   {{- $nowMatch := findRE `(?s)<h2 id="now">.*?</h2>(.*?)(?:<h2|$)` $content }}
   {{- with $nowMatch }}
     {{- $nowContent = index . 0 | replaceRE `<h2 id="now">.*?</h2>` "" | replaceRE `<h2$` "" }}
   {{- end }}
 
-  {{/* ─── Opening ─── */}}
+  {{/* ─── 1. Introduction ─── */}}
   {{- with $introContent }}
     <section class="home-section home-section--intro">
       <div class="home-intro">{{ . | safeHTML }}</div>
     </section>
   {{- end }}
 
-  {{/* ─── Now ─── */}}
-  {{- with $nowContent }}
-    <section class="home-section">
-      <h2 class="home-section__title">Now</h2>
-      <div class="home-now">{{ . | safeHTML }}</div>
-    </section>
-  {{- end }}
-
-  {{/* ─── Featured Work ─── */}}
+  {{/* ─── 2. Featured Work ─── */}}
   {{- $pinned := slice }}
   {{- range site.Params.pinnedProjects }}
     {{- $p := site.GetPage . }}
@@ -47,41 +37,74 @@
     </section>
   {{- end }}
 
-  {{/* ─── Activity ─── */}}
-  {{- $activity := slice }}
-
-  {{- range (where site.RegularPages "Section" "project-journal") }}
-    {{- $page := . }}
-    {{- $h2s := findRE `<h2 id="([^"]+)">.*?<span class="timestamp">\[([^\]]+)\]</span></span>\s*([^<]+)` $page.Content }}
-    {{- range $h2s }}
-      {{- $h2 := . }}
-      {{- $id := index (findRE `id="([^"]+)"` $h2) 0 | replaceRE `id="|"` "" }}
-      {{- $ts := index (findRE `\[([^\]]+)\]` $h2) 0 | replaceRE `\[|\]` "" }}
-      {{- $label := $h2 | replaceRE `<[^>]+>` "" | replaceRE `^\s*\[[^\]]+\]\s*` "" | strings.TrimSpace }}
-      {{- $datePart := substr $ts 0 10 }}
-      {{- $activity = $activity | append (dict "date" $datePart "ts" $ts "type" "journal" "title" $label "url" (printf "%s#%s" $page.RelPermalink $id)) }}
+  {{/* ─── 3. Explore the Knowledge System ─── */}}
+  {{- $nav := hugo.Data.navigation }}
+  {{- $groups := slice
+    (dict "label" "Explore" "desc" $nav.explore.description "items" $nav.explore.items)
+    (dict "label" "Journey" "desc" $nav.journey.description "items" $nav.journey.items)
+    (dict "label" "Writing" "desc" $nav.writing.description "items" $nav.writing.items)
+  }}
+  <section class="home-section">
+    <h2 class="home-section__title">Knowledge System</h2>
+    {{- range $groups }}
+      <div class="home-explore-group">
+        <h3 class="home-explore-group__label">{{ .label }} <span class="home-explore-group__desc">— {{ .desc }}</span></h3>
+        <div class="home-explore">
+          {{- range .items }}
+            <a class="home-explore__item" href="{{ .url | relLangURL }}">
+              <span class="home-explore__name">{{ .name }}</span>
+              <span class="home-explore__desc">{{ .desc }}</span>
+            </a>
+          {{- end }}
+        </div>
+      </div>
     {{- end }}
+  </section>
+
+  {{/* ─── 4. Now ─── */}}
+  {{- with $nowContent }}
+    <section class="home-section">
+      <h2 class="home-section__title">Now</h2>
+      <div class="home-now">{{ . | safeHTML }}</div>
+    </section>
   {{- end }}
 
-  {{- range (where site.RegularPages "Section" "posts") }}
-    {{- $activity = $activity | append (dict "date" (.Date.Format "2006-01-02") "type" "post" "title" .Title "url" .RelPermalink) }}
-  {{- end }}
+  {{/* ─── 5. Recent Changes ─── */}}
+  {{- $changes := slice }}
 
   {{- range (where site.RegularPages "Section" "projects") }}
-    {{- $activity = $activity | append (dict "date" (.Date.Format "2006-01-02") "type" "project" "title" .Title "url" .RelPermalink) }}
+    {{- $changes = $changes | append (dict "date" (.Date.Format "2006-01-02") "type" "project" "title" .Title "url" .RelPermalink) }}
+  {{- end }}
+  {{- range (where site.RegularPages "Section" "technologies") }}
+    {{- $changes = $changes | append (dict "date" (.Date.Format "2006-01-02") "type" "technology" "title" .Title "url" .RelPermalink) }}
+  {{- end }}
+  {{- range (where site.RegularPages "Section" "workflows") }}
+    {{- $changes = $changes | append (dict "date" (.Date.Format "2006-01-02") "type" "workflow" "title" .Title "url" .RelPermalink) }}
+  {{- end }}
+  {{- range (where site.RegularPages "Section" "books") }}
+    {{- $changes = $changes | append (dict "date" (.Date.Format "2006-01-02") "type" "book" "title" .Title "url" .RelPermalink) }}
+  {{- end }}
+  {{- range (where site.RegularPages "Section" "posts") }}
+    {{- $changes = $changes | append (dict "date" (.Date.Format "2006-01-02") "type" "post" "title" .Title "url" .RelPermalink) }}
+  {{- end }}
+  {{- range (where site.RegularPages "Section" "project-journal") }}
+    {{- $changes = $changes | append (dict "date" (.Date.Format "2006-01-02") "type" "journal" "title" .Title "url" .RelPermalink) }}
+  {{- end }}
+  {{- range (where site.RegularPages "Section" "work-experience") }}
+    {{- $changes = $changes | append (dict "date" (.Date.Format "2006-01-02") "type" "experience" "title" .Title "url" .RelPermalink) }}
   {{- end }}
 
-  {{- $activity = sort $activity "date" "desc" | first 8 }}
+  {{- $changes = sort $changes "date" "desc" | first 10 }}
 
-  {{- with $activity }}
+  {{- with $changes }}
     <section class="home-section">
-      <h2 class="home-section__title">Activity</h2>
+      <h2 class="home-section__title">Recent Changes</h2>
       <ul class="home-activity">
         {{- range . }}
           <li class="home-activity__item">
             <span class="home-activity__type">{{ .type }}</span>
             <a class="home-activity__link" href="{{ .url }}">{{ .title }}</a>
-            <span class="home-activity__date">{{ with .ts }}{{ . }}{{ else }}{{ .date }}{{ end }}</span>
+            <span class="home-activity__date">{{ .date }}</span>
           </li>
         {{- end }}
       </ul>

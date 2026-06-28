@@ -95,6 +95,7 @@ Unlike Technologies (which have no lifecycle), Books have a natural reading life
 
 * reading — currently being read
 * completed — finished reading
+* want-to-read — on the horizon, not yet started
 * abandoned — stopped reading intentionally
 
 This lifecycle is factual and objective.
