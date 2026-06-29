@@ -6,6 +6,7 @@ status = "complete"
 projectType = ["cli"]
 thumbnail = "/gifs/snakegame.gif"
 description = "A simple terminal based snake game in C with vim bindings 'hjkl'. "
+technologies = ['C']
 +++
 # Terminal-Based Snake Game
 One bored weekend, I thought: "Why not write a snake game in C?". 

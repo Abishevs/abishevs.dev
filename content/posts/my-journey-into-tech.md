@@ -1,6 +1,7 @@
 +++
 title = 'From Breaking Toys to Terminal Nerd: My Journey Into Tech'
 date = 2025-01-05T15:28:15+01:00
+description = "How curiosity, broken toys, and Linux turned into an engineering obsession."
 draft = false 
 +++
 

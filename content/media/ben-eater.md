@@ -1,4 +1,5 @@
 +++
+draft = true
 date = 2023-01-01
 title = "Ben Eater"
 description = "Hardware education through hands-on builds — from breadboard computers to networking."

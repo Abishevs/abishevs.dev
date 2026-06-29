@@ -1,5 +1,6 @@
 +++
 draft = false
+linkToSource = true
 date = 2024-01-14
 
 title = "Utwene"
@@ -9,6 +10,10 @@ projectType = ["cli", "automation"]
 thumbnail  = ""
 description =  "“Useless Time Waster but Entertaining Newsboat Extractor” is a small program that fetches the newest videos from specified channels in your Newsboat feed database—auto-marking them as read."
 
-sourceCodeUrl = "https://github.com/Abishevs/utwene"
-linkToSource = true
+technologies = ['Python']
+
+[[links]]
+label = "Source"
+url = "https://github.com/Abishevs/utwene"
+
 +++

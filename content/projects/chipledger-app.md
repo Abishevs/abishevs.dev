@@ -4,20 +4,23 @@ date = 2025-10-16T23:40:09+02:00
 
 title = "chipledger.app"
 description = "A simple ledger that tracks buy-ins, manages balances, and calculates who owes whom. Built for the person who runs the game."
-keywords = []
+keywords = ["JavaScript", "Web"]
 
 status = "deployed"
 projectType = ["web-app"]
 thumbnail = ""
 
-demoUrl = ""
-liveUrl = "https://chipledger.app"
-reportUrl = ""
-journalUrl = ""
-
-sourceCodeUrl = ""
-linkToSource = false  # the card becomes a button to sourceCodeUrl
 related = ["/projects/modest"]
+
+technologies = ["JavaScript", "HTML", "CSS", "LocalStorage"]
+
+[[links]]
+label = "Live Site"
+url = "https://chipledger.app"
+
+[[links]]
+label = "Source"
+url = "https://github.com/Abishevs/chipledger"
 +++
 
 # Background

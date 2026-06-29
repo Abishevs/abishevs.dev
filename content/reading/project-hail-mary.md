@@ -1,6 +1,6 @@
 +++
 draft = false
-date = 2024-06-01
+date = 2022-06-01
 title = "Project Hail Mary"
 description = "A story about engineering problem-solving under impossible constraints."
 
@@ -9,20 +9,21 @@ year = "2021"
 readingType = "book"
 readingStatus = "completed"
 favorite = true
-technologies = ["Systems Engineering"]
-related = ["/projects/modest"]
+technologies = []
+related = []
 +++
 
 ## Why I Read This
 
-Loved The Martian for its engineering-first storytelling. Project Hail Mary goes further — the protagonist solves problems the way engineers actually think.
+Andy Weirs approuch to SCI-Fi is simply mindboggling! The science in his
+books is always as accuarate and thought through as humanly possible. 
+
+It was natural that I would read his other bigs after reading The Martian.
 
 ## Key Ideas
 
-- Iterative problem-solving under resource constraints
+- Rocky!
 - Testing hypotheses with available tools
 - Engineering creativity when standard approaches fail
 
-## Influence on Engineering
-
-Reinforced the principle of breaking impossible problems into testable sub-problems. The protagonist's approach to unknown materials mirrors how I approach unfamiliar hardware — measure, hypothesize, test, iterate.
+<!-- ## Influence on Engineering -->

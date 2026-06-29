@@ -2,20 +2,23 @@
 draft = true
 date = 2026-06-20T23:41:03+02:00
 
-title = "Redovisastartup Se"
-description = ""
-keywords = []
+title = "redovisastartup.se"
+description = "Bookkeeping and financial services website for a Swedish startup consultancy."
+keywords = ["Web", "Hugo", "Design"]
 
 status = "deployed"
 projectType = ["website"]
 thumbnail = ""
 
-demoUrl = ""
-reportUrl = ""
-journalUrl = ""
+technologies = ["Hugo", "SCSS", "Netlify"]
 
-sourceCodeUrl = ""
-linkToSource = true  # the card becomes a button to sourceCodeUrl
+[[links]]
+label = "Live Site"
+url = "https://redovisastartup.se"
+
+[[links]]
+label = "Source"
+url = "https://github.com/Abishevs/redovisastartup-se"
 +++
 
 # Overview

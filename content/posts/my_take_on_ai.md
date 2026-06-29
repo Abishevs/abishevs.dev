@@ -2,13 +2,7 @@
 draft = true
 date = 2026-06-06T23:37:50+02:00
 title = "My take on AI usage"
-description = ""
-slug = ""
-authors = []
-tags = []
-categories = []
-externalLink = ""
-series = []
+description = "Thoughts on AI-generated content, creativity, and preserving personality in a world optimized for polish."
 +++
 
 # Background

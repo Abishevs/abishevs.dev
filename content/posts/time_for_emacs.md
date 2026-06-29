@@ -1,6 +1,7 @@
 +++
 title = 'Is it time to try out EMACS?'
 date = 2026-06-06T16:23:05+02:00
+description = "Exploring Emacs as a development environment after years of Neovim."
 draft = false
 +++
 

@@ -11,12 +11,22 @@ status = "research"
 projectType = ["embedded", "mechanical"]
 thumbnail = "/images/modest/modest_thumnail.webp"
 
-sourceCodeUrl = ""
-demoUrl = ""
-reportUrl = ""
-
-linkToSource = false
 related = ["/project-journal/modest", "/education/chalmers-mechatronics", "/workflows/linux-desktop"]
+
+# Temporal
+startDate = "2026-05-07"
+
+technologies = ['C', 'STM32', 'FreeCAD']
+
+[[activity]]
+start = "2026-05-07"
+end = "2026-05-23"
+label = "Initial research & CAD"
+
+[[milestones]]
+date = "2026-05-07"
+title = "Project started"
+
 +++
 
 # Overview

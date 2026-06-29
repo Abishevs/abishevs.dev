@@ -1,4 +1,6 @@
 +++
+draft = true
+
 date = 2023-06-15
 title = "Making an 8-bit CPU — ALU Design"
 description = "Designing and building an arithmetic logic unit from 74LS-series chips."

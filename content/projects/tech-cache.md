@@ -1,5 +1,6 @@
 +++
 draft = false
+linkToSource = true
 date = 2023-11-22
 
 title = "Tech Cache"
@@ -9,6 +10,10 @@ projectType = ["tooling"]
 thumbnail  = "/images/techcache-thumbnail.png"
 description =  "Inventory Management Program for Small Warehouses such as Makerspaces/Workshops"
 
-sourceCodeUrl = "https://github.com/Abishevs/TechCache"
-linkToSource = true
+technologies = ['Python', 'Qt']
+
+[[links]]
+label = "Source"
+url = "https://github.com/Abishevs/TechCache"
+
 +++

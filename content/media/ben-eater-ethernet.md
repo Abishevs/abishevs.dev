@@ -1,4 +1,6 @@
 +++
+draft = true
+
 date = 2024-02-10
 title = "How Does Ethernet Work?"
 description = "Building an Ethernet interface from scratch to understand the physical layer."

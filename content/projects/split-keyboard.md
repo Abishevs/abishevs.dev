@@ -9,13 +9,23 @@ status = "active"
 projectType = ["embedded", "mechanical", "firmware"]
 thumbnail = "/images/split-keyboard/kb_dual_no_kc.webp"
 
-sourceCodeUrl = ""
-demoUrl = ""
-reportUrl = ""
-
-linkToSource = false
-
 draft = false
+
+# Temporal
+startDate = "2023-12-28"
+
+technologies = ['C', 'QMK', '3D Printing']
+
+[[activity]]
+start = "2023-12-28"
+end = "2024-02-15"
+label = "Initial build & 3D printing"
+
+[[activity]]
+start = "2024-08-15"
+end = "2024-09-30"
+label = "Firmware & daily use"
+
 +++
 
 ## Split Keyboard?

@@ -4,18 +4,18 @@ date = 2020-11-15T23:40:27+02:00
 
 title = "IT For Fordewind AB"
 description = ""
-keywords = []
+keywords = ["Web", "WordPress"]
 
 status = "deployed"
 projectType = ["website"]
 thumbnail = ""
 
-demoUrl = "https://fordewind.se"
-reportUrl = ""
-journalUrl = ""
+technologies = ['WordPress']
 
-sourceCodeUrl = ""
-linkToSource = false  # the card becomes a button to sourceCodeUrl
+[[links]]
+label = "Demo"
+url = "https://fordewind.se"
+
 +++
 
 # Background

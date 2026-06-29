@@ -13,4 +13,4 @@ This website documents projects, build logs, workflows, engineering decisions an
 
 ## now
 
-Designing a motorized poker chip dispensing mechanism — iterating on disc geometry and stepper motor control.
+Figuring out how to effectivly pipeline note taking in Org-mode (emacs) and which parts to save into the public knowledge system (this site). As well as fixing bugs in this websites theme.

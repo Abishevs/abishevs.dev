@@ -6,6 +6,7 @@ status = "complete"
 projectType = ["simulation", "robotics"]
 thumbnail = '/images/roboarmthumbnail.png'
 description = 'Desktop app (PySide6) with 3D view of a robotic arm, with controlls. Central server (Py WS) for controlling servos over Wifi.'
+technologies = ['Python', 'Tkinter']
 +++
 
 ## The vison

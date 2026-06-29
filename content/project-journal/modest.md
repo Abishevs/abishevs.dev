@@ -41,7 +41,7 @@ MODESTs' enclouser would take over 3 hours to print so I was eager to launch the
 
 Well it is already summer, anyways. This is the progress so far (see the video below).
 
-MVP reached for pre-summer phase, more CAD todo. This version is still only a bit of proof of concept as out-feeder, how to stack multiple such modules are still under question.
+MVP reached for pre-summer phase, more CAD todo. This version is still only a proof of concept as out-feeder, how to stack multiple such modules are still under question and expirmentation.
 
 I will also now design a new, smaller design. So we shall see if full disc design will live or this will be the last update with this design.
 
