@@ -87,6 +87,12 @@ techField = "technologies"
 [[reading.meta]]
 field = "year"
 type = "text"
+prefix = "Published"
+
+[[reading.meta]]
+field = "date"
+type = "date"
+prefix = "Read"
 
 [[reading.meta]]
 field = "readingType"
@@ -110,6 +116,12 @@ techField = "technologies"
 [[media.meta]]
 field = "year"
 type = "text"
+prefix = "Released"
+
+[[media.meta]]
+field = "date"
+type = "date"
+prefix = "Watched"
 
 [[media.meta]]
 field = "mediaType"

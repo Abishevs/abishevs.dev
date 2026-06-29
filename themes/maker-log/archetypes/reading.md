@@ -1,11 +1,11 @@
 +++
 draft = true
-date = '{{ .Date }}'
+date = '{{ .Date }}'  # when I read/discovered it
 title = '{{ replace .File.ContentBaseName "-" " " | title }}'
 description = ''
 
 author = ''
-year = ''
+year = ''  # publication/release year
 readingType = 'book'  # book | paper | standard | specification | rfc | report | manual
 readingStatus = 'want-to-read'  # reading | completed | want-to-read | abandoned
 favorite = false

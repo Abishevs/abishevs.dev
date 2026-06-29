@@ -81,6 +81,8 @@
         {{- with $val }}
           <span class="node-meta__text">{{ with $prefix }}{{ . }} {{ end }}{{ $val }}</span>
         {{- end }}
+      {{- else if eq $type "date" }}
+        <span class="node-meta__text">{{ with $prefix }}{{ . }} {{ end }}{{ $page.Date.Format "Jan 2006" }}</span>
       {{- end }}
     {{- end }}
   </div>

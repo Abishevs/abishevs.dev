@@ -14,6 +14,8 @@
     {{- $nowContent = index . 0 | replaceRE `<h2 id="now">.*?</h2>` "" | replaceRE `<h2$` "" }}
   {{- end }}
 
+  {{- $hp := hugo.Data.homepage }}
+
   {{/* ─── 1. Introduction ─── */}}
   {{- with $introContent }}
     <section class="home-section home-section--intro">
@@ -21,8 +23,15 @@
     </section>
   {{- end }}
 
-  {{/* ─── 2. Featured Work ─── */}}
-  {{- $hp := hugo.Data.homepage }}
+  {{/* ─── 2. Now ─── */}}
+  {{- with $nowContent }}
+    <section class="home-section">
+      <h2 class="home-section__title">{{ $hp.now.title }}</h2>
+      <div class="home-now">{{ . | safeHTML }}</div>
+    </section>
+  {{- end }}
+
+  {{/* ─── 3. Featured Work ─── */}}
   {{- $pinned := slice }}
   {{- range site.Params.pinnedProjects }}
     {{- $p := site.GetPage . }}
@@ -61,14 +70,6 @@
       </div>
     {{- end }}
   </section>
-
-  {{/* ─── 4. Now ─── */}}
-  {{- with $nowContent }}
-    <section class="home-section">
-      <h2 class="home-section__title">{{ $hp.now.title }}</h2>
-      <div class="home-now">{{ . | safeHTML }}</div>
-    </section>
-  {{- end }}
 
   {{/* ─── 5. Recent Changes ─── */}}
   {{- $changes := slice }}

@@ -6,10 +6,10 @@ moreLabel = "All projects →"
 moreUrl = "/projects/"
 
 [knowledge]
-title = "Knowledge System"
+title = "Quick Links To The Knowledge System"
 
 [now]
-title = "Now"
+title = "Currently working on"
 
 [recentChanges]
 title = "Recent Changes"

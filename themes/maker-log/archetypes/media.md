@@ -1,11 +1,11 @@
 +++
 draft = true
-date = '{{ .Date }}'
+date = '{{ .Date }}'  # when I watched/discovered it
 title = '{{ replace .File.ContentBaseName "-" " " | title }}'
 description = ''
 
 creator = ''
-year = ''
+year = ''  # release year
 mediaType = 'movie'  # movie | series | anime | documentary | talk | course | youtube | youtube-channel | podcast | workshop
 watchStatus = 'want-to-watch'  # watching | completed | want-to-watch | abandoned
 favorite = false
